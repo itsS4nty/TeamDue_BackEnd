@@ -24,7 +24,7 @@ conexion.connect(function(err) {
 io.on("connection", (socket) => {
     console.log("Cliente conectado");
 
-    io.on("login", (data) => {
+    socket.on("login", (data) => {
         
         console.log(data);
 

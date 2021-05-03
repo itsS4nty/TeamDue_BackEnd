@@ -27,6 +27,7 @@ io.on("connection", (socket) => {
     socket.on("login", (data) => {
         
         console.log(data);
+        console.log(data.nombre);
 
     })
 });

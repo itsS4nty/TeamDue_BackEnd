@@ -17,6 +17,10 @@
   },
   "homepage": "https://github.com/itsS4nty/TeamDue_BackEnd#readme",
   "dependencies": {
-    "mysql": "^2.18.1"
+    "expres": "0.0.5",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1",
+    "socket.io": "^4.0.1",
+    "socketio": "^1.0.0"
   }
 }

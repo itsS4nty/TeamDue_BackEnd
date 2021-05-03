@@ -1,5 +1,10 @@
 const mysql = require('mysql');
 
+var express = require('express');
+var app = express();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+
 var conexion= mysql.createConnection({
     host : 'localhost',
     database : 'TeamDue',
@@ -15,4 +20,12 @@ conexion.connect(function(err) {
     }
     console.log('Conectado con el identificador ' + conexion.threadId);
 
+});
+
+server.listen(8080, function() {
+    console.log('Servidor corriendo en http://localhost:8080');
+});
+
+io.on('connection', function(socket) {
+    console.log('Un cliente se ha conectado');
 });

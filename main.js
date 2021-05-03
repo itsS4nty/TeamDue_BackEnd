@@ -32,7 +32,7 @@ app.get('/' , (req , res)=>{
 
 })
 
-io.on('connection', function(socket) {
+io.on('connect', function(socket) {
     console.log('Un cliente se ha conectado');
     io.on("login", (data) => {
 

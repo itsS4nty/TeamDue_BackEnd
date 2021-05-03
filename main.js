@@ -1,4 +1,5 @@
 const mysql = require('mysql');
+const { Console } = require('node:console');
 const httpServer = require("http").createServer();
 const io = require("socket.io")(httpServer, {cors:{origin: "*",}});
 
@@ -24,6 +25,11 @@ conexion.connect(function(err) {
 io.on("connection", (socket) => {
     console.log("Cliente conectado");
 
+    io.on("login", (data) => {
+        
+        console.log(data);
+
+    })
 });
   
 httpServer.listen(8080);

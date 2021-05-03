@@ -1,5 +1,4 @@
 const mysql = require('mysql');
-const { Console } = require('node:console');
 const httpServer = require("http").createServer();
 const io = require("socket.io")(httpServer, {cors:{origin: "*",}});
 

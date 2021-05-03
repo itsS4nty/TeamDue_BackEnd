@@ -1,9 +1,8 @@
 const mysql = require('mysql');
+const { Console } = require('node:console');
 
-var express = require('express');
-var app = express();
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
+const httpServer = require("http").createServer();
+const io = require("socket.io")(httpServer);
 
 var conexion = mysql.createConnection({
     host : 'localhost',
@@ -22,20 +21,8 @@ conexion.connect(function(err) {
 
 });
 
-server.listen(8080, function() {
-    console.log('Servidor corriendo en http://localhost:8080');
-});
-
-app.get('/' , (req , res)=>{
-
-   res.send('Hola');
-
-})
-
-io.on('connect', function(socket) {
-    console.log('Un cliente se ha conectado');
-    io.on("login", (data) => {
-
-
-    })
-});
+io.on("connection", (socket) => {
+    console.log("Cliente conectado");
+  });
+  
+httpServer.listen(8080);

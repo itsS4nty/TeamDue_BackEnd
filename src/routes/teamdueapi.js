@@ -50,10 +50,7 @@ router.post('/login', (req, res) => {
     console.log(usuario, "y", password);
     conexion.query("SELECT * FROM Usuarios WHERE usuario = ? OR correo = ? LIMIT 1", [usuario, usuario], (err, rows, fields) => {
         if (!err) {
-            if (typeof rows === 'undefined') {
-                res.status(404).send("No encontrado");
-                
-            }else {
+            if (rows > 0) {
                 console.log("entra");
                 const pass = rows[0]["password"];
                 hashPasswordIsSame(pass, password).then(isSame => {
@@ -64,6 +61,9 @@ router.post('/login', (req, res) => {
                         res.status(409).send("Incorrect password");
                     }
                 });
+
+            }else {
+                res.status(404).send("No encontrado");
             }
 
         }else {

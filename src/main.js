@@ -4,7 +4,6 @@ const httpServer = require("http").createServer();
 const io = require("socket.io")(httpServer, {cors:{origin: "*",}});
 // const {Server} = require("socket.io"), server = new Server(8000);
 
-
 // Variables
 var conexion = connImport.crearConexion();
 
@@ -17,14 +16,16 @@ io.on("connection", (socket) => {
         conexion.query("SELECT * FROM Usuarios WHERE usuario LIKE ? AND password LIKE ? LIMIT 1", [data.user, data.password], function (err, result, fields) {
             if (err) {
                 console.log("Error", err);
+                socket.emit("loginResponse", false);
             }
 
 			if (result.length == 1) {
-                console.log("Resultado encontrado", result[0]["id"]);
-                // socket.emit("loginResponse", true)
+                console.log("Resultado encontrado");
+                socket.emit("loginResponse", true, result[0]);
 
 			} else {
 				console.log("No se ha encontrado ningun resultado");
+                socket.emit("loginResponse", false);
 
 			}
         });

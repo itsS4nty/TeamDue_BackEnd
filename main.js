@@ -11,14 +11,24 @@ var conexion = connImport.crearConexion();
 
 // Funciones
 io.on("connection", (socket) => {
-    console.log("Cliente conectado");
+    console.log("Nueva conexion: " + socket.id);
 
     socket.on("login", (data) => {
-        var login = connImport.consultaLogin(conexion, data.user, data.password);
-        console.log("finalizado");
-        if (login) {
-            console.log("Acertado");
-        }
+        // var login = connImport.consultaLogin(conexion, data.user, data.password);
+
+        // if (login) {
+        //     console.log("Acertado");
+        // }
+
+        conexion.query("SELECT * FROM Usuarios WHERE usuario LIKE '" + user + "' AND password LIKE '" + password + "'", function (err, result, fields) {
+            if (err) {
+                console.error('Error de consulta: ' + err.stack);
+                return;
+            }
+
+            console.log(result);
+            return true;
+        });
 
     })
 });

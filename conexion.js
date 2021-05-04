@@ -13,6 +13,25 @@ function crearConexion() {
     return conexion;
 }
 
-objetoConexion.crearConexion = crearConexion();
+function consultaLogin(conn, user, password) {
+    conn.connect(function(err) {
+        if (err) {
+            console.error('Error de conexion: ' + err.stack);
+            return;
+        }
+        console.log('Conectado con el identificador ' + conn.threadId);
 
-module.exports = objetoConexion;
+        con.query("SELECT * FROM Usuarios WHERE usuario LIKE " + user + " AND password LIKE " + password, function (err, result, fields) {
+            if (err) {
+                console.error('Error de consulta: ' + err.stack);
+                return;
+            }
+
+            console.log(result);
+            return true;
+        });
+    });
+}
+
+exports.crearConexion = crearConexion;
+exports.consultaLogin = consultaLogin;

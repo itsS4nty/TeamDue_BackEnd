@@ -15,12 +15,16 @@ io.on("connection", (socket) => {
 
     socket.on("login", (data) => {
         conexion.query("SELECT * FROM Usuarios WHERE usuario LIKE ? AND password LIKE ?", [data.user, data.password], function (err, result, fields) {
-			if (results.length > 0) {
+            if (err) {
+                console.log("Error", err);
+            }
+
+			if (result.length > 0) {
                 console.log("Resultado encontrado");
 
 			} else {
 				console.log("No se ha encontrado ningun resultado");
-                
+
 			}
         });
 

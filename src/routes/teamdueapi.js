@@ -32,6 +32,7 @@ router.get('/:id', (req, res) => {
 router.post('/login', (req, res) => {
     console.log("Entrando por POST /login", req);
     const { user, password } = req.body;
+    console.log(user, "y", password);
     conexion.query("SELECT * FROM Usuarios WHERE usuario = ? AND password = ? OR correo = ? AND password = ?", [user, password, user, password], (err, rows, fields) => {
         if (!err) {
             res.json(rows[0]);

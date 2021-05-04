@@ -65,8 +65,9 @@ router.post('/register', (req, res) => {
     conexion.query("SELECT * FROM Usuarios WHERE usuario = ? OR correo = ?", [usuario, correo], (err, rows, fields) => {
         if (!err) {
             if (rows < 1) {
-                const salt = bcrypt.genSalt(10)
-                const hash = bcrypt.hash(password, salt)
+                const salt = bcrypt.genSalt(10);
+                const hash = bcrypt.hash(password, salt);
+                console.log(hash);
 
                 conexion.query("INSERT INTO Usuarios (nombre, apellidos, correo, usuario, password, premium, fecha_registro) VALUES (?, ?, ?, ?, ?, ?, ?)", [nombre, apellidos, correo, usuario, hash, 0, new Date()], (err, rows, fields) => {
                     if (!err) {

@@ -20,7 +20,7 @@ io.on("connection", (socket) => {
             }
 
 			if (result.length == 1) {
-                console.log("Resultado encontrado", result[0]);
+                console.log("Resultado encontrado", result[0]["id"]);
                 // socket.emit("loginResponse", true)
 
 			} else {

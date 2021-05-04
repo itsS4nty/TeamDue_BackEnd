@@ -14,13 +14,14 @@ io.on("connection", (socket) => {
     console.log("Nueva conexion:", socket.id);
 
     socket.on("login", (data) => {
-        conexion.query("SELECT * FROM Usuarios WHERE usuario LIKE ? AND password LIKE ?", [data.user, data.password], function (err, result, fields) {
+        conexion.query("SELECT * FROM Usuarios WHERE usuario LIKE ? AND password LIKE ? LIMIT 1", [data.user, data.password], function (err, result, fields) {
             if (err) {
                 console.log("Error", err);
             }
 
-			if (result.length > 0) {
-                console.log("Resultado encontrado");
+			if (result.length == 1) {
+                console.log("Resultado encontrado", result[0]);
+                // socket.emit("loginResponse", true)
 
 			} else {
 				console.log("No se ha encontrado ningun resultado");

@@ -21,7 +21,7 @@ function consultaLogin(conn, user, password) {
         }
         console.log('Conectado con el identificador ' + conn.threadId);
 
-        con.query("SELECT * FROM Usuarios WHERE usuario LIKE " + user + " AND password LIKE " + password, function (err, result, fields) {
+        conn.query("SELECT * FROM Usuarios WHERE usuario LIKE " + user + " AND password LIKE " + password, function (err, result, fields) {
             if (err) {
                 console.error('Error de consulta: ' + err.stack);
                 return;

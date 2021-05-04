@@ -47,7 +47,7 @@ router.post('/login', (req, res) => {
 router.get('/files/:id', (req, res) => {
     console.log("Entrando por GET /files/id");
     const { id } = req.params;
-    conexion.query("SELECT * FROM Archivos WHERE id = ?", [id], (err, rows, fields)=> {
+    conexion.query("SELECT * FROM Archivos WHERE usuario_id = ?", [id], (err, rows, fields)=> {
         if (!err) {
             res.json(rows);
 

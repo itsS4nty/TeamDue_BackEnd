@@ -9,7 +9,7 @@ router.get('/usuarios', (req, res) => {
             res.json(rows);
 
         }else {
-            console.log(err);
+            res.send(400, err.message);
         
         }
     });
@@ -23,11 +23,25 @@ router.get('/:id', (req, res) => {
             res.json(rows[0]);
 
         }else {
-            console.log(err);
+            res.send(400, err.message);
         
         }
     });
 })
+
+router.get('/files/:id', (req, res) => {
+    console.log("Entrando por GET /files/id");
+    const { id } = req.params;
+    conexion.query("SELECT * FROM Archivos WHERE usuario_id = ?", [id], (err, rows, fields)=> {
+        if (!err) {
+            res.json(rows);
+
+        }else {
+            res.send(400, err.message);
+        
+        }
+    });
+});
 
 router.post('/login', (req, res) => {
     console.log("Entrando por POST /login");
@@ -38,22 +52,27 @@ router.post('/login', (req, res) => {
             res.json(rows[0]);
 
         }else {
-            console.log(err);
+            res.send(400, err.message);
 
         }
     });
 });
 
-router.get('/files/:id', (req, res) => {
-    console.log("Entrando por GET /files/id");
-    const { id } = req.params;
-    conexion.query("SELECT * FROM Archivos WHERE usuario_id = ?", [id], (err, rows, fields)=> {
+router.post('/register', (req, res) => {
+    console.log("Entrando por POST /register");
+    const { nombre, apellidos, correo, usuario, password, fecha_registro, premium } = req.body;
+    conexion.query("SELECT * FROM Usuarios WHERE usuario = ? OR correo = ?", [usuario, correo], (err, rows, fields) => {
         if (!err) {
-            res.json(rows);
+            if (rows < 1) {
+
+
+            }else {
+                res.send(409, "Duplicate");
+            }
 
         }else {
-            console.log(err);
-        
+            res.send(400, err.message);
+
         }
     });
 });

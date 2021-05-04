@@ -11,7 +11,7 @@ var conexion = connImport.crearConexion();
 
 // Funciones
 io.on("connection", (socket) => {
-    console.log("Nueva conexion: " + socket.id);
+    console.log("Nueva conexion: ", socket.remoteAddress);
 
     socket.on("login", (data) => {
         conexion.query("SELECT * FROM Usuarios WHERE usuario LIKE '" + data.user + "' AND password LIKE '" + data.password + "'", function (err, result, fields) {

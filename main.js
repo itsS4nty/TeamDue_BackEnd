@@ -14,12 +14,6 @@ io.on("connection", (socket) => {
     console.log("Nueva conexion: " + socket.id);
 
     socket.on("login", (data) => {
-        // var login = connImport.consultaLogin(conexion, data.user, data.password);
-
-        // if (login) {
-        //     console.log("Acertado");
-        // }
-
         conexion.query("SELECT * FROM Usuarios WHERE usuario LIKE '" + data.user + "' AND password LIKE '" + data.password + "'", function (err, result, fields) {
             if (err) {
                 console.error('Error de consulta: ' + err.stack);
@@ -27,7 +21,7 @@ io.on("connection", (socket) => {
             }
 
             console.log(result);
-            return true;
+            // socket.emit
         });
 
     })

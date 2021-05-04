@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const conexion = require("../database.js");
+const bcrypt = require('bcrypt')
 
 router.get('/usuarios', (req, res) => {
     console.log("Entrando por GET /");
@@ -64,7 +65,10 @@ router.post('/register', (req, res) => {
     conexion.query("SELECT * FROM Usuarios WHERE usuario = ? OR correo = ?", [usuario, correo], (err, rows, fields) => {
         if (!err) {
             if (rows < 1) {
-                conexion.query("INSERT INTO Usuarios (nombre, apellidos, correo, usuario, password, premium, fecha_registro) VALUES (?, ?, ?, ?, ?, ?, ?)", [nombre, apellidos, correo, usuario, password, 0, new Date()], (err, rows, fields) => {
+                const salt = await bcrypt.genSalt(10)
+                const hash = await bcrypt.hash(password, salt)
+
+                conexion.query("INSERT INTO Usuarios (nombre, apellidos, correo, usuario, password, premium, fecha_registro) VALUES (?, ?, ?, ?, ?, ?, ?)", [nombre, apellidos, correo, usuario, hash, 0, new Date()], (err, rows, fields) => {
                     if (!err) {
                         res.status(201).send("Created");
 

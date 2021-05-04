@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/itsS4nty/TeamDue_BackEnd#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "expres": "0.0.5",
     "express": "^4.17.1",
     "io-session-handler": "^1.0.74",

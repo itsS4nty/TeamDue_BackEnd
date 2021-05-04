@@ -48,7 +48,7 @@ router.post('/login', (req, res) => {
     console.log("Entrando por POST /login");
     const { usuario, password } = req.body;
     console.log(usuario, "y", password);
-    conexion.query("SELECT * FROM Usuarios WHERE usuario = ? OR correo = ?", [usuario], (err, rows, fields) => {
+    conexion.query("SELECT * FROM Usuarios WHERE usuario LIKE ? OR correo LIKE ?", [usuario, usuario], (err, rows, fields) => {
         if (!err) {
             if (rows > 0) {
                 console.log("entra");

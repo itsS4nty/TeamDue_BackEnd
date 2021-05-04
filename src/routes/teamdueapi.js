@@ -47,10 +47,8 @@ router.get('/files/:id', (req, res) => {
 router.post('/login', (req, res) => {
     console.log("Entrando por POST /login");
     const { usuario, password } = req.body;
-    console.log(usuario, "y", password);
     conexion.query("SELECT * FROM Usuarios WHERE usuario LIKE ? OR correo LIKE ?", [usuario, usuario], (err, rows, fields) => {
         if (!err) {
-            console.log(rows[0]);
             if (typeof rows[0] === 'undefined') {
                 res.status(404).send("No encontrado");
 

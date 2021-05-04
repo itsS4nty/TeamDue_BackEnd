@@ -9,7 +9,7 @@ router.get('/usuarios', (req, res) => {
             res.json(rows);
 
         }else {
-            res.send(400, err.message);
+            res.status(400).send(err.message);
         
         }
     });
@@ -23,7 +23,7 @@ router.get('/:id', (req, res) => {
             res.json(rows[0]);
 
         }else {
-            res.send(400, err.message);
+            res.status(400).send(err.message);
         
         }
     });
@@ -37,7 +37,7 @@ router.get('/files/:id', (req, res) => {
             res.json(rows);
 
         }else {
-            res.send(400, err.message);
+            res.status(400).send(err.message);
         
         }
     });
@@ -52,7 +52,7 @@ router.post('/login', (req, res) => {
             res.json(rows[0]);
 
         }else {
-            res.send(400, err.message);
+            res.status(400).send(err.message);
 
         }
     });
@@ -66,20 +66,20 @@ router.post('/register', (req, res) => {
             if (rows < 1) {
                 conexion.query("INSERT INTO Usuarios (nombre, apellidos, correo, usuario, password, premium, fecha_registro) VALUES (?, ?, ?, ?, ?, ?, ?)", [nombre, apellidos, correo, usuario, password, 0, new Date()], (err, rows, fields) => {
                     if (!err) {
-                        res.send(201, "Created");
+                        res.status(201).send("Created");
 
                     }else {
-                        res.send(400, err.message);
+                        res.status(400).send(err.message);
                 
                     }
                 });
 
             }else {
-                res.send(409, "Duplicate");
+                res.status(409).send("Duplicate");
             }
 
         }else {
-            res.send(400, err.message);
+            res.status(400).send(err.message);
 
         }
     });

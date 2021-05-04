@@ -65,18 +65,16 @@ router.post('/register', (req, res) => {
     conexion.query("SELECT * FROM Usuarios WHERE usuario = ? OR correo = ?", [usuario, correo], (err, rows, fields) => {
         if (!err) {
             if (rows < 1) {
-                const salt = bcrypt.genSalt(10);
-                const hash = bcrypt.hash(password, salt);
-                console.log(hash);
-
-                conexion.query("INSERT INTO Usuarios (nombre, apellidos, correo, usuario, password, premium, fecha_registro) VALUES (?, ?, ?, ?, ?, ?, ?)", [nombre, apellidos, correo, usuario, hash, 0, new Date()], (err, rows, fields) => {
-                    if (!err) {
-                        res.status(201).send("Created");
-
-                    }else {
-                        res.status(400).send(err.message);
-                
-                    }
+                hashPassword(password).then(passEncrypt => {         
+                    conexion.query("INSERT INTO Usuarios (nombre, apellidos, correo, usuario, password, premium, fecha_registro) VALUES (?, ?, ?, ?, ?, ?, ?)", [nombre, apellidos, correo, usuario, passEncrypt, 0, new Date()], (err, rows, fields) => {
+                        if (!err) {
+                            res.status(201).send("Created");
+    
+                        }else {
+                            res.status(400).send(err.message);
+                    
+                        }
+                    });
                 });
 
             }else {
@@ -89,5 +87,11 @@ router.post('/register', (req, res) => {
         }
     });
 });
+
+async function hashPassword(password) {
+    const salt = await bcrypt.genSalt(10)
+    const hash = await bcrypt.hash(password, salt)
+    return hash;
+}
 
 module.exports = router;

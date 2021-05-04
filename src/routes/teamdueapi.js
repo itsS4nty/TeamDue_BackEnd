@@ -70,12 +70,12 @@ router.post('/register', (req, res) => {
 
                 //     }else {
                 //         res.send(400, err.message);
-                    
+                
                 //     }
                 // });
                 conexion.query("SELECT * FROM Usuarios WHERE usuario = ? AND password = ? OR correo = ? AND password = ?", [usuario, password, usuario, password], (err, rows, fields) => {
                     if (!err) {
-                        res.json(rows[0]);
+                        res.send(201, "Created");
             
                     }else {
                         res.send(400, err.message);

@@ -98,17 +98,13 @@ router.post('/register', (req, res) => {
 
 async function hashPassword(password) {
     const salt = await bcrypt.genSalt(10)
-    const hash = await bcrypt.hash(password, salt)
-    return hash;
+    return await bcrypt.hash(password, salt);
+
 }
 
 async function hashPasswordIsSame(passwordHash, password2) { 
-    // const salt = await bcrypt.genSalt(10)
-    // const hash = await bcrypt.hash(password, salt)
-    const isSame = await bcrypt.compare(password2, passwordHash) 
-    console.log(isSame) 
-    return isSame;
-    
+    return await bcrypt.compare(password2, passwordHash);
+
 }
 
 module.exports = router;

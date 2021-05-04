@@ -51,7 +51,7 @@ router.post('/login', (req, res) => {
     conexion.query("SELECT * FROM Usuarios WHERE usuario LIKE ? OR correo LIKE ?", [usuario, usuario], (err, rows, fields) => {
         if (!err) {
             console.log(rows[0]);
-            if (rows > 0) {
+            if (!typeof rows[0] === 'undefined') {
                 console.log("entra");
                 const pass = rows[0]["password"];
                 hashPasswordIsSame(pass, password).then(isSame => {

@@ -8,7 +8,7 @@ const express = require('express');
 
 // Variables
 const app = express();
-var conexion = connImport.crearConexion();
+// var conexion = connImport.crearConexion();
 
 
 // Settings

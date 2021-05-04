@@ -52,6 +52,9 @@ router.post('/login', (req, res) => {
         if (!err) {
             console.log(rows[0]);
             if (typeof rows[0] === 'undefined') {
+                res.status(404).send("No encontrado");
+
+            }else {
                 console.log("entra");
                 const pass = rows[0]["password"];
                 hashPasswordIsSame(pass, password).then(isSame => {
@@ -62,11 +65,7 @@ router.post('/login', (req, res) => {
                         res.status(409).send("Incorrect password");
                     }
                 });
-
-            }else {
-                res.status(404).send("No encontrado");
             }
-
         }else {
             res.status(400).send(err.message);
         }

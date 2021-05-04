@@ -48,9 +48,9 @@ router.post('/login', (req, res) => {
     console.log("Entrando por POST /login");
     const { usuario, password } = req.body;
     console.log(usuario, "y", password);
-    conexion.query("SELECT * FROM Usuarios WHERE usuario = ? OR correo = ?", [usuario, usuario], (err, rows, fields) => {
+    conexion.query("SELECT * FROM Usuarios WHERE usuario = ? OR correo = ? LIMIT 1", [usuario, usuario], (err, rows, fields) => {
         if (!err) {
-            if (rows > 0) {
+            if (rows == 1) {
                 const pass = rows[0]["password"];
                 hashPasswordIsSame(pass, password).then(isSame => {
                     if (isSame) {
@@ -65,7 +65,7 @@ router.post('/login', (req, res) => {
                 res.status(404).send("No encontrado");
 
             }
-            
+
         }else {
             res.status(400).send(err.message);
 

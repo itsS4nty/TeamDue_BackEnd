@@ -10,14 +10,12 @@ var conexion = connImport.crearConexion();
 
 
 // Funciones
-
 io.on("connection", (socket) => {
     console.log("Cliente conectado");
 
     socket.on("login", (data) => {
-        // console.log(data.nombre);
         var login = connImport.consultaLogin(conexion, data.user, data.password);
-
+        console.log("finalizado");
         if (login) {
             console.log("Acertado");
         }

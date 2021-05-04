@@ -50,6 +50,7 @@ router.post('/login', (req, res) => {
     console.log(usuario, "y", password);
     conexion.query("SELECT * FROM Usuarios WHERE usuario LIKE ? OR correo LIKE ?", [usuario, usuario], (err, rows, fields) => {
         if (!err) {
+            console.log(rows[0]);
             if (rows > 0) {
                 console.log("entra");
                 const pass = rows[0]["password"];

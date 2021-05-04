@@ -7,29 +7,26 @@ const io = require("socket.io")(httpServer, {cors:{origin: "*",}});
 
 // Variables
 var conexion = connImport.crearConexion();
-const session_handler = require('io-session-handler').from(io, { timeout: 5000 });
+
 
 // Funciones
-// io.on("connection", (socket) => {
-//     console.log("Nueva conexion:", socket.id);
+io.on("connection", (socket) => {
+    console.log("Nueva conexion:", socket.id);
 
-//     socket.on("login", (data) => {
-//         conexion.query("SELECT * FROM Usuarios WHERE usuario LIKE '" + data.user + "' AND password LIKE '" + data.password + "'", function (err, result, fields) {
-//             if (err) {
-//                 console.error('Error de consulta: ' + err.stack);
-//                 return;
-//             }
+    socket.on("login", (data) => {
+        conexion.query("SELECT * FROM Usuarios WHERE usuario LIKE ? AND password LIKE ?", [data.user, data.password], function (err, result, fields) {
+			if (results.length > 0) {
+                console.log("Resultado encontrado");
 
-//             console.log(result);
-//             // socket.emit
-//         });
+			} else {
+				console.log("No se ha encontrado ningun resultado");
+                
+			}
+        });
 
-//     })
-// });
- 
-session_handler.connectionListener((connection) => {
-    console.log(connection);
+    })
 });
+ 
 
 
 httpServer.listen(8080);

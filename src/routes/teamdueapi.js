@@ -63,8 +63,9 @@ router.post('/login', (req, res) => {
 
             }else {
                 res.status(404).send("No encontrado");
-            }
 
+            }
+            
         }else {
             res.status(400).send(err.message);
 

@@ -19,13 +19,13 @@ conexion.connect(function(err) {
     
 });
 
-// io.on("connection", (socket) => {
-//     console.log("Cliente conectado");
+io.on("connection", (socket) => {
+    console.log("Cliente conectado");
 
-//     socket.on("login", (data) => {
-//         console.log(data.nombre);
+    socket.on("login", (data) => {
+        console.log(data.nombre);
 
-//     })
-// });
+    })
+});
   
-// httpServer.listen(8080);
+httpServer.listen(8080);

@@ -27,7 +27,7 @@ function consultaLogin(conn, user, password) {
                 return;
             }
 
-            console.log(result);
+            // console.log(result);
             return true;
         });
     });

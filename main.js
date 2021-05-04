@@ -1,16 +1,10 @@
-const mysql = require('mysql');
+const connImport = require('./conexion.js');
 const httpServer = require("http").createServer();
 const io = require("socket.io")(httpServer, {cors:{origin: "*",}});
 
-// const {Server} = require("socket.io"), server = new Server(8000);
+const {Server} = require("socket.io"), server = new Server(8000);
 
-var conexion = mysql.createConnection({
-    host : 'localhost',
-    database : 'TeamDue',
-    user : 'Carlos',
-    password : 'Admin123',
-    
-});
+var conexion = connImport.crearConexion;
 
 conexion.connect(function(err) {
     if (err) {
@@ -25,8 +19,6 @@ io.on("connection", (socket) => {
     console.log("Cliente conectado");
 
     socket.on("login", (data) => {
-        
-        console.log(data);
         console.log(data.nombre);
 
     })

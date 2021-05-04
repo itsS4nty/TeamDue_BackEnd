@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const conexion = require("../database.js");
 
-router.get('/', (req, res) => {
+router.get('/usuarios', (req, res) => {
     console.log("Entrando por GET /");
     conexion.query("SELECT * FROM Usuarios", (err, rows, fields)=> {
         if (!err) {

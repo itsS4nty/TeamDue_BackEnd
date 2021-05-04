@@ -3,12 +3,23 @@ const connImport = require('./conexion.js');
 const httpServer = require("http").createServer();
 const io = require("socket.io")(httpServer, {cors:{origin: "*",}});
 // const {Server} = require("socket.io"), server = new Server(8000);
+const express = require('express');
+const app = express();
 
 // Variables
 var conexion = connImport.crearConexion();
 
 
 // Funciones
+app.listen(3000, () => {
+    console.log("Server API on port 3000");
+
+});
+
+httpServer.listen(8080, () => {
+    console.log("Server app on port 8080");
+});
+
 io.on("connection", (socket) => {
     console.log("Nueva conexion:", socket.id);
 
@@ -33,6 +44,3 @@ io.on("connection", (socket) => {
     })
 });
  
-
-
-httpServer.listen(8080);

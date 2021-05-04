@@ -1,3 +1,5 @@
+const objetoConexion = {};
+
 function crearConexion() {
     const mysql = require('mysql');
 
@@ -5,9 +7,12 @@ function crearConexion() {
         host : 'localhost',
         database : 'TeamDue',
         user : 'Carlos',
-        password : 'Admin123'});
-    
+        password : 'Admin123'
+    });
+
     return conexion;
 }
 
-exports.crearConexion = crearConexion;
+objetoConexion.crearConexion = crearConexion();
+
+module.exports = objetoConexion;

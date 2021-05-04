@@ -64,24 +64,16 @@ router.post('/register', (req, res) => {
     conexion.query("SELECT * FROM Usuarios WHERE usuario = ? OR correo = ?", [usuario, correo], (err, rows, fields) => {
         if (!err) {
             if (rows < 1) {
-                // conexion.query("INSERT INTO Usuarios (nombre, apellidos, correo, usuario, password, premium, fecha_registro) VALUES (?, ?, ?, ?, ?, ?, ?)", [nombre, apellidos, correo, usuario, password, 0, now()], (err, rows, fields) => {
-                //     if (!err) {
-                //         res.send(201, "Created");
-
-                //     }else {
-                //         res.send(400, err.message);
-                
-                //     }
-                // });
-                conexion.query("SELECT * FROM Usuarios WHERE usuario = ? AND password = ? OR correo = ? AND password = ?", [usuario, password, usuario, password], (err, rows, fields) => {
+                conexion.query("INSERT INTO Usuarios (nombre, apellidos, correo, usuario, password, premium, fecha_registro) VALUES (?, ?, ?, ?, ?, ?, ?)", [nombre, apellidos, correo, usuario, password, 0, new Date()], (err, rows, fields) => {
                     if (!err) {
                         res.send(201, "Created");
-            
+
                     }else {
                         res.send(400, err.message);
-            
+                
                     }
                 });
+
             }else {
                 res.send(409, "Duplicate");
             }

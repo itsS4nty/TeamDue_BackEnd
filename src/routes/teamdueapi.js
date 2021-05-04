@@ -50,7 +50,7 @@ router.post('/login', (req, res) => {
     console.log(usuario, "y", password);
     conexion.query("SELECT * FROM Usuarios WHERE usuario = ? OR correo = ? LIMIT 1", [usuario, usuario], (err, rows, fields) => {
         if (!err) {
-            if (rows < 1) {
+            if (rows > 0) {
                 console.log("entra");
                 const pass = rows[0]["password"];
                 hashPasswordIsSame(pass, password).then(isSame => {
@@ -64,12 +64,10 @@ router.post('/login', (req, res) => {
 
             }else {
                 res.status(404).send("No encontrado");
-
             }
 
         }else {
             res.status(400).send(err.message);
-
         }
     });
 });
@@ -98,7 +96,6 @@ router.post('/register', (req, res) => {
 
         }else {
             res.status(400).send(err.message);
-
         }
     });
 });

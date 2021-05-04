@@ -5,23 +5,37 @@ const io = require("socket.io")(httpServer, {cors:{origin: "*",}});
 // const {Server} = require("socket.io"), server = new Server(8000);
 const express = require('express');
 
+
 // Variables
 const app = express();
 var conexion = connImport.crearConexion();
 
+
 // Settings
 app.set("port", 3000 || process.env.PORT);
+httpServer.set("port", 8080 ||process.env.PORT);
 
-// Funciones
+
+// Middlewares
+app.use(express.json());
+
+
+// Routes
+app.use(require("./routes/teamdueapi"));
+
+
+// Servidores
 app.listen(app.get("port"), () => {
     console.log("Server API on port", app.get("port"));
 
 });
 
-httpServer.listen(8080, () => {
-    console.log("Server app on port 8080");
+httpServer.listen(httpServer.get("port"), () => {
+    console.log("Server app on port", httpServer.get("port"));
 });
 
+
+// Sockets
 io.on("connection", (socket) => {
     console.log("Nueva conexion:", socket.id);
 

@@ -44,4 +44,18 @@ router.post('/login', (req, res) => {
     });
 });
 
+router.get('/files/:id', (req, res) => {
+    console.log("Entrando por GET /files/id");
+    const { id } = req.params;
+    conexion.query("SELECT * FROM Archivos WHERE id = ?", [id], (err, rows, fields)=> {
+        if (!err) {
+            res.json(rows);
+
+        }else {
+            console.log(err);
+        
+        }
+    });
+});
+
 module.exports = router;

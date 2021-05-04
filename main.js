@@ -20,7 +20,7 @@ io.on("connection", (socket) => {
         //     console.log("Acertado");
         // }
 
-        conexion.query("SELECT * FROM Usuarios WHERE usuario LIKE '" + user + "' AND password LIKE '" + password + "'", function (err, result, fields) {
+        conexion.query("SELECT * FROM Usuarios WHERE usuario LIKE '" + data.user + "' AND password LIKE '" + data.password + "'", function (err, result, fields) {
             if (err) {
                 console.error('Error de consulta: ' + err.stack);
                 return;

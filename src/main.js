@@ -4,15 +4,17 @@ const httpServer = require("http").createServer();
 const io = require("socket.io")(httpServer, {cors:{origin: "*",}});
 // const {Server} = require("socket.io"), server = new Server(8000);
 const express = require('express');
-const app = express();
 
 // Variables
+const app = express();
 var conexion = connImport.crearConexion();
 
+// Settings
+app.set("port", 3000 || process.env.PORT);
 
 // Funciones
-app.listen(3000, () => {
-    console.log("Server API on port 3000");
+app.listen(app.get("port"), () => {
+    console.log("Server API on port", app.get("port"));
 
 });
 

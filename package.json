@@ -19,6 +19,7 @@
   "dependencies": {
     "expres": "0.0.5",
     "express": "^4.17.1",
+    "io-session-handler": "^1.0.74",
     "mysql": "^2.18.1",
     "socket.io": "^4.0.1",
     "socketio": "^1.0.0"

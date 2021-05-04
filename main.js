@@ -17,7 +17,11 @@ io.on("connection", (socket) => {
     socket.on("login", (data) => {
         // console.log(data.nombre);
         var login = connImport.consultaLogin(conexion, data.user, data.password);
-        console.log(login);
+
+        if (login) {
+            console.log("Acertado");
+        }
+
     })
 });
   

@@ -13,7 +13,6 @@ var conexion = connImport.crearConexion();
 
 // Settings
 app.set("port", 3000 || process.env.PORT);
-httpServer.set("port", 8080 ||process.env.PORT);
 
 
 // Middlewares
@@ -30,8 +29,8 @@ app.listen(app.get("port"), () => {
 
 });
 
-httpServer.listen(httpServer.get("port"), () => {
-    console.log("Server app on port", httpServer.get("port"));
+httpServer.listen(8080, () => {
+    console.log("Server app on port 8080");
 });
 
 

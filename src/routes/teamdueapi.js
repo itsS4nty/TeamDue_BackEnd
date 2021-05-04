@@ -51,7 +51,7 @@ router.post('/login', (req, res) => {
     conexion.query("SELECT * FROM Usuarios WHERE usuario = ? OR correo = ? LIMIT 1", [usuario, usuario], (err, rows, fields) => {
         if (!err) {
             console.log(rows);
-            if (rows != undefined) {
+            if (rows != null) {
                 const pass = rows[0]["password"];
                 hashPasswordIsSame(pass, password).then(isSame => {
                     if (isSame) {

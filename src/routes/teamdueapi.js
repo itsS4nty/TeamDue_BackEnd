@@ -48,9 +48,17 @@ router.post('/login', (req, res) => {
     console.log("Entrando por POST /login");
     const { usuario, password } = req.body;
     console.log(usuario, "y", password);
-    conexion.query("SELECT * FROM Usuarios WHERE usuario = ? AND password = ? OR correo = ? AND password = ?", [usuario, password, usuario, password], (err, rows, fields) => {
+    conexion.query("SELECT * FROM Usuarios WHERE usuario = ? OR correo = ?", [usuario, password, usuario, password], (err, rows, fields) => {
         if (!err) {
-            res.json(rows[0]);
+            const pass = rows[0]["password"];
+            hashPasswordIsSame(pass, password).then(isSame => {
+                if (isSame) {
+                    res.json(rows[0]);
+
+                }else {
+                    res.status(409).send("Incorrect password");
+                }
+            });
 
         }else {
             res.status(400).send(err.message);
@@ -92,6 +100,15 @@ async function hashPassword(password) {
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hash(password, salt)
     return hash;
+}
+
+async function hashPasswordIsSame(passwordHash, password2) { 
+    // const salt = await bcrypt.genSalt(10)
+    // const hash = await bcrypt.hash(password, salt)
+    const isSame = await bcrypt.compare(password2, passwordHash) 
+    console.log(isSame) 
+    return isSame;
+    
 }
 
 module.exports = router;

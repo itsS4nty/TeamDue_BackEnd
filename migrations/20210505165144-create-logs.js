@@ -9,14 +9,17 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       accion: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       fecha: {
+        allowNull: false,
         type: Sequelize.DATE
-      },
-      usuario_id: {
-        type: Sequelize.INTEGER
-      },
+      }
+      // usuario_id: {
+      //   allowNull: false,
+      //   type: Sequelize.INTEGER
+      // },
       // createdAt: {
       //   allowNull: false,
       //   type: Sequelize.DATE

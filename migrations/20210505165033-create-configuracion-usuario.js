@@ -9,9 +9,11 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       tema_oscuro: {
+        allowNull: false,
         type: Sequelize.BOOLEAN
       },
       mandar_correo: {
+        allowNull: false,
         type: Sequelize.BOOLEAN
       }
       // createdAt: {

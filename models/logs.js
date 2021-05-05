@@ -21,5 +21,8 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Logs',
   });
+
+  Logs.Usuarios = Logs.belongsTo(Usuarios);
+
   return Logs;
 };

@@ -41,7 +41,7 @@ router.use(cors());
 router.get('/files/:id', (req, res) => {
     console.log("Entrando por GET /files/id");
     const { idParam } = req.params;
-    archivosBD.find({where: {usuario_id: idParam}}).then((findedArchivo) => {
+    archivosBD.findAll({where: {usuario_id: idParam}}).then((findedArchivo) => {
         console.log(findedArchivo);
     });
 });

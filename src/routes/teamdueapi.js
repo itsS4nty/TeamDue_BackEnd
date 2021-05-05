@@ -3,8 +3,9 @@ const router = express.Router();
 const conexion = require("../database.js");
 const bcrypt = require('bcrypt');
 const cors = require('cors');
-// const models = require("../../models");
-const archivosBD = require('../../models/archivos');
+const models = require("./../../models");
+// const archivosBD = require('../../models/archivos');
+const archivosBD = models.Archivos;
 
 router.use(cors());
 

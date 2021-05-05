@@ -3,35 +3,45 @@ const router = express.Router();
 const conexion = require("../database.js");
 const bcrypt = require('bcrypt');
 const cors = require('cors');
+const models = require("../models");
+const archivosBD = models.Archivos;
 
 router.use(cors());
 
-router.get('/usuarios', (req, res) => {
-    console.log("Entrando por GET /");
-    conexion.query("SELECT * FROM Usuarios", (err, rows, fields)=> {
-        if (!err) {
-            res.json(rows);
+// router.get('/usuarios', (req, res) => {
+//     console.log("Entrando por GET /");
+//     conexion.query("SELECT * FROM Usuarios", (err, rows, fields)=> {
+//         if (!err) {
+//             res.json(rows);
 
-        }else {
-            res.status(400).send(err.message);
+//         }else {
+//             res.status(400).send(err.message);
         
-        }
+//         }
+//     });
+// });
+
+// router.get('/:id', (req, res) => {
+//     console.log("Entrando por GET /id");
+//     const { id } = req.params;
+//     conexion.query("SELECT * FROM Usuarios WHERE id = ?", [id], (err, rows, fields)=> {
+//         if (!err) {
+//             res.json(rows[0]);
+
+//         }else {
+//             res.status(400).send(err.message);
+        
+//         }
+//     });
+// })
+
+router.get('/files/:id', (req, res) => {
+    console.log("Entrando por GET /files/id");
+    const { idParam } = req.params;
+    archivosBD.find({where: {usuario_id: idParam}}).then((findedArchivo) => {
+        console.log(findedArchivo);
     });
 });
-
-router.get('/:id', (req, res) => {
-    console.log("Entrando por GET /id");
-    const { id } = req.params;
-    conexion.query("SELECT * FROM Usuarios WHERE id = ?", [id], (err, rows, fields)=> {
-        if (!err) {
-            res.json(rows[0]);
-
-        }else {
-            res.status(400).send(err.message);
-        
-        }
-    });
-})
 
 router.get('/files/:id', (req, res) => {
     console.log("Entrando por GET /files/id");

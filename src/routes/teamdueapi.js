@@ -3,12 +3,12 @@ const router = express.Router();
 const conexion = require("../database.js");
 const bcrypt = require('bcrypt');
 const cors = require('cors');
-const models = require("./../../models");
-// const archivosBD = require('../../models/archivos');
-const usersBD = models.Usuarios;
-const archivosBD = models.Archivos;
-const logsBD = models.Logs;
-const configuracionBD = models.ConfiguracionUsuario;
+// const models = require("./../../models");
+const archivosBD = require('../../models/archivos');
+const logsBD = require('../../models/logs')
+// const archivosBD = models.Archivos;
+// const userBD = models.Logs;
+// const configuracionBD = models.ConfiguracionUsuario;
 
 router.use(cors());
 

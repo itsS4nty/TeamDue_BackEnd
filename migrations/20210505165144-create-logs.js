@@ -15,11 +15,15 @@ module.exports = {
       fecha: {
         allowNull: false,
         type: Sequelize.DATE
-      }
-      // usuario_id: {
-      //   allowNull: false,
-      //   type: Sequelize.INTEGER
-      // },
+      },
+      usuario_id: {
+        references: {
+          model: 'Usuarios',
+          key: 'id'
+        },
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
       // createdAt: {
       //   allowNull: false,
       //   type: Sequelize.DATE

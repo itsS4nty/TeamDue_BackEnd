@@ -3,13 +3,25 @@ const router = express.Router();
 const conexion = require("../database.js");
 const bcrypt = require('bcrypt');
 const cors = require('cors');
-// const models = require("./../../models");
-const archivosBD = require('../../models/archivos');
-const logsBD = require('../../models/logs');
-const userBD = require('../../models/usuarios');
-const configuracionBD = require('../../models/configuracionusuario');
+const sequelize = require("../db.js");
+const archivosDB = require('../../models/archivos');
+const logsDB = require('../../models/logs');
+const userDB = require('../../models/usuarios');
+const configuracionDB = require('../../models/configuracionusuario');
 
 router.use(cors());
+
+express.listen(3000, function() {
+    console.log("App arrancada http://localhost:3000");
+
+    sequelize.authenticate().then(() => {
+        console.log("Conexion a la base de datos establecida con exito")
+
+    }).catch(error => {
+        console.log("No se ha podido establecer conexion con la base de datos", err);
+
+    })
+});
 
 // router.get('/usuarios', (req, res) => {
 //     console.log("Entrando por GET /");
@@ -41,7 +53,7 @@ router.use(cors());
 router.get('/files/:id', (req, res) => {
     console.log("Entrando por GET /files/id");
     const { idParam } = req.params;
-    archivosBD.findAll({where: {usuario_id: idParam}}).then((findedArchivo) => {
+    archivosDB.findAll({where: {usuario_id: idParam}}).then((findedArchivo) => {
         console.log(findedArchivo);
     });
 });

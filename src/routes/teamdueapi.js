@@ -46,19 +46,19 @@ router.get('/files/:id', (req, res) => {
     });
 });
 
-router.get('/files/:id', (req, res) => {
-    console.log("Entrando por GET /files/id");
-    const { id } = req.params;
-    conexion.query("SELECT * FROM Archivos WHERE usuario_id = ?", [id], (err, rows, fields)=> {
-        if (!err) {
-            res.json(rows);
+// router.get('/files/:id', (req, res) => {
+//     console.log("Entrando por GET /files/id");
+//     const { id } = req.params;
+//     conexion.query("SELECT * FROM Archivos WHERE usuario_id = ?", [id], (err, rows, fields)=> {
+//         if (!err) {
+//             res.json(rows);
 
-        }else {
-            res.status(400).send(err.message);
+//         }else {
+//             res.status(400).send(err.message);
         
-        }
-    });
-});
+//         }
+//     });
+// });
 
 router.post('/login', (req, res) => {
     console.log("Entrando por POST /login");

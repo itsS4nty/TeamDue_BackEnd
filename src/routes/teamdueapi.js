@@ -5,10 +5,9 @@ const bcrypt = require('bcrypt');
 const cors = require('cors');
 // const models = require("./../../models");
 const archivosBD = require('../../models/archivos');
-const logsBD = require('../../models/logs')
-// const archivosBD = models.Archivos;
-// const userBD = models.Logs;
-// const configuracionBD = models.ConfiguracionUsuario;
+const logsBD = require('../../models/logs');
+const userBD = require('../../models/usuarios');
+const configuracionBD = require('../../models/configuracionusuario');
 
 router.use(cors());
 

@@ -4,7 +4,7 @@ const conexion = require("../database.js");
 const bcrypt = require('bcrypt');
 const cors = require('cors');
 // const models = require("../../models");
-const archivosBD = require("../models/archivos.js");
+const archivosBD = require("../models/archivos");
 
 router.use(cors());
 

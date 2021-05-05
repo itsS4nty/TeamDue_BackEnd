@@ -1,7 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const conexion = require("../database.js");
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const cors = require('cors');
+
+router.use(cors());
 
 router.get('/usuarios', (req, res) => {
     console.log("Entrando por GET /");

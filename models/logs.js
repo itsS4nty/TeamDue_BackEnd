@@ -23,6 +23,6 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Logs.Usuarios = Logs.belongsTo(Usuarios);
-
+  module.exports = Logs;
   return Logs;
 };

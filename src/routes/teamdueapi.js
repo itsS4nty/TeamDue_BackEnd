@@ -49,13 +49,14 @@ sequelize.sync({ force:false }).then(() => {
 router.get('/files/:id', (req, res) => {
     console.log("Entrando por GET /files/id");
     const { idParam } = req.params;
-    // Archivos.findAll({where: {usuario_id: idParam}}).then((findedArchivo) => {
-    //     console.log(findedArchivo);
+    db.Archivos.findAll({where: {UsuarioId: idParam}}).then((findedArchivo) => {
+        res.json(findedArchivo);
         
-    // });
-    db.Archivos.findAll().then(arx => {
-        console.log(arx);
-        res.json(arx);
+    }).catch((err) => {
+        if (err) {
+            res.status(400).send(err.message);
+            
+        }
     });
 });
 

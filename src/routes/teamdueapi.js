@@ -101,25 +101,25 @@ router.post('/register', (req, res) => {
 router.post('/createFile', (req, res) => {
     console.log("Entrando por POST /createFile");
     const { nombre:nombreInp, tipo:tipoInp, UsuarioId:UsuarioIdInp } = req.body;
-
     db.Archivos.findOne({where: { [Op.and]: [{UsuarioId:UsuarioIdInp}, {nombre:nombreInp}, {tipo:tipoInp}] }}).then((findedArchivo) => {
-        try {
-            if (findedArchivo === null) {
-                db.Archivos.create({
-                    nombre: nombreInp,
-                    tipo: tipoInp,
-                    UsuarioId: UsuarioIdInp
-                });
-    
-                res.status(201).send("Created");  
-    
-            }else {
-                res.status(409).send("Duplicate");
-    
-            }
+        if (findedArchivo === null) {
+            db.Usuarios.findOne({where: {id: UsuarioIdInp}}).then((findedUsuario) => {
+                if (findedUsuario === null) {
+                    res.status(409).send("User not exists");
 
-        }catch(err) {
-            res.status(409).send(err.message);
+                }else {
+                    db.Archivos.create({
+                        nombre: nombreInp,
+                        tipo: tipoInp,
+                        UsuarioId: UsuarioIdInp
+                    });
+        
+                    res.status(201).send("Created");  
+                }
+            });
+
+        }else {
+            res.status(409).send("Duplicate");
 
         }
         

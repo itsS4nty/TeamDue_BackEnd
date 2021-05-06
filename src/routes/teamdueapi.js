@@ -27,11 +27,9 @@ router.get('/files/:id', (req, res) => {
         res.json(findedArchivo);
         
     }).catch((err) => {
-        if (err) {
-            res.status(400).send(err.message);
-            console.log(err.message);
+        res.status(400).send(err.message);
+        console.log(err.message);
 
-        }
     });
 });
 
@@ -39,17 +37,19 @@ router.post('/login', (req, res) => {
     console.log("Entrando por POST /login");
     const { usuario, password } = req.body;
     db.Usuarios.findOne({where: { [Op.or]: [{usuario: usuario}, {correo: usuario}]}}).then((findedArchivo) => {
-        if (typeof findedArchivo === 'undefined') {
-            res.status(404).send("No encontrado");
-            console.log("No se ha encontrado el archivo")
+        console.log(findedArchivo);
+        res.json(findedArchivo.json);
+        // if (typeof findedArchivo === 'undefined') {
+        //     res.status(404).send("No encontrado");
+        //     console.log("No se ha encontrado el archivo")
             
-        }else {
-            console.log("archivo encontrado"), findedArchivo.password;
-            res.json(findedArchivo);
-            console.log("Archivo encontrado con exito")
+        // }else {
+        //     console.log("archivo encontrado"), findedArchivo.password;
+        //     res.json(findedArchivo);
+        //     console.log("Archivo encontrado con exito")
 
 
-        }
+        // }
 
     }).catch((err) => {
         res.status(400).send(err.message);

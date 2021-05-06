@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   Logs.init({
     accion: DataTypes.STRING,
     fecha: DataTypes.DATE,
-    usuario_id: DataTypes.INTEGER
+    UsuarioId: DataTypes.INTEGER
   }, {
     timestamps: false,
     sequelize,

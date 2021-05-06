@@ -16,7 +16,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      usuario_id: {
+      UsuarioId: {
         references: {
           model: 'Usuarios',
           key: 'id'

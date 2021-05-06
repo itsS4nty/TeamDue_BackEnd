@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   Archivos.init({
     nombre: DataTypes.STRING,
     tipo: DataTypes.STRING,
-    usuario_id: DataTypes.INTEGER
+    UsuarioId: DataTypes.INTEGER
   }, {
     timestamps: false,
     sequelize,

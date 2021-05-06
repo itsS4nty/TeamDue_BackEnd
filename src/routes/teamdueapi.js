@@ -15,7 +15,7 @@ sequelize.sync({ force:false }).then(() => {
     console.log("Conexion a la base de datos establecida con exito")
 
 }).catch(error => {
-    console.log("No se ha podido establecer conexion con la base de datos", err);
+    console.log("No se ha podido establecer conexion con la base de datos", error);
 
 })
 
@@ -55,7 +55,8 @@ router.get('/files/:id', (req, res) => {
     }).catch((err) => {
         if (err) {
             res.status(400).send(err.message);
-            
+            console.log(err.message);
+
         }
     });
 });

@@ -102,7 +102,7 @@ router.post('/createFile', (req, res) => {
     console.log("Entrando por POST /createFile");
     const { nombre:nombreInp, tipo:tipoInp, UsuarioId:UsuarioIdInp } = req.body;
 
-    db.Archivos.findOne({where: { [Op.and]: [{UsuarioId:UsuarioIdInp, nombre:nombreInp, tipo:tipoInp}] }}).then((findedArchivo) => {
+    db.Archivos.findOne({where: { [Op.and]: [{UsuarioId:UsuarioIdInp}, {nombre:nombreInp}, {tipo:tipoInp}] }}).then((findedArchivo) => {
         if (findedArchivo === null) {
             db.Archivos.create({
                 nombre: nombreInp,

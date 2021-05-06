@@ -59,25 +59,51 @@ router.post('/login', (req, res) => {
     });
 });
 
-// router.post('/login', (req, res) => {
-//     console.log("Entrando por POST /login");
-//     const { usuario, password } = req.body;
-//     conexion.query("SELECT * FROM Usuarios WHERE usuario LIKE ? OR correo LIKE ?", [usuario, usuario], (err, rows, fields) => {
+router.post('/register', (req, res) => {
+    console.log("Entrando por POST /register");
+    const { nombre, apellidos, correo, usuario, password } = req.body;
+    db.Usuarios.findOne({where: { [Op.or]: [{usuario: usuario}, {correo: correo}]}}).then((findedArchivo) => {
+        if (findedArchivo === null) {
+            hashPassword(password).then(passEncrypt => {         
+                db.Usuarios.create({
+
+                }).catch((err) => {
+                    
+                });
+            });
+
+        }else {
+            res.status(409).send("Duplicate");
+        
+        }
+
+    }).catch((err) => {
+        res.status(400).send(err.message);
+        console.log(err.message);
+
+    });
+});
+
+// router.post('/register', (req, res) => {
+//     console.log("Entrando por POST /register");
+//     const { nombre, apellidos, correo, usuario, password } = req.body;
+//     conexion.query("SELECT * FROM Usuarios WHERE usuario = ? OR correo = ?", [usuario, correo], (err, rows, fields) => {
 //         if (!err) {
-//             if (typeof rows[0] === 'undefined') {
-//                 res.status(404).send("No encontrado");
+//             if (rows < 1) {
+                // hashPassword(password).then(passEncrypt => {         
+                //     conexion.query("INSERT INTO Usuarios (nombre, apellidos, correo, usuario, password, premium, fecha_registro) VALUES (?, ?, ?, ?, ?, ?, ?)", [nombre, apellidos, correo, usuario, passEncrypt, 0, new Date()], (err, rows, fields) => {
+                //         if (!err) {
+                //             res.status(201).send("Created");
+    
+                //         }else {
+                //             res.status(400).send(err.message);
+                    
+                //         }
+                //     });
+                // });
 
 //             }else {
-//                 const pass = rows[0]["password"];
-//                 hashPasswordIsSame(pass, password).then(isSame => {
-//                     if (isSame) {
-//                         res.json(rows[0]);
-    
-//                     }else {
-//                         res.status(409).send("Incorrect password");
-                        
-//                     }
-//                 });
+//                 res.status(409).send("Duplicate");
 //             }
 
 //         }else {
@@ -85,34 +111,6 @@ router.post('/login', (req, res) => {
 //         }
 //     });
 // });
-
-router.post('/register', (req, res) => {
-    console.log("Entrando por POST /register");
-    const { nombre, apellidos, correo, usuario, password } = req.body;
-    conexion.query("SELECT * FROM Usuarios WHERE usuario = ? OR correo = ?", [usuario, correo], (err, rows, fields) => {
-        if (!err) {
-            if (rows < 1) {
-                hashPassword(password).then(passEncrypt => {         
-                    conexion.query("INSERT INTO Usuarios (nombre, apellidos, correo, usuario, password, premium, fecha_registro) VALUES (?, ?, ?, ?, ?, ?, ?)", [nombre, apellidos, correo, usuario, passEncrypt, 0, new Date()], (err, rows, fields) => {
-                        if (!err) {
-                            res.status(201).send("Created");
-    
-                        }else {
-                            res.status(400).send(err.message);
-                    
-                        }
-                    });
-                });
-
-            }else {
-                res.status(409).send("Duplicate");
-            }
-
-        }else {
-            res.status(400).send(err.message);
-        }
-    });
-});
 
 async function hashPassword(password) {
     const salt = await bcrypt.genSalt(10)

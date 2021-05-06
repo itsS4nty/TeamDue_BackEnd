@@ -17,10 +17,12 @@ module.exports = {
         type: Sequelize.STRING
       },
       correo: {
+        unique: true,
         allowNull: false,
         type: Sequelize.STRING
       },
       usuario: {
+        unique: true,
         allowNull: false,
         type: Sequelize.STRING
       },

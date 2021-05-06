@@ -63,7 +63,7 @@ router.post('/register', (req, res) => {
     console.log("Entrando por POST /register");
     const { nombre, apellidos, correo, usuario, password } = req.body;
     hashPassword(password).then(passEncrypt => {         
-        db.Usuarios.create({
+        db.Usuarios.build({
             nombre = "this.nombre",
             apellidos = "this.apellidos",
             correo = "this.correo",

@@ -55,6 +55,7 @@ router.get('/files/:id', (req, res) => {
     // });
     Archivos.findAll().then(arx => {
         console.log(arx);
+        res.json(arx);
     });
 });
 

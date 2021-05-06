@@ -41,8 +41,8 @@ router.post('/login', (req, res) => {
             res.status(404).send("No encontrado");
 
         }else {
-            console.log(findedArchivo);
-            res.json(findedArchivo.json);
+            console.log(findedArchivo["password"]);
+            res.json(findedArchivo);
 
         }
         // if (typeof findedArchivo === 'undefined') {

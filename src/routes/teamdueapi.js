@@ -11,7 +11,7 @@ const configuracionDB = require('../../models/configuracionusuario');
 
 router.use(cors());
 
-sequelize.sync( force: false ).then(() => {
+sequelize.sync({ force:false }).then(() => {
     console.log("Conexion a la base de datos establecida con exito")
 
 }).catch(error => {

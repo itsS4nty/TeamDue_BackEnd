@@ -64,10 +64,10 @@ router.post('/register', (req, res) => {
     const { nombre, apellidos, correo, usuario, password } = req.body;
     hashPassword(password).then(passEncrypt => {         
         db.Usuarios.create({
-            nombre = this.nombre,
-            apellidos = this.apellidos,
-            correo = this.correo,
-            usuario = this.usuario,
+            nombre = "this.nombre",
+            apellidos = "this.apellidos",
+            correo = "this.correo",
+            usuario = "this.usuario",
             password = passEncrypt,
             premium = 0,
             fecha_registro = new Date()

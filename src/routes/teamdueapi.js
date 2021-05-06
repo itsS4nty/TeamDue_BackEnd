@@ -65,24 +65,32 @@ router.post('/register', (req, res) => {
     db.Usuarios.findOne({where: { [Op.or]: [{usuario: usuarioInp}, {correo: correoInp}]}}).then((findedArchivo) => {
         if (findedArchivo === null) {
             hashPassword(password).then(passEncrypt => {         
-                db.Usuarios.create({
+                var usu = db.Usuarios.create({
                     nombre: nombreInp,
                     apellidos: apellidosInp,
                     correo: correoInp,
                     usuario: usuarioInp,
                     password: passEncrypt,
                     premium: 0,
-                    fecha_registro: new Date(),
+                    validado: 0,
+                    fecha_registro: new Date()
         
-                })
+                });
+
+                db.ConfiguracionUsuario.create({
+                    id = usu["id"],
+                    tema_oscuro = 0,
+                    mandar_correo = 1
+
+                });
         
                 res.status(201).send("Created");  
             });
+
         }else {
             res.status(409).send("Duplicate");
 
         }
-
     }).catch((err) => {
         res.status(400).send(err.message);
         console.log(err.message);
@@ -90,33 +98,11 @@ router.post('/register', (req, res) => {
     });
 });
 
-// router.post('/register', (req, res) => {
-//     console.log("Entrando por POST /register");
-//     const { nombre, apellidos, correo, usuario, password } = req.body;
-//     conexion.query("SELECT * FROM Usuarios WHERE usuario = ? OR correo = ?", [usuario, correo], (err, rows, fields) => {
-//         if (!err) {
-//             if (rows < 1) {
-                // hashPassword(password).then(passEncrypt => {         
-                //     conexion.query("INSERT INTO Usuarios (nombre, apellidos, correo, usuario, password, premium, fecha_registro) VALUES (?, ?, ?, ?, ?, ?, ?)", [nombre, apellidos, correo, usuario, passEncrypt, 0, new Date()], (err, rows, fields) => {
-                //         if (!err) {
-                //             res.status(201).send("Created");
-    
-                //         }else {
-                //             res.status(400).send(err.message);
-                    
-                //         }
-                //     });
-                // });
+router.post('/createFile', (req, res) => {
+    console.log("Entrando por POST /createFile");
+    const { nombre:nombreInp, tipo:tipoInp, UsuarioId:UsuarioIdInp } = req.body;
 
-//             }else {
-//                 res.status(409).send("Duplicate");
-//             }
-
-//         }else {
-//             res.status(400).send(err.message);
-//         }
-//     });
-// });
+});
 
 async function hashPassword(password) {
     const salt = await bcrypt.genSalt(10)

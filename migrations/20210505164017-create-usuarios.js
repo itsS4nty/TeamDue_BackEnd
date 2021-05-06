@@ -37,6 +37,10 @@ module.exports = {
       premium: {
         allowNull: false,
         type: Sequelize.BOOLEAN
+      },
+      validado: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN
       }
       // createdAt: {
       //   allowNull: false,

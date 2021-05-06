@@ -62,24 +62,32 @@ router.post('/login', (req, res) => {
 router.post('/register', (req, res) => {
     console.log("Entrando por POST /register");
     const { nombre:nombreInp, apellidos:apellidosInp, correo:correoInp, usuario:usuarioInp, password } = req.body;
-    hashPassword(password).then(passEncrypt => {         
-        db.Usuarios.create({
-            nombre: nombreInp,
-            apellidos: apellidosInp,
-            correo: correoInp,
-            usuario: usuarioInp,
-            password: passEncrypt,
-            premium: 0,
-            fecha_registro: new Date(),
-
-        })
-
-        res.status(201).send("Created");
+    db.Usuarios.findOne({where: { [Op.or]: [{usuario: usuario}, {correo: usuario}]}}).then((findedArchivo) => {
+        if (findedArchivo === null) {
+            hashPassword(password).then(passEncrypt => {         
+                db.Usuarios.create({
+                    nombre: nombreInp,
+                    apellidos: apellidosInp,
+                    correo: correoInp,
+                    usuario: usuarioInp,
+                    password: passEncrypt,
+                    premium: 0,
+                    fecha_registro: new Date(),
         
-    }).catch((err) => {
-        res.status(409).send("Duplicate");
+                })
+        
+                res.status(201).send("Created");  
+            });
+        }else {
+            res.status(409).send("Duplicate");
 
-    });;
+        }
+
+    }).catch((err) => {
+        res.status(400).send(err.message);
+        console.log(err.message);
+
+    });
 });
 
 // router.post('/register', (req, res) => {

@@ -41,21 +41,16 @@ router.post('/login', (req, res) => {
             res.status(404).send("No encontrado");
 
         }else {
-            console.log(findedArchivo["password"]);
-            res.json(findedArchivo);
+            hashPasswordIsSame(findedArchivo["password"], password).then(isSame => {
+                if (isSame) {
+                    res.json(findedArchivo);
 
+                }else {
+                    res.status(409).send("Incorrect password");
+                    
+                }
+            });
         }
-        // if (typeof findedArchivo === 'undefined') {
-        //     res.status(404).send("No encontrado");
-        //     console.log("No se ha encontrado el archivo")
-            
-        // }else {
-        //     console.log("archivo encontrado"), findedArchivo.password;
-        //     res.json(findedArchivo);
-        //     console.log("Archivo encontrado con exito")
-
-
-        // }
 
     }).catch((err) => {
         res.status(400).send(err.message);

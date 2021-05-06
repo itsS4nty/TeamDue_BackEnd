@@ -107,7 +107,7 @@ router.post('/createFile', (req, res) => {
             db.Archivos.create({
                 nombre: nombreInp,
                 tipo: tipoInp,
-                UsuarioId, UsuarioIdInp
+                UsuarioId: UsuarioIdInp
             });
 
             res.status(201).send("Created");  

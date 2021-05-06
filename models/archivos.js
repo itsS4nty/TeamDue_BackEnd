@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     tipo: DataTypes.STRING,
     usuario_id: DataTypes.INTEGER
   }, {
+    timestamps: false,
     sequelize,
     modelName: 'Archivos',
   });

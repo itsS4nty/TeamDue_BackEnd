@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     fecha: DataTypes.DATE,
     usuario_id: DataTypes.INTEGER
   }, {
+    timestamps: false,
     sequelize,
     modelName: 'Logs',
   });

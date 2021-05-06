@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     fecha_registro: DataTypes.DATE,
     premium: DataTypes.BOOLEAN
   }, {
+    timestamps: false,
     sequelize,
     modelName: 'Usuarios',
   });

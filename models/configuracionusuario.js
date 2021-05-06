@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     tema_oscuro: DataTypes.BOOLEAN,
     mandar_correo: DataTypes.BOOLEAN
   }, {
+    timestamps: false,
     sequelize,
     modelName: 'ConfiguracionUsuario',
   });

@@ -64,10 +64,10 @@ router.post('/register', (req, res) => {
     const { nombre, apellidos, correo, usuario, password } = req.body;
     hashPassword(password).then(passEncrypt => {         
         db.Usuarios.create({
-            nombre = nombre,
-            apellidos = apellidos,
-            correo = correo,
-            usuario = usuario,
+            nombre = this.nombre,
+            apellidos = this.apellidos,
+            correo = this.correo,
+            usuario = this.usuario,
             password = passEncrypt,
             premium = 0,
             fecha_registro = new Date()
@@ -75,7 +75,7 @@ router.post('/register', (req, res) => {
         }).catch((err) => {ç
             console.log(err.message);
             res.status(409).send("Duplicate");
-            
+
         });
     });
 });

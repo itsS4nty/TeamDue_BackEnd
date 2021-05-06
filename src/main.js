@@ -38,23 +38,26 @@ httpServer.listen(8080, () => {
 io.on("connection", (socket) => {
     console.log("Nueva conexion:", socket.id);
 
-    socket.on("login", (data) => {
-        conexion.query("SELECT * FROM Usuarios WHERE usuario LIKE ? AND password LIKE ? LIMIT 1", [data.user, data.password], function (err, result, fields) {
-            if (err) {
-                console.log("Error", err);
-                socket.emit("loginResponse", false);
-            }
+    socket.on("canvas-data", (data) => {
+        socket.broadcast.emit("canvas-data", data);
 
-			if (result.length == 1) {
-                console.log("Resultado encontrado");
-                socket.emit("loginResponse", true, result[0]);
 
-			} else {
-				console.log("No se ha encontrado ningun resultado");
-                socket.emit("loginResponse", false);
+        // conexion.query("SELECT * FROM Usuarios WHERE usuario LIKE ? AND password LIKE ? LIMIT 1", [data.user, data.password], function (err, result, fields) {
+        //     if (err) {
+        //         console.log("Error", err);
+        //         socket.emit("loginResponse", false);
+        //     }
 
-			}
-        });
+		// 	if (result.length == 1) {
+        //         console.log("Resultado encontrado");
+        //         socket.emit("loginResponse", true, result[0]);
+
+		// 	} else {
+		// 		console.log("No se ha encontrado ningun resultado");
+        //         socket.emit("loginResponse", false);
+
+		// 	}
+        // });
 
     })
 });

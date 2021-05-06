@@ -103,17 +103,23 @@ router.post('/createFile', (req, res) => {
     const { nombre:nombreInp, tipo:tipoInp, UsuarioId:UsuarioIdInp } = req.body;
 
     db.Archivos.findOne({where: { [Op.and]: [{UsuarioId:UsuarioIdInp}, {nombre:nombreInp}, {tipo:tipoInp}] }}).then((findedArchivo) => {
-        if (findedArchivo === null) {
-            db.Archivos.create({
-                nombre: nombreInp,
-                tipo: tipoInp,
-                UsuarioId: UsuarioIdInp
-            });
+        try {
+            if (findedArchivo === null) {
+                db.Archivos.create({
+                    nombre: nombreInp,
+                    tipo: tipoInp,
+                    UsuarioId: UsuarioIdInp
+                });
+    
+                res.status(201).send("Created");  
+    
+            }else {
+                res.status(409).send("Duplicate");
+    
+            }
 
-            res.status(201).send("Created");  
-
-        }else {
-            res.status(409).send("Duplicate");
+        }catch(err) {
+            res.status(409).send(err.message);
 
         }
         

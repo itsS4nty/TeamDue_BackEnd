@@ -77,6 +77,7 @@ router.post('/register', (req, res) => {
             res.status(409).send("Duplicate");
 
         });
+        db.Usuarios.save().then(res.status(201).send("Created"));
     });
 });
 

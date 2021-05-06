@@ -72,12 +72,12 @@ router.post('/register', (req, res) => {
             premium: 0,
             fecha_registro: new Date(),
 
-        }).catch((err) => {
+        }).then(res.status(201).send("Created")).catch((err) => {
             console.log(err.message);
             res.status(409).send("Duplicate");
 
         });
-        res.status(201).send("Created")
+        // res.status(201).send("Created")
         
     });
 });

@@ -51,6 +51,7 @@ router.get('/files/:id', (req, res) => {
     const { idParam } = req.params;
     archivosDB.findAll({where: {usuario_id: idParam}}).then((findedArchivo) => {
         console.log(findedArchivo);
+        
     });
 });
 

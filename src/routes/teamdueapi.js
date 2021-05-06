@@ -70,13 +70,15 @@ router.post('/register', (req, res) => {
             usuario: usuarioInp,
             password: passEncrypt,
             premium: 0,
-            fecha_registro: new Date()
+            fecha_registro: new Date(),
 
-        }).then(res.status(201).send("Created")).catch((err) => {
+        }).catch((err) => {
             console.log(err.message);
             res.status(409).send("Duplicate");
 
         });
+        res.status(201).send("Created")
+        
     });
 });
 

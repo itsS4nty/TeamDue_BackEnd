@@ -22,7 +22,8 @@ module.exports = (sequelize, DataTypes) => {
     usuario: DataTypes.STRING,
     password: DataTypes.STRING,
     fecha_registro: DataTypes.DATE,
-    premium: DataTypes.BOOLEAN
+    premium: DataTypes.BOOLEAN,
+    validado: DataTypes.BOOLEAN
   }, {
     timestamps: false,
     sequelize,

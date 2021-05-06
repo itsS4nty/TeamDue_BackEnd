@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // Logs.belongsTo(models.Usuarios, {foreignKey: 'usuario_id', as: 'Usuarios'});
+      Logs.belongsTo(models.Usuarios, {foreignKey: 'usuario_id', as: 'Usuarios'});
     }
   };
   Logs.init({

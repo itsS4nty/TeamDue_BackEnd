@@ -5,9 +5,9 @@ const bcrypt = require('bcrypt');
 const cors = require('cors');
 const sequelize = require("../db.js");
 const db = require('../.././models');
-const logsDB = require('../../models/logs');
-const userDB = require('../../models/usuarios');
-const configuracionDB = require('../../models/configuracionusuario');
+// const logsDB = require('../../models/logs');
+// const userDB = require('../../models/usuarios');
+// const configuracionDB = require('../../models/configuracionusuario');
 
 router.use(cors());
 

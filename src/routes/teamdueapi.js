@@ -55,7 +55,7 @@ router.get('/files/:id', (req, res) => {
     }).catch((err) => {
         if (err) {
             res.status(400).send(err.message);
-            console.log(err.message);
+            console.log(err);
 
         }
     });

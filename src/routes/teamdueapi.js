@@ -11,17 +11,13 @@ const configuracionDB = require('../../models/configuracionusuario');
 
 router.use(cors());
 
-express.listen(3000, function() {
-    console.log("App arrancada http://localhost:3000");
+sequelize.authenticate().then(() => {
+    console.log("Conexion a la base de datos establecida con exito")
 
-    sequelize.authenticate().then(() => {
-        console.log("Conexion a la base de datos establecida con exito")
+}).catch(error => {
+    console.log("No se ha podido establecer conexion con la base de datos", err);
 
-    }).catch(error => {
-        console.log("No se ha podido establecer conexion con la base de datos", err);
-
-    })
-});
+})
 
 // router.get('/usuarios', (req, res) => {
 //     console.log("Entrando por GET /");

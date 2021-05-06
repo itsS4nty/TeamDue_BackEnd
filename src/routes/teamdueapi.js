@@ -53,7 +53,7 @@ router.get('/files/:id', (req, res) => {
     //     console.log(findedArchivo);
         
     // });
-    db.Archivos.findAll().then(arx => {
+    db.Usuarios.findAll().then(arx => {
         console.log(arx);
         res.json(arx);
     });

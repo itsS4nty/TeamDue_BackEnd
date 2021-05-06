@@ -39,12 +39,15 @@ router.post('/login', (req, res) => {
     console.log("Entrando por POST /login");
     const { usuario, password } = req.body;
     db.Usuarios.findOne({where: { [Op.or]: [{usuario: usuario}, {correo: usuario}]}}).then((findedArchivo) => {
-        if (findedArchivo > 0) {
-            res.json(findedArchivo);
-            console.log("archivo encontrado");
-
+        if (typeof rows[0] === 'undefined') {
+            res.status(404).send("No encontrado");
+            console.log("No se ha encontrado el archivo")
+            
         }else {
-            console.log("no se ha encontrado el archivo")
+            console.log("archivo encontrado"), findedArchivo["password"];
+            res.json(findedArchivo);
+            console.log("Archivo encontrado con exito")
+
 
         }
 

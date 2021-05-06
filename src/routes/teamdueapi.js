@@ -72,8 +72,10 @@ router.post('/register', (req, res) => {
             premium: 0,
             fecha_registro: new Date(),
 
-        })
-        res.status(201).send("Created")
+        }).then(() => {
+            res.status(201).send("Created")}
+        );
+
         
     }).catch((err) => {
         console.log(err.message);

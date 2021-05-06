@@ -4,7 +4,7 @@ const conexion = require("../database.js");
 const bcrypt = require('bcrypt');
 const cors = require('cors');
 const sequelize = require("../db.js");
-const Archivos = require('../../models/archivos');
+const db = require('../.././models');
 const logsDB = require('../../models/logs');
 const userDB = require('../../models/usuarios');
 const configuracionDB = require('../../models/configuracionusuario');
@@ -53,7 +53,7 @@ router.get('/files/:id', (req, res) => {
     //     console.log(findedArchivo);
         
     // });
-    Archivos.findAll().then(arx => {
+    db.Archivos.findAll().then(arx => {
         console.log(arx);
         res.json(arx);
     });

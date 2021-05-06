@@ -75,6 +75,7 @@ router.post('/register', (req, res) => {
         }).then(res.status(201).send("Created")).catch((err) => {
             console.log(err.message);
             res.status(409).send("Duplicate");
+            console.log("f");
 
         });
     });

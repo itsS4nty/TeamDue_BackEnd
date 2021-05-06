@@ -11,13 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Archivos.belongsTo(models.Usuarios, {foreignKey: 'usuarioId', as: 'Usuarios'});
+      Archivos.belongsTo(models.Usuarios, {foreignKey: 'UsuarioId', as: 'Usuarios'});
     }
   };
   Archivos.init({
     nombre: DataTypes.STRING,
     tipo: DataTypes.STRING,
-    usuarioId: DataTypes.INTEGER
+    UsuarioId: DataTypes.INTEGER
   }, {
     timestamps: false,
     sequelize,

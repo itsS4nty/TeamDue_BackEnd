@@ -73,7 +73,7 @@ router.post('/register', (req, res) => {
             fecha_registro: new Date()
 
         }).catch((err) => {
-            console.log(err.message);
+            console.log("Error",err.message);
             res.status(409).send("Duplicate");
 
         });

@@ -78,9 +78,9 @@ router.post('/register', (req, res) => {
                 });
 
                 db.ConfiguracionUsuario.create({
-                    id = usu["id"],
-                    tema_oscuro = 0,
-                    mandar_correo = 1
+                    id: usu["id"],
+                    tema_oscuro: 0,
+                    mandar_correo: 1
 
                 });
         

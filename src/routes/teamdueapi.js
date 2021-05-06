@@ -52,11 +52,9 @@ router.post('/login', (req, res) => {
         }
 
     }).catch((err) => {
-        if (err) {
-            res.status(400).send(err.message);
-            console.log(err.message);
+        res.status(400).send(err.message);
+        console.log(err.message);
 
-        }
     });
 });
 

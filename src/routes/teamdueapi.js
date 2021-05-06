@@ -1,21 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const conexion = require("../database.js");
 const bcrypt = require('bcrypt');
 const cors = require('cors');
-const sequelize = require("../db.js");
+const sequelize = require("../database.js");
 const db = require('../.././models');
 const { Op } = require("sequelize");
 
 router.use(cors());
-
-// sequelize.sync({ force:false }).then(() => {
-//     console.log("Conexion a la base de datos establecida con exito")
-
-// }).catch(error => {
-//     console.log("No se ha podido establecer conexion con la base de datos", error);
-
-// })
 
 router.get('/files/:id', (req, res) => {
     console.log("Entrando por GET /files/id");

@@ -1,22 +1,21 @@
-const mysql = require('mysql');
-const objetoConexion = {};
-const conexion = mysql.createConnection({
-    host : 'localhost',
-    database : 'TeamDue',
-    user : 'Carlos',
-    password : 'Admin123'
-});
+const { Sequelize } = require('sequelize');
+const { database } = require('../config/configure.js');
 
-conexion.connect(function (err){
-    if (err) {
-        console.log(err);
-        return;
-
-    }else {
-        console.log("Base de datos conectada");
-
+const sequelize = new Sequelize (
+    database.database,
+    database.username,
+    database.password, {
+        host: database.host,
+        dialect: "mysql"
     }
-});
+);
 
-module.exports = conexion;
-// exports.crearConexion = crearConexion;
+sequelize.sync({ force:false }).then(() => {
+    console.log("Conexion a la base de datos establecida con exito")
+
+}).catch(error => {
+    console.log("No se ha podido establecer conexion con la base de datos", error);
+
+})
+
+module.exports = sequelize;

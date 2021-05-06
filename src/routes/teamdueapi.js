@@ -4,7 +4,7 @@ const conexion = require("../database.js");
 const bcrypt = require('bcrypt');
 const cors = require('cors');
 const sequelize = require("../db.js");
-const archivosDB = require('../../models/archivos');
+const Archivos = require('../../models/archivos');
 const logsDB = require('../../models/logs');
 const userDB = require('../../models/usuarios');
 const configuracionDB = require('../../models/configuracionusuario');
@@ -49,9 +49,12 @@ sequelize.sync({ force:false }).then(() => {
 router.get('/files/:id', (req, res) => {
     console.log("Entrando por GET /files/id");
     const { idParam } = req.params;
-    archivosDB.findAll({where: {usuario_id: idParam}}).then((findedArchivo) => {
-        console.log(findedArchivo);
+    // Archivos.findAll({where: {usuario_id: idParam}}).then((findedArchivo) => {
+    //     console.log(findedArchivo);
         
+    // });
+    Archivos.findAll().then(arx => {
+        console.log(arx);
     });
 });
 

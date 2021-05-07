@@ -60,8 +60,9 @@ io.on("connection", (socket) => {
 
     socket.on("new-room", (data) => {
         console.log(socket.id + " entrando por new-room");
+        var randomNumber;
         while(true) {
-            const randomNumber = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+            randomNumber = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
             if (!gameRooms.includes(randomNumber)) {
                 break;
             }

@@ -42,6 +42,7 @@ io.on("connection", (socket) => {
     socket.on("canvas-data", (data) => {
         // console.log(socket.id, "entrando por: canvas-data");
         socket.broadcast.emit("canvas-data", data);
+    });
 
     socket.on("join-room", (room) => {
         console.log(socket.id + " entrando por join-room");
@@ -70,7 +71,5 @@ io.on("connection", (socket) => {
         console.log(socket.id + " ha creado con exito la sala con key " + randomNumber);
         socket.emit("success", "Has creado la sala");
     });
-
-    })
 });
  

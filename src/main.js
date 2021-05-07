@@ -9,7 +9,7 @@ const express = require('express');
 // Variables
 const app = express();
 // var conexion = connImport.crearConexion();
-var rooms = [];
+var gameRooms = [];
 
 
 // Settings
@@ -40,7 +40,7 @@ io.on("connection", (socket) => {
     console.log("Nueva conexion:", socket.id);
 
     socket.on("canvas-data", (data) => {
-        console.log(socket.id, "entrando por: canvas-data");
+        // console.log(socket.id, "entrando por: canvas-data");
         socket.broadcast.emit("canvas-data", data);
 
     socket.on("join-room", (room) => {
@@ -65,7 +65,7 @@ io.on("connection", (socket) => {
                 break;
             }
         }
-        rooms.push(randomNumber);
+        gameRooms.push(randomNumber);
         socket.join(randomNumber);
         console.log(socket.id + " ha creado con exito la sala con key " + randomNumber);
         socket.emit("success", "Has creado la sala");

@@ -48,29 +48,28 @@ io.on("connection", (socket) => {
         console.log(socket.id + " entrando por join-room");
         if(gameRooms.includes(room)) {
             socket.join(room);
-            console.log(socket.id + " se ha unido a la sala con key " + room + " con exito.");
+            console.log(socket.id + " se ha unido a la sala con key " + room + " exitosamente.");
             socket.emit("entrando-sala", room);
 
         }else {
-            return socket.emit("err", "La clave " + room + " es incorrecta.");
+            socket.emit("err", "La clave " + room + " es incorrecta.");
 
         }
 
     });
 
-    socket.on("new-room", (data) => {
+    socket.on("new-room", (roomKey) => {
         console.log(socket.id + " entrando por new-room");
-        var randomNumber;
-        while(true) {
-            randomNumber = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-            if (!gameRooms.includes(randomNumber)) {
-                break;
-            }
+        if (gameRooms.includes(roomKey)) {
+            socket.emit("err", "La room con la clave " + roomKey + " ya existe.");
+
+        }else {
+            gameRooms.push(roomKey);
+            socket.join(roomKey);
+            console.log(socket.id + " ha creado con exito la sala con key " + roomKey);
+            socket.emit("sala-creada", "Sala creada", roomKey);
+
         }
-        gameRooms.push(randomNumber);
-        socket.join(randomNumber);
-        console.log(socket.id + " ha creado con exito la sala con key " + randomNumber);
-        socket.emit("sala-creada", randomNumber);
     });
 });
  

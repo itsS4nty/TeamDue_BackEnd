@@ -74,7 +74,7 @@ io.on("connection", (socket) => {
         console.log(socket.id + " entrando por new-room");
         for (var i = 0; i < gameRooms.length; i++) {
             console.log(gameRooms[i]);
-            if (gameRooms[i].roomInformation.roomKey == roomKey) {
+            if (gameRooms[i].roomKey == roomKey) {
                 console.log("devuelto");
                 socket.emit("err", "La room con la clave " + roomKey + " ya existe.");
 

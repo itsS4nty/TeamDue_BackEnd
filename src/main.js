@@ -44,6 +44,18 @@ io.on("connection", (socket) => {
         socket.broadcast.emit("canvas-data", data);
     });
 
+    socket.on("peticionSala-enviada", (room) => {
+        console.log(socket.id + " entrando por peticionSala-enviada");
+        if (gameRooms.includes(room)) {
+
+            
+        }else {
+            socket.emit("err", "La clave " + room + " es incorrecta.");
+        }
+
+    });
+
+
     socket.on("join-room", (room) => {
         console.log(socket.id + " entrando por join-room");
         if(gameRooms.includes(room)) {
@@ -60,16 +72,38 @@ io.on("connection", (socket) => {
 
     socket.on("new-room", (roomKey) => {
         console.log(socket.id + " entrando por new-room");
-        if (gameRooms.includes(roomKey)) {
-            socket.emit("err", "La room con la clave " + roomKey + " ya existe.");
 
-        }else {
-            gameRooms.push(roomKey);
-            socket.join(roomKey);
-            console.log(socket.id + " ha creado con exito la sala con key " + roomKey);
-            socket.emit("sala-creada", "Sala creada con la key: " + roomKey);
+        for (var i = 0; i < gameRooms.length; i++) {
+            if (gameRooms[i].roomInformation.roomKey == roomKey) {
+                socket.emit("err", "La room con la clave " + roomKey + " ya existe.");
+                console.log("devuelto");
 
+            }else {
+                roomInformation = {
+                    roomKey: roomKey,
+                    administrator: socket.id
+                };
+                gameRooms.push(roomInformation);
+                socket.join(roomKey);
+                console.log(socket.id + " ha creado con exito la sala con key " + roomKey);
+                socket.emit("sala-creada", "Sala creada con la key: " + roomKey + " el administrador es el socket con id: " + roomInformation.administrator);
+            }
         }
+
+        // if (gameRooms.includes(roomKey)) {
+        //     socket.emit("err", "La room con la clave " + roomKey + " ya existe.");
+
+        // }else {
+        //     roomInformation = {
+        //         roomKey: roomKey,
+        //         administrator: socket.id
+        //     };
+        //     gameRooms.push(roomInformation);
+        //     socket.join(roomKey);
+        //     console.log(socket.id + " ha creado con exito la sala con key " + roomKey);
+        //     socket.emit("sala-creada", "Sala creada con la key: " + roomKey + " el administrador es el socket con id: " + roomInformation.administrator);
+
+        // }
     });
 });
  

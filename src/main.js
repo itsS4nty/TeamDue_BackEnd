@@ -43,7 +43,7 @@ io.on("connection", (socket) => {
         // console.log(socket.id, "entrando por: canvas-data");
         socket.broadcast.emit("canvas-data", data);
 
-    socket.on("join-room", (room) => {
+    socket.on("joinf-room", (room) => {
         console.log(socket.id + " entrando por join-room");
         if(gameRooms.includes(room)) {
             socket.join(room);

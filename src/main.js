@@ -44,6 +44,7 @@ io.on("connection", (socket) => {
         socket.broadcast.emit("canvas-data", data);
 
     socket.on("join-room", (room) => {
+        console.log(socket.id + " entrando por join-room");
         if(gameRooms.includes(room)) {
             socket.join(room);
             console.log(socket.id + " se ha unido a la sala con key " + room + " con exito.");
@@ -57,6 +58,7 @@ io.on("connection", (socket) => {
     });
 
     socket.on("new-room", (data) => {
+        console.log(socket.id + " entrando por new-room");
         while(true) {
             const randomNumber = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
             if (!gameRooms.includes(randomNumber)) {

@@ -9,7 +9,7 @@ const express = require('express');
 // Variables
 const app = express();
 // var conexion = connImport.crearConexion();
-var rooms = {};
+var rooms = [];
 
 
 // Settings
@@ -38,38 +38,34 @@ httpServer.listen(8080, () => {
 // Sockets
 io.on("connection", (socket) => {
     console.log("Nueva conexion:", socket.id);
-    console.log(Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15));
 
     socket.on("canvas-data", (data) => {
         console.log(socket.id, "entrando por: canvas-data");
         socket.broadcast.emit("canvas-data", data);
 
     socket.on("join-room", (room) => {
-        socket.join(room);
+        if(gameRooms.includes(room)) {
+            socket.join(room);
+            socket.emit("success", "Has entrado en la sala");
+
+        }else {
+            return socket.emit("err", "La clave " + room + " es incorrecta.");
+
+        }
 
     });
 
     socket.on("new-room", (data) => {
-
-        rooms[roomname] = {};
-        console.log(data);
+        while(true) {
+            const randomNumber = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+            if (!gameRooms.includes(randomNumber)) {
+                break;
+            }
+        }
+        rooms.push(randomNumber);
+        socket.join(randomNumber);
+        socket.emit("success", "Has creado la sala");
     });
-        // conexion.query("SELECT * FROM Usuarios WHERE usuario LIKE ? AND password LIKE ? LIMIT 1", [data.user, data.password], function (err, result, fields) {
-        //     if (err) {
-        //         console.log("Error", err);
-        //         socket.emit("loginResponse", false);
-        //     }
-
-		// 	if (result.length == 1) {
-        //         console.log("Resultado encontrado");
-        //         socket.emit("loginResponse", true, result[0]);
-
-		// 	} else {
-		// 		console.log("No se ha encontrado ningun resultado");
-        //         socket.emit("loginResponse", false);
-
-		// 	}
-        // });
 
     })
 });

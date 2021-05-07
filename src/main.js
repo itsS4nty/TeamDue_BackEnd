@@ -72,23 +72,22 @@ io.on("connection", (socket) => {
 
     socket.on("new-room", (roomKey) => {
         console.log(socket.id + " entrando por new-room");
-
         for (var i = 0; i < gameRooms.length; i++) {
             if (gameRooms[i].roomInformation.roomKey == roomKey) {
-                socket.emit("err", "La room con la clave " + roomKey + " ya existe.");
                 console.log("devuelto");
+                socket.emit("err", "La room con la clave " + roomKey + " ya existe.");
 
-            }else {
-                roomInformation = {
-                    roomKey: roomKey,
-                    administrator: socket.id
-                };
-                gameRooms.push(roomInformation);
-                socket.join(roomKey);
-                console.log(socket.id + " ha creado con exito la sala con key " + roomKey);
-                socket.emit("sala-creada", "Sala creada con la key: " + roomKey + " el administrador es el socket con id: " + roomInformation.administrator);
             }
         }
+
+        roomInformation = {
+            roomKey: roomKey,
+            administrator: socket.id
+        };
+        gameRooms.push(roomInformation);
+        socket.join(roomKey);
+        console.log(socket.id + " ha creado con exito la sala con key " + roomKey);
+        socket.emit("sala-creada", "Sala creada con la key: " + roomKey + " el administrador es el socket con id: " + roomInformation.administrator);
 
         // if (gameRooms.includes(roomKey)) {
         //     socket.emit("err", "La room con la clave " + roomKey + " ya existe.");

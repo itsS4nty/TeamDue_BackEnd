@@ -49,7 +49,7 @@ io.on("connection", (socket) => {
         if(gameRooms.includes(room)) {
             socket.join(room);
             console.log(socket.id + " se ha unido a la sala con key " + room + " con exito.");
-            socket.emit("success", "Has entrado en la sala");
+            socket.emit("entrando-sala", room);
 
         }else {
             return socket.emit("err", "La clave " + room + " es incorrecta.");
@@ -70,7 +70,7 @@ io.on("connection", (socket) => {
         gameRooms.push(randomNumber);
         socket.join(randomNumber);
         console.log(socket.id + " ha creado con exito la sala con key " + randomNumber);
-        socket.emit("success", "Has creado la sala");
+        socket.emit("sala-creada", randomNumber);
     });
 });
  

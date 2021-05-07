@@ -67,7 +67,7 @@ io.on("connection", (socket) => {
             gameRooms.push(roomKey);
             socket.join(roomKey);
             console.log(socket.id + " ha creado con exito la sala con key " + roomKey);
-            socket.emit("sala-creada", "Sala creada", roomKey);
+            socket.emit("sala-creada", "Sala creada" + roomKey);
 
         }
     });

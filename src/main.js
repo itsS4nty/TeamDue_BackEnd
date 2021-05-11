@@ -96,5 +96,12 @@ io.on("connection", (socket) => {
         console.log(socket.id + " ha creado con exito la sala con key " + roomKey);
         return socket.emit("sala-creada", "Sala creada con la key: " + roomKey + " el administrador es el socket con id: " + roomInformation.administrator);
     });
+
+
+    socket.on("mensaje", (data) => {
+        socket.to(data.sala).emit("mensajeRecibido", data.mensaje);
+
+    });
+
 });
  

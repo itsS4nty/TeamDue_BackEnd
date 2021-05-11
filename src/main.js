@@ -66,7 +66,7 @@ io.on("connection", (socket) => {
         console.log(socket.id + " entrando por join-room para que el socket con id " + data.idPeticion + " pueda entrar");
 
         // socket.join(room);
-        io.to(data.idPeticion).join(data.roomKey);
+        // io.to(data.idPeticion).join(data.roomKey);
         console.log(data.idPeticion + " se ha unido a la sala con key " + data.roomKey + " exitosamente.");
         return io.to(data.idPeticion).emit("entrando-sala", data.roomKey);
     });

@@ -55,27 +55,20 @@ io.on("connection", (socket) => {
                     idPeticion: socket.id
                 };
                 io.to(gameRooms[i].administrator).emit("peticion-recibida", data);
-
             }
         }
 
         return socket.emit("err", "La clave " + room + " es incorrecta.");
-
     });
 
 
-    socket.on("join-room", (room) => {
-        console.log(socket.id + " entrando por join-room");
-        for (var i = 0; i < gameRooms.length; i++) {
-            if (gameRooms[i].roomKey == room) {
-                socket.join(room);
-                console.log(socket.id + " se ha unido a la sala con key " + room + " exitosamente.");
-                return socket.emit("entrando-sala", room);
+    socket.on("join-room", (data) => {
+        console.log(socket.id + " entrando por join-room para que el socket con id " + data.idPeticion + " pueda entrar");
 
-            }
-        }
-
-        return socket.emit("err", "La clave " + room + " es incorrecta.");
+        // socket.join(room);
+        io.to(data.idPeticion).join(data.roomKey);
+        console.log(data.idPeticion + " se ha unido a la sala con key " + data.roomKey + " exitosamente.");
+        return io.to(data.idPeticion).emit("entrando-sala", data.roomKey);
     });
 
     socket.on("new-room", (roomKey) => {

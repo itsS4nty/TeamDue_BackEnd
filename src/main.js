@@ -59,6 +59,7 @@ io.on("connection", (socket) => {
     });
 
     socket.on("peticionRecibida", (data) => {
+        console.log(socket.id + " entrando por peticionRecibida");
         io.to(data.administrator).emit("recibido");
 
     });

@@ -36,7 +36,7 @@ httpServer.listen(8080, () => {
 // Sockets
 io.on("connection", (socket) => {
     console.log("Nueva conexion:", socket.id);
-    console.log(io.sockets.manager.roomClients[socket.id]);
+    console.log(socket.rooms);
 
     socket.on("canvas-data", (data) => {
         // console.log(socket.id, "entrando por: canvas-data");

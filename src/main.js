@@ -63,12 +63,12 @@ io.on("connection", (socket) => {
 
     socket.on("aceptado-room", (data) =>  {
         console.log(socket.id + " entrando por aceptado-room para aceptar la entrada a " + data.idPeticion + " para la sala: " + data.roomKey);
-        return socket.emit("peticionAceptada", data.roomKey);
+        return io.to(data.idPeticion).emit("peticionAceptada", data.roomKey);
     });
 
     socket.on("rechazado-room", (data) => {
         console.log(socket.id + " entrando por rechazado-room para rechazar la entrada a " + data.idPeticion + " para la sala: " + data.roomKey);
-        return socket.emit("peticionRechazada", data.roomKey);
+        return io.to(data.idPeticion).emit("peticionRechazada", data.roomKey);
     });
 
     socket.on("join-room", (room) => {

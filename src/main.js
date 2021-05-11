@@ -58,6 +58,11 @@ io.on("connection", (socket) => {
 
     });
 
+    socket.on("peticionRecibida", (data) => {
+        io.to(data.administrator).emit("recibido");
+
+    });
+
     socket.on("join-room", (room) => {
         console.log(socket.id + " entrando por join-room");
         for (var i = 0; i < gameRooms.length; i++) {

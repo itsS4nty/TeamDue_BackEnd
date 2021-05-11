@@ -49,7 +49,12 @@ io.on("connection", (socket) => {
         for (var i = 0; i < gameRooms.length; i++) {
             if (gameRooms[i].roomKey == room) {
                 console.log(socket.id + " ha enviado una peticion a la room con id " + room + " exitosamente.");
-                return socket.emit("peticion-sala", gameRooms[i]);
+                data = {
+                    roomKey: gameRooms[i].roomKey,
+                    administrator: gameRooms[i].administrator,
+                    idPeticion = socket.id
+                };
+                io.to(gameRooms[i].administrator).emit("peticion-recibida", data);
 
             }
         }
@@ -58,18 +63,13 @@ io.on("connection", (socket) => {
 
     });
 
-    socket.on("peticionRecibida", (data) => {
-        console.log(socket.id + " entrando por peticionRecibida");
-        io.to(data.administrator).emit("recibido", data);
-
-    });
 
     socket.on("join-room", (room) => {
         console.log(socket.id + " entrando por join-room");
         for (var i = 0; i < gameRooms.length; i++) {
             if (gameRooms[i].roomKey == room) {
                 socket.join(room);
-                console.log(socket.id + " se ha unido fa la sala con key " + room + " exitosamente.");
+                console.log(socket.id + " se ha unido a la sala con key " + room + " exitosamente.");
                 return socket.emit("entrando-sala", room);
 
             }

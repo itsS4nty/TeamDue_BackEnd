@@ -25,6 +25,7 @@
     "io-session-handler": "^1.0.74",
     "mysql": "^2.18.1",
     "mysql2": "^2.2.5",
+    "nodemailer": "^6.6.0",
     "sequelize": "^6.6.2",
     "sequelize-cli": "^6.2.0",
     "socket.io": "^4.0.1",

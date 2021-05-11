@@ -2,13 +2,11 @@
 const connImport = require('./database.js');
 const httpServer = require("http").createServer();
 const io = require("socket.io")(httpServer, {cors:{origin: "*",}});
-// const {Server} = require("socket.io"), server = new Server(8000);
 const express = require('express');
 
 
 // Variables
 const app = express();
-// var conexion = connImport.crearConexion();
 var gameRooms = [];
 
 

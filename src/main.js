@@ -69,7 +69,7 @@ io.on("connection", (socket) => {
         for (var i = 0; i < gameRooms.length; i++) {
             if (gameRooms[i].roomKey == room) {
                 socket.join(room);
-                console.log(socket.id + " se ha unido a la sala con key " + room + " exitosamente.");
+                console.log(socket.id + " se ha unido fa la sala con key " + room + " exitosamente.");
                 return socket.emit("entrando-sala", room);
 
             }

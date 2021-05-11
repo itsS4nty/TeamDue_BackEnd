@@ -52,7 +52,7 @@ io.on("connection", (socket) => {
                 data = {
                     roomKey: gameRooms[i].roomKey,
                     administrator: gameRooms[i].administrator,
-                    idPeticion = socket.id
+                    idPeticion: socket.id
                 };
                 io.to(gameRooms[i].administrator).emit("peticion-recibida", data);
 

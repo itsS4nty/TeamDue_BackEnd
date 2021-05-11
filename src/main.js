@@ -54,7 +54,7 @@ io.on("connection", (socket) => {
                     administrator: gameRooms[i].administrator,
                     idPeticion: socket.id
                 };
-                io.to(gameRooms[i].administrator).emit("peticion-recibida", data);
+                return io.to(gameRooms[i].administrator).emit("peticion-recibida", data);
             }
         }
 
@@ -63,12 +63,12 @@ io.on("connection", (socket) => {
 
     socket.on("aceptado-room", (data) =>  {
         console.log(socket.id + " entrando por aceptado-room para aceptar la entrada a " + data.idPeticion + " para la sala: " + data.roomKey);
-        socket.emit("peticionAceptada", data.roomKey);
+        return socket.emit("peticionAceptada", data.roomKey);
     });
 
     socket.on("rechazado-room", (data) => {
         console.log(socket.id + " entrando por rechazado-room para rechazar la entrada a " + data.idPeticion + " para la sala: " + data.roomKey);
-        socket.emit("peticionRechazada", data.roomKey);
+        return socket.emit("peticionRechazada", data.roomKey);
     });
 
     socket.on("join-room", (room) => {

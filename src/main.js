@@ -99,6 +99,7 @@ io.on("connection", (socket) => {
 
 
     socket.on("mensaje", (data) => {
+        console.log("Enviando mensaje a la sala: " + data.sala);
         socket.to(data.sala).emit("mensajeRecibido", data.mensaje);
 
     });

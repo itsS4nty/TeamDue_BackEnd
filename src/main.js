@@ -61,14 +61,21 @@ io.on("connection", (socket) => {
         return socket.emit("err", "La clave " + room + " es incorrecta.");
     });
 
+    socket.on("aceptado-room", (data) =>  {
+        console.log(socket.id + " entrando por aceptado-room para aceptar la entrada a " + data.idPeticion + " para la sala: " + data.roomKey);
+        socket.emit("peticionAceptada", data.roomKey);
+    });
 
-    socket.on("join-room", (data) => {
-        console.log(socket.id + " entrando por join-room para que el socket con id " + data.idPeticion + " pueda entrar");
+    socket.on("rechazado-room", (data) => {
+        console.log(socket.id + " entrando por rechazado-room para rechazar la entrada a " + data.idPeticion + " para la sala: " + data.roomKey);
+        socket.emit("peticionRechazada", data.roomKey);
+    });
 
-        // socket.join(room);
-        // io.to(data.idPeticion).join(data.roomKey);
-        console.log(data.idPeticion + " se ha unido a la sala con key " + data.roomKey + " exitosamente.");
-        return io.to(data.idPeticion).emit("entrando-sala", data.roomKey);
+    socket.on("join-room", (room) => {
+        console.log(socket.id + " entrando por join-room");
+        socket.join(room);
+        console.log(socket.id + " se ha unido a la sala con key " + room + " exitosamente.");
+        return socket.emit("entrando-sala", room);
     });
 
     socket.on("new-room", (roomKey) => {

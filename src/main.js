@@ -46,12 +46,15 @@ io.on("connection", (socket) => {
 
     socket.on("peticionSala-enviada", (room) => {
         console.log(socket.id + " entrando por peticionSala-enviada");
-        if (gameRooms.includes(room)) {
+        for (var i = 0; i < gameRooms.length; i++) {
+            if (gameRooms[i].roomKey == room) {
+                console.log(socket.id + " ha enviado una peticion a la room con id " + room + " exitosamente.");
+                return socket.emit("peticion-sala", gameRooms[i]);
 
-            
-        }else {
-            socket.emit("err", "La clave " + room + " es incorrecta.");
+            }
         }
+
+        return socket.emit("err", "La clave " + room + " es incorrecta.");
 
     });
 
@@ -67,14 +70,12 @@ io.on("connection", (socket) => {
         }
 
         return socket.emit("err", "La clave " + room + " es incorrecta.");
-
     });
 
     socket.on("new-room", (roomKey) => {
         console.log(socket.id + " entrando por new-room");
         for (var i = 0; i < gameRooms.length; i++) {
             if (gameRooms[i].roomKey == roomKey) {
-                console.log("devuelto");
                 return socket.emit("err", "La room con la clave " + roomKey + " ya existe.");
 
             }

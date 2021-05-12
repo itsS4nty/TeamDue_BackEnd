@@ -41,8 +41,8 @@ io.on("connection", (socket) => {
         // console.log(socket.id, "entrando por: canvas-data");
         let array = Array.from(socket.rooms);
         console.log(array[1]);
-        socket.to(array[1]).emit("canvaas-daata", data);
-        // socket.broadcast.emit("canvas-data", data);
+        // socket.to(array[1]).emit("canvas-data", data);
+        socket.broadcast.emit("canvas-data", data);
     });
 
     socket.on("peticionSala-enviada", (room) => {

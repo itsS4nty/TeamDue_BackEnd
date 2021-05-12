@@ -40,7 +40,8 @@ io.on("connection", (socket) => {
     socket.on("canvas-data", (data) => {
         // console.log(socket.id, "entrando por: canvas-data");
         let array = Array.from(socket.rooms);
-        io.to(array[1]).emit("canvaas-daata", data);
+        console.log(array[1]);
+        socket.to(array[1]).emit("canvaas-daata", data);
         // socket.broadcast.emit("canvas-data", data);
     });
 

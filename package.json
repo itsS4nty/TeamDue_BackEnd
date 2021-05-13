@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "npm run kill && nodemon --delay 1000ms src/main.js",
-    "kill": "lsof -ti tcp:3000 | xargs kill"
+    "kill": "lsof -ti tcp:3000 | xargs kill || echo 'No hay nada en el puerto 3000'"
   },
   "repository": {
     "type": "git",

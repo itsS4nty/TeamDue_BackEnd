@@ -1,4 +1,4 @@
-const { transporter } = require("./conf");
+const { transporter } = require("./confEmail");
 
 async function sendEmail(email, uniqueURL) {
     await transporter.sendEmail({

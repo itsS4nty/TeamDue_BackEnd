@@ -12,12 +12,6 @@ const transporter = nodemailer.createTransport({
 
 transporter.verify().then(() => {
     console.log("Servidor preparado para enviar emails");
-    // transporter.sendMail({
-    //     from: "teamduenoreply@gmail.com",
-    //     to: "carloskeko80@gmail.com",
-    //     subject: "Verification email",
-    //     html: `<b> hola </b>`
-    // });
 });
 
 function sendEmail(email, uniqueURL) {
@@ -25,8 +19,13 @@ function sendEmail(email, uniqueURL) {
         from: "teamduenoreply@gmail.com",
         to: email,
         subject: "Verification email",
-        html: `<b> ${uniqueURL} </b>`
+        html: `
+            Pulsa <a href='www.51.38.225.18:3000/verify/${uniqueURL}'> aquí </a> para verificar tu usuario. <br>
+            <i>Si usted no ha solicitado este email, simplemente ignore este mensaje.</i> <br>
+            <span>&copy; All rights reserved @TeamDue</span>
+        `
     });
+    console.log("El email de registro se ha enviado con éxito");
 }
 
 module.exports = {

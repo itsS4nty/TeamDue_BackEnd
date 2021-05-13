@@ -73,8 +73,12 @@ router.post('/register', (req, res) => {
                     mandar_correo: 1
 
                 });
+                
+                hashPassword(usuarioInp).then(usserHash => {
+                    sendEmail(correoInp, "holita");
 
-                sendEmail(correoInp, "holita");
+
+                });
         
                 res.status(201).send("Created");  
             });

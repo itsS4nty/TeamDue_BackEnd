@@ -45,17 +45,18 @@ io.on("connection", (socket) => {
         // socket.broadcast.emit("canvas-data", data);
     });
 
-    socket.on("peticionSala-enviada", (room) => {
+    socket.on("peticionSala-enviada", (data) => {
         console.log(socket.id + " entrando por peticionSala-enviada");
         for (var i = 0; i < gameRooms.length; i++) {
-            if (gameRooms[i].roomKey == room) {
-                console.log(socket.id + " ha enviado una peticion a la room con id " + room + " exitosamente.");
-                data = {
+            if (gameRooms[i].roomKey == data.room) {
+                console.log(socket.id + "con nombre " + data.user + " ha enviado una peticion a la room con id " + data.room + " exitosamente.");
+                dataSaliente = {
                     roomKey: gameRooms[i].roomKey,
                     administrator: gameRooms[i].administrator,
-                    idPeticion: socket.id
+                    idPeticion: socket.id,
+                    nombreUsuario: room.user
                 };
-                return io.to(gameRooms[i].administrator).emit("peticion-recibida", data);
+                return io.to(gameRooms[i].administrator).emit("peticion-recibida", dataSaliente);
             }
         }
 

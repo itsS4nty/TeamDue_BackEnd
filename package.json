@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "npm run kill && nodemon --delay 1000ms src/main.js",
+    "server": "nodemon --delay 1000ms src/main.js",
     "kill": "lsof -ti tcp:3000 | xargs kill"
   },
   "repository": {

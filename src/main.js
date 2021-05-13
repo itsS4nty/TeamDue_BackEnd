@@ -49,7 +49,7 @@ io.on("connection", (socket) => {
         console.log(socket.id + " entrando por peticionSala-enviada");
         for (var i = 0; i < gameRooms.length; i++) {
             if (gameRooms[i].roomKey == data.room) {
-                console.log(socket.id + "con nombre " + data.user + " ha enviado una peticion a la room con id " + data.room + " exitosamente.");
+                console.log(socket.id + " con nombre de usuario " + data.user + " ha enviado una peticion a la room con id " + data.room + " exitosamente.");
                 dataSaliente = {
                     roomKey: gameRooms[i].roomKey,
                     administrator: gameRooms[i].administrator,

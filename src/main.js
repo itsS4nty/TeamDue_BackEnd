@@ -60,7 +60,7 @@ io.on("connection", (socket) => {
             }
         }
 
-        return socket.emit("err", "La clave " + room + " es incorrecta.");
+        return socket.emit("err", "La clave " + data.room + " es incorrecta.");
     });
 
     socket.on("aceptado-room", (data) =>  {

@@ -1,7 +1,7 @@
 const { transporter } = require("./confEmail");
 
 async function sendEmail(email, uniqueURL) {
-    await transporter.sendEmail({
+    await transporter.sendMail({
         from: "teamduenoreply@gmail.com",
         to: email,
         subject: "Verification email",

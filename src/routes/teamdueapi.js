@@ -6,7 +6,7 @@ const sequelize = require("../database.js");
 const db = require('../.././models');
 const { Op } = require("sequelize");
 
-const { sendEmail } = require("../mail/email")
+const { sendEmail } = require("../mail/confEmail")
 
 router.use(cors());
 

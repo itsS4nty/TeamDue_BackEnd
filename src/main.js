@@ -54,7 +54,7 @@ io.on("connection", (socket) => {
                     roomKey: gameRooms[i].roomKey,
                     administrator: gameRooms[i].administrator,
                     idPeticion: socket.id,
-                    nombreUsuario: room.user
+                    nombreUsuario: data.user
                 };
                 return io.to(gameRooms[i].administrator).emit("peticion-recibida", dataSaliente);
             }

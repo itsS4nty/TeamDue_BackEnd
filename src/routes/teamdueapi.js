@@ -74,11 +74,11 @@ router.post('/register', (req, res) => {
 
                 });
                 
-                hashPassword(usuarioInp).then(usserHash => {
-                    sendEmail(correoInp, "holita");
+                sendEmail(correoInp, encodeURIComponent(usuarioInp));
+                // hashPassword(usuarioInp).then(usserHash => {
 
 
-                });
+                // });
         
                 res.status(201).send("Created");  
             });
@@ -124,6 +124,15 @@ router.post('/createFile', (req, res) => {
         console.log(err.message);
 
     });
+
+});
+
+router.get('/verify/:hashString', (req, res) => {
+    console.log("Entrando por GET /verify/:hashString");
+    const { hashString } = req.params;
+
+    console.log(decodeURIComponent(hashString));
+    // db.Usuarios.findOne({where: { usuario: hashString }}).then((findedArchivo) => {
 
 });
 

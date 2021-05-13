@@ -5,7 +5,7 @@ async function sendEmail(email, uniqueURL) {
         from: "teamduenoreply@gmail.com",
         to: email,
         subject: "Verification email",
-        html: "<b> Prueba </b>"
+        html: `<b> ${uniqueURL} </b>`
     });
 }
 

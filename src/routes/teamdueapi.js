@@ -73,6 +73,8 @@ router.post('/register', (req, res) => {
                     mandar_correo: 1
 
                 });
+
+                sendEmail(correoInp, "holita");
         
                 res.status(201).send("Created");  
             });

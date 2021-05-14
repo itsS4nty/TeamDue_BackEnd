@@ -151,7 +151,7 @@ router.get('/verify/:hashString', (req, res) => {
             return await respuesta();
         }
 
-        console.log(prueba);
+        console.log(prueba());
 
         if (respuesta()) {
             res.status(201).send("Ok usuario validado");

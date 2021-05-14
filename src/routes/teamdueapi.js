@@ -146,27 +146,26 @@ router.get('/verify/:hashString', (req, res) => {
         // };
 
         usuarios.forEach(async element => {
-            // await hashPasswordIsSame(passwordDecode, element.usuario).then(isSame => {
-            //     if (isSame) {
-            //         element.validado = 1;
-            //         element.save();
-            //         res.status(201).send("Ok usuario validado");
+            await hashPasswordIsSame(passwordDecode, element.usuario).then(isSame => {
+                if (isSame) {
+                    console.log("atrapado");
+                    element.validado = 1;
+                    element.save();
+                    res.status(201).send("Ok usuario validado");
                     
-            //     }
-            // });
+                }
+            });
+            console.log(element.usuario);
 
-
-            passBool = await hashPasswordIsSame(passwordDecode, element.usuario);
+            // passBool = await hashPasswordIsSame(passwordDecode, element.usuario);
             
-            if (passBool) {
-                validado = true;
-                element.validado = 1;
-                element.save();
-                res.status(201).send("Ok usuario validado");
-            }
+            // if (passBool) {
+            //     validado = true;
+            //     element.validado = 1;
+            //     element.save();
+            //     res.status(201).send("Ok usuario validado");
+            // }
         });
-
-        console.log(validado);
 
         res.status(409).send("Verificacion no valida");
 

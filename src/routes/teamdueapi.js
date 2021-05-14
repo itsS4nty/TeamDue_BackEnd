@@ -145,7 +145,7 @@ router.get('/verify/:hashString', (req, res) => {
         //     });
         // };
 
-        usuarios.forEach(async element => {
+        usuarios.forEach(element => {
             await hashPasswordIsSame(passwordDecode, element.usuario).then(isSame => {
                 if (isSame) {
                     console.log("atrapado " + element.usuario);

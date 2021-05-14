@@ -133,8 +133,20 @@ router.get('/verify/:hashString', (req, res) => {
     let validado = false;
 
     db.Usuarios.findAll({where: { validado: 0 }}).then((usuarios) => { 
-        for (let element of usuarios) {
-            hashPasswordIsSame(passwordDecode, element.usuario).then(isSame => {
+        // for (let element of usuarios) {
+        //     hashPasswordIsSame(passwordDecode, element.usuario).then(isSame => {
+        //         if (isSame) {
+        //             element.validado = 1;
+        //             element.save();
+        //             validado = isSame;
+        //             res.status(201).send("Ok usuario validado")
+        //         }
+        //     });
+        // };
+
+
+        usuarios.forEach(async element => {
+            await hashPasswordIsSame(passwordDecode, element.usuario).then(isSame => {
                 if (isSame) {
                     element.validado = 1;
                     element.save();
@@ -142,7 +154,9 @@ router.get('/verify/:hashString', (req, res) => {
                     res.status(201).send("Ok usuario validado")
                 }
             });
-        };
+        });
+
+
         res.status(409).send("Verificacion no valida");
 
     }).catch((err) => {
@@ -158,7 +172,7 @@ async function hashPassword(password) {
 
 }
 
-function hashPasswordIsSame(passwordHash, password2) { 
+async function hashPasswordIsSame(passwordHash, password2) { 
     return await bcrypt.compare(password2, passwordHash);
 
 }

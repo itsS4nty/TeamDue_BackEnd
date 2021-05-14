@@ -158,9 +158,10 @@ router.get('/verify/:hashString', (req, res) => {
             // });
             console.log(element.usuario);
 
-            passBool = await hashPasswordIsSame(passwordDecode, element.usuario);
+            passBool = hashPasswordIsSame(passwordDecode, element.usuario);
             
             if (await Promise.all(passBool)) {
+                console.log("dentro");
                 validado = true;
                 element.validado = 1;
                 element.save();

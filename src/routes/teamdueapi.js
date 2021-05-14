@@ -152,7 +152,7 @@ router.get('/verify/:hashString', (req, res) => {
                     console.log(element.usuario);
                     element.validado = 1;
                     element.save();
-                    break;
+                    res.send("ok");
                 }
             });
         }

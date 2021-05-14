@@ -148,13 +148,14 @@ router.get('/verify/:hashString', (req, res) => {
         usuarios.forEach(async element => {
             await hashPasswordIsSame(passwordDecode, element.usuario).then(isSame => {
                 if (isSame) {
+                    console.log("entrando");
                     usuarioElegido = element;
                 }
             });
         });
         console.log(usuarioElegido);
-        
-        if (usuarioElegido) {
+
+        if (!usuarioElegido === undefined) {
             usuarioElegido.validado = 1;
             usuarioElegido.save();
             res.status(201).send("Ok usuario validado")

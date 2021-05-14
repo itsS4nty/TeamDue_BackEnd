@@ -74,12 +74,8 @@ router.post('/register', (req, res) => {
 
                 });
                 
-                console.log(encodeURIComponent(usuarioInp));
                 hashPassword(usuarioInp).then(usserHash => {
-                    console.log(usserHash);
                     sendEmail(correoInp, encodeURIComponent(usuarioInp));
-                    console.log(encodeURIComponent(usserHash));
-                    console.log(decodeURIComponent(usserHash));
 
                 });
         
@@ -134,9 +130,10 @@ router.get('/verify/:hashString', (req, res) => {
     console.log("Entrando por GET /verify/:hashString");
     const { hashString } = req.params;
 
-    console.log(decodeURIComponent(hashString));
-    // db.Usuarios.findOne({where: { usuario: hashString }}).then((findedArchivo) => {
+    db.Usuarios.findAll({where: { validado: 0 }}).then((usuarios) => { 
+        usuarios.forEach(element => console.log(element.nombre));
 
+    });
 });
 
 async function hashPassword(password) {

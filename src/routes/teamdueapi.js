@@ -138,6 +138,7 @@ router.get('/verify/:hashString', (req, res) => {
 
 
         const respuesta = async() => {
+            console.log("entrando");
             for (let element of usuarios) {
                 let igual = await hashPasswordIsSame(passwordDecode, element.usuario);
                 console.log(igual);

@@ -154,7 +154,7 @@ router.get('/verify/:hashString', (req, res) => {
             // });
 
 
-            let passBool = hashPasswordIsSame(passwordDecode, element.usuario);
+            let passBool = await hashPasswordIsSame(passwordDecode, element.usuario);
             console.log(passBool);
 
         });

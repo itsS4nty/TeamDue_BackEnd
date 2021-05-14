@@ -132,21 +132,7 @@ router.get('/verify/:hashString', (req, res) => {
     const passwordDecode = decodeURIComponent(hashString);
 
     db.Usuarios.findAll({where: { validado: 0 }}).then((usuarios) => { 
-        // usuarios.forEach(element => {
-        //     if (hashPasswordIsSame(hashString, element.usuario)) {
-        //         element.validado = 1;
-        //         element.save();
-        //         break;
-        //     }
-        // });
         for (let element of usuarios) {
-            // if (hashPasswordIsSame(passwordDecode, element.usuario)) {
-                // console.log(element.usuario);
-                // element.validado = 1;
-                // element.save();
-                // break;
-            // }
-
             hashPasswordIsSame(passwordDecode, element.usuario).then(isSame => {
                 if (isSame) {
                     console.log(element.usuario);
@@ -155,7 +141,8 @@ router.get('/verify/:hashString', (req, res) => {
                     res.send("ok");
                 }
             });
-        }
+        };
+        res.status(409).send("Verificacion no valida");
 
     });
 });

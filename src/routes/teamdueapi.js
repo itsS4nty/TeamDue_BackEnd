@@ -147,7 +147,10 @@ router.get('/verify/:hashString', (req, res) => {
             return false;
         }
 
-        let prueba = await respuesta();
+        const prueba = async() => {
+            return await respuesta();
+        }
+
         console.log(prueba);
 
         if (respuesta()) {

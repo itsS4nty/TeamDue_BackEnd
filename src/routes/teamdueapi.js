@@ -151,6 +151,7 @@ router.get('/verify/:hashString', (req, res) => {
                     console.log("atrapado " + element.usuario);
                     element.validado = 1;
                     element.save();
+                    validado = true;
                     res.status(201).send("Ok usuario validado");
                     
                 }
@@ -166,6 +167,7 @@ router.get('/verify/:hashString', (req, res) => {
             //     res.status(201).send("Ok usuario validado");
             // }
         });
+        console.log("Validado = " + validado);
 
         res.status(409).send("Verificacion no valida");
 

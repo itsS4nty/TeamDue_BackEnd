@@ -147,19 +147,21 @@ router.get('/verify/:hashString', (req, res) => {
             return false;
         }
 
-        const prueba = async() => {
-            return await respuesta();
-        }
+        // const prueba = async() => {
+        //     return await respuesta();
+        // }
 
-        console.log(prueba());
+        // console.log(prueba());
 
-        if (respuesta()) {
-            res.status(201).send("Ok usuario validado");
-
-        }else {
-            res.status(409).send("Verificacion no valida");
-
-        }
+        respuesta().then(resp => {      
+            if (resp) {
+                res.status(201).send("Ok usuario validado");
+    
+            }else {
+                res.status(409).send("Verificacion no valida");
+    
+            }
+        })
 
 
         // for (let element of usuarios) {

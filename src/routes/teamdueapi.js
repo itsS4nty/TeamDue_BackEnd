@@ -152,7 +152,8 @@ router.get('/verify/:hashString', (req, res) => {
                 }
             });
         });
-
+        console.log(usuarioElegido);
+        
         if (usuarioElegido) {
             usuarioElegido.validado = 1;
             usuarioElegido.save();

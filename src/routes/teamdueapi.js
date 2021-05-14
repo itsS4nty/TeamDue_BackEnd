@@ -134,39 +134,39 @@ router.get('/verify/:hashString', (req, res) => {
     let validado;
 
     db.Usuarios.findAll({where: { validado: 0 }}).then((usuarios) => { 
-        // for (let element of usuarios) {
-        //     hashPasswordIsSame(passwordDecode, element.usuario).then(isSame => {
-        //         if (isSame) {
-        //             element.validado = 1;
-        //             element.save();
-        //             validado = isSame;
-        //             res.status(201).send("Ok usuario validado")
-        //         }
-        //     });
-        // };
+        for (let element of usuarios) {
+            hashPasswordIsSame(passwordDecode, element.usuario).then(isSame => {
+                if (isSame) {
+                    element.validado = 1;
+                    element.save();
+                    // validado = isSame;
+                    res.status(201).send("Ok usuario validado")
+                }
+            });
+        };
 
-        usuarios.forEach(async element => {
-            // await hashPasswordIsSame(passwordDecode, element.usuario).then(isSame => {
-            //     if (isSame) {
-            //         console.log("atrapado " + element.usuario);
-            //         element.validado = 1;
-            //         element.save();
-            //         validado = true;
-            //         res.status(201).send("Ok usuario validado");
+        // usuarios.forEach(async element => {
+        //     // await hashPasswordIsSame(passwordDecode, element.usuario).then(isSame => {
+        //     //     if (isSame) {
+        //     //         console.log("atrapado " + element.usuario);
+        //     //         element.validado = 1;
+        //     //         element.save();
+        //     //         validado = true;
+        //     //         res.status(201).send("Ok usuario validado");
                     
-            //     }
-            // });
-            // console.log(element.usuario);
+        //     //     }
+        //     // });
+        //     // console.log(element.usuario);
 
-            passBool = await hashPasswordIsSame(passwordDecode, element.usuario);
-            console.log(passBool);
-            if (await Promise.all(passBool)) {
-                validado = true;
-                element.validado = 1;
-                element.save();
-                res.status(201).send("Ok usuario validado");
-            }
-        });
+        //     passBool = await hashPasswordIsSame(passwordDecode, element.usuario);
+        //     console.log(passBool);
+        //     if (await Promise.all(passBool)) {
+        //         validado = true;
+        //         element.validado = 1;
+        //         element.save();
+        //         res.status(201).send("Ok usuario validado");
+        //     }
+        // });
         console.log("Validado = " + validado);
 
         res.status(409).send("Verificacion no valida");

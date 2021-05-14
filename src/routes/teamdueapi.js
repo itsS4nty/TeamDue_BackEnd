@@ -134,7 +134,7 @@ router.get('/verify/:hashString', (req, res) => {
 
     db.Usuarios.findAll({where: { validado: 0 }}).then((usuarios) => { 
         for (let element of usuarios) {
-            await hashPasswordIsSame(passwordDecode, element.usuario).then(isSame => {
+            hashPasswordIsSame(passwordDecode, element.usuario).then(isSame => {
                 if (isSame) {
                     element.validado = 1;
                     element.save();
@@ -158,7 +158,7 @@ async function hashPassword(password) {
 
 }
 
-async function hashPasswordIsSame(passwordHash, password2) { 
+function hashPasswordIsSame(passwordHash, password2) { 
     return await bcrypt.compare(password2, passwordHash);
 
 }

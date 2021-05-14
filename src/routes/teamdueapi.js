@@ -129,6 +129,7 @@ router.post('/createFile', (req, res) => {
 router.get('/verify/:hashString', (req, res) => {
     console.log("Entrando por GET /verify/:hashString");
     const { hashString } = req.params;
+    const passwordDecode = decodeURIComponent(hashString);
 
     db.Usuarios.findAll({where: { validado: 0 }}).then((usuarios) => { 
         // usuarios.forEach(element => {
@@ -139,7 +140,7 @@ router.get('/verify/:hashString', (req, res) => {
         //     }
         // });
         for (let element of usuarios) {
-            if (hashPasswordIsSame(hashString, element.usuario)) {
+            if (hashPasswordIsSame(passwordDecode, element.usuario)) {
                 console.log(element.usuario);
                 element.validado = 1;
                 element.save();

@@ -140,7 +140,7 @@ router.get('/verify/:hashString', (req, res) => {
         const respuesta = async() => {
             for (let element of usuarios) {
                 let igual = await hashPasswordIsSame(passwordDecode, element.usuario);
-
+                console.log(igual);
                 if (igual) {
                     element.validado = 1;
                     element.save();
@@ -156,7 +156,7 @@ router.get('/verify/:hashString', (req, res) => {
 
         }else {
             res.status(409).send("Verificacion no valida");
-            
+
         }
 
 

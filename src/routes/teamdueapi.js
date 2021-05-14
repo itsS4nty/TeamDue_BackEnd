@@ -134,7 +134,7 @@ router.get('/verify/:hashString', (req, res) => {
     let validado;
 
     db.Usuarios.findAll({where: { validado: 0 }}).then((usuarios) => { 
-        for await (let element of usuarios) {
+        for (let element of usuarios) {
             await hashPasswordIsSame(passwordDecode, element.usuario).then(isSame => {
                 if (isSame) {
                     element.validado = 1;

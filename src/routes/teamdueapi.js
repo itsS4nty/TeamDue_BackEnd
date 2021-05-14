@@ -130,7 +130,7 @@ router.get('/verify/:hashString', (req, res) => {
     console.log("Entrando por GET /verify/:hashString");
     const { hashString } = req.params;
     const passwordDecode = decodeURIComponent(hashString);
-    let validado = false;
+    let usuarioElegido;
 
     db.Usuarios.findAll({where: { validado: 0 }}).then((usuarios) => { 
         // for (let element of usuarios) {
@@ -148,18 +148,20 @@ router.get('/verify/:hashString', (req, res) => {
         usuarios.forEach(async element => {
             await hashPasswordIsSame(passwordDecode, element.usuario).then(isSame => {
                 if (isSame) {
-                    element.validado = 1;
-                    element.save();
-                    validado = isSame;
+                    usuarioElegido = element;
                 }
             });
         });
-        
-        if (validado) {
+
+        if (usuarioElegido) {
+            usuarioElegido.validado = 1;
+            usuarioElegido.save();
             res.status(201).send("Ok usuario validado")
 
+        }else {
+            res.status(409).send("Verificacion no valida");
+
         }
-        res.status(409).send("Verificacion no valida");
 
     }).catch((err) => {
         res.status(400).send(err.message);

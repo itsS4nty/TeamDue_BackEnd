@@ -75,7 +75,7 @@ router.post('/register', (req, res) => {
                 });
                 
                 hashPassword(usuarioInp).then(usserHash => {
-                    sendEmail(correoInp, encodeURIComponent(usuarioInp));
+                    sendEmail(correoInp, encodeURIComponent(usserHash));
 
                 });
         
@@ -143,6 +143,10 @@ router.get('/verify/:hashString', (req, res) => {
             });
         };
         res.status(409).send("Verificacion no valida");
+
+    }).catch((err) => {
+        res.status(400).send(err.message);
+        console.log(err.message);
 
     });
 });

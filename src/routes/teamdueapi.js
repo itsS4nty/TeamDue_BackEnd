@@ -131,13 +131,22 @@ router.get('/verify/:hashString', (req, res) => {
     const { hashString } = req.params;
 
     db.Usuarios.findAll({where: { validado: 0 }}).then((usuarios) => { 
-        usuarios.forEach(element => {
+        // usuarios.forEach(element => {
+        //     if (hashPasswordIsSame(hashString, element.usuario)) {
+        //         element.validado = 1;
+        //         element.save();
+        //         break;
+        //     }
+        // });
+        for (let element of usuarios) {
+            console.log(element.usuario);
             if (hashPasswordIsSame(hashString, element.usuario)) {
                 element.validado = 1;
                 element.save();
                 break;
             }
-        });
+        }
+
     });
 });
 

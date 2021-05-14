@@ -33,7 +33,13 @@ router.post('/login', (req, res) => {
         }else {
             hashPasswordIsSame(findedArchivo["password"], password).then(isSame => {
                 if (isSame) {
-                    res.json(findedArchivo);
+                    if (findedArchivo["validado"] == 1) {
+                        res.json(findedArchivo);
+
+                    }else {
+                        res.status(403).send("Usuario no validado");
+
+                    }
 
                 }else {
                     res.status(409).send("Incorrect password");
@@ -134,7 +140,6 @@ router.get('/verify/:hashString', (req, res) => {
     let validado;
 
     db.Usuarios.findAll({where: { validado: 0 }}).then((usuarios) => { 
-
         const respuesta = async() => {
             for (let element of usuarios) {
                 let igual = await hashPasswordIsSame(passwordDecode, element.usuario);
@@ -147,60 +152,15 @@ router.get('/verify/:hashString', (req, res) => {
             return false;
         }
 
-        // const prueba = async() => {
-        //     return await respuesta();
-        // }
-
-        // console.log(prueba());
-
         respuesta().then(resp => {      
             if (resp) {
-                res.status(201).send("Ok usuario validado");
+                res.status(201).send("Usuario validado");
     
             }else {
                 res.status(409).send("Verificacion no valida");
     
             }
         })
-
-
-        // for (let element of usuarios) {
-        //     hashPasswordIsSame(passwordDecode, element.usuario).then(isSame => {
-        //         if (isSame) {
-        //             element.validado = 1;
-        //             element.save();
-        //             // validado = isSame;
-        //             res.status(201).send("Ok usuario validado")
-        //             return;
-        //         }
-        //     });
-        // };
-
-        // usuarios.forEach(async element => {
-        //     // await hashPasswordIsSame(passwordDecode, element.usuario).then(isSame => {
-        //     //     if (isSame) {
-        //     //         console.log("atrapado " + element.usuario);
-        //     //         element.validado = 1;
-        //     //         element.save();
-        //     //         validado = true;
-        //     //         res.status(201).send("Ok usuario validado");
-                    
-        //     //     }
-        //     // });
-        //     // console.log(element.usuario);
-
-        //     passBool = await hashPasswordIsSame(passwordDecode, element.usuario);
-        //     console.log(passBool);
-        //     if (await Promise.all(passBool)) {
-        //         validado = true;
-        //         element.validado = 1;
-        //         element.save();
-        //         res.status(201).send("Ok usuario validado");
-        //     }
-        // });
-        // console.log("Validado = " + validado);
-
-        // res.status(409).send("Verificacion no valida");
 
     }).catch((err) => {
         res.status(400).send(err.message);

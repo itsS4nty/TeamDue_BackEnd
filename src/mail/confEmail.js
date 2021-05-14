@@ -18,11 +18,13 @@ function sendEmail(email, uniqueURL) {
     transporter.sendMail({
         from: "teamduenoreply@gmail.com",
         to: email,
-        subject: "Verification email TeamDue",
+        subject: "Email de verificación TeamDue",
         html: `
             Pulsa <a href="http://51.38.225.18:3000/verify/${uniqueURL}">aquí</a> para verificar tu usuario. <br><br>
             <i>Si usted no ha solicitado este email, simplemente ignore este mensaje.</i> <br><br>
-            <span>&copy; All rights reserved @TeamDue</span>
+            <span>Atentamente,
+
+            Atención al Cliente de Teamdue</span>
         `
     });
     console.log("El email de registro se ha enviado con éxito");

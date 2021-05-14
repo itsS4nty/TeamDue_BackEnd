@@ -140,12 +140,21 @@ router.get('/verify/:hashString', (req, res) => {
         //     }
         // });
         for (let element of usuarios) {
-            if (hashPasswordIsSame(passwordDecode, element.usuario)) {
-                console.log(element.usuario);
-                element.validado = 1;
-                element.save();
-                break;
-            }
+            // if (hashPasswordIsSame(passwordDecode, element.usuario)) {
+                // console.log(element.usuario);
+                // element.validado = 1;
+                // element.save();
+                // break;
+            // }
+
+            hashPasswordIsSame(passwordDecode, element.usuario).then(isSame => {
+                if (isSame) {
+                    console.log(element.usuario);
+                    element.validado = 1;
+                    element.save();
+                    break;
+                }
+            });
         }
 
     });

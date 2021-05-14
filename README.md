@@ -17,6 +17,6 @@ NODEMAILER:
     https://www.youtube.com/watch?v=KjheexBLY4A
 
 
-    pass: oqplnjfrfauyeqcw
+     pass email: oqplnjfrfauyeqcw
 
     

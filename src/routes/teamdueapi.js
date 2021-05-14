@@ -74,12 +74,13 @@ router.post('/register', (req, res) => {
 
                 });
                 
-                sendEmail(correoInp, encodeURIComponent(usuarioInp));
                 console.log(encodeURIComponent(usuarioInp));
-                // hashPassword(usuarioInp).then(usserHash => {
+                hashPassword(usuarioInp).then(usserHash => {
+                    console.log(usserHash);
+                    sendEmail(correoInp, encodeURIComponent(usuarioInp));
+                    console.log(encodeURIComponent(usserHash));
 
-
-                // });
+                });
         
                 res.status(201).send("Created");  
             });

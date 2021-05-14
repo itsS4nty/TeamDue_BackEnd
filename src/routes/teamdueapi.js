@@ -139,15 +139,16 @@ router.get('/verify/:hashString', (req, res) => {
                     element.validado = 1;
                     element.save();
                     validado = isSame;
+                    console.log(validado)
                 }
             });
+            console.log(validado)
         };
 
         if (validado) {
             res.status(201).send("Ok usuario validado")
 
         }else {
-            console.log("f");
             res.status(409).send("Verificacion no valida");
 
         }

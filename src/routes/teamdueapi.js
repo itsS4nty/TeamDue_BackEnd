@@ -134,17 +134,43 @@ router.get('/verify/:hashString', (req, res) => {
     let validado;
 
     db.Usuarios.findAll({where: { validado: 0 }}).then((usuarios) => { 
-        for (let element of usuarios) {
-            hashPasswordIsSame(passwordDecode, element.usuario).then(isSame => {
-                if (isSame) {
+
+
+
+        const respuesta = async() => {
+            for (let element of usuarios) {
+                let igual = await hashPasswordIsSame(passwordDecode, element.usuario);
+
+                if (igual) {
                     element.validado = 1;
                     element.save();
-                    // validado = isSame;
-                    res.status(201).send("Ok usuario validado")
-                    return;
+                    // res.status(201).send("Ok usuario validado")
+                    return true;
                 }
-            });
-        };
+            }
+            return false;
+        }
+
+        if (respuesta) {
+            res.status(201).send("Ok usuario validado");
+
+        }else {
+            res.status(409).send("Verificacion no valida");
+            
+        }
+
+
+        // for (let element of usuarios) {
+        //     hashPasswordIsSame(passwordDecode, element.usuario).then(isSame => {
+        //         if (isSame) {
+        //             element.validado = 1;
+        //             element.save();
+        //             // validado = isSame;
+        //             res.status(201).send("Ok usuario validado")
+        //             return;
+        //         }
+        //     });
+        // };
 
         // usuarios.forEach(async element => {
         //     // await hashPasswordIsSame(passwordDecode, element.usuario).then(isSame => {
@@ -168,9 +194,9 @@ router.get('/verify/:hashString', (req, res) => {
         //         res.status(201).send("Ok usuario validado");
         //     }
         // });
-        console.log("Validado = " + validado);
+        // console.log("Validado = " + validado);
 
-        res.status(409).send("Verificacion no valida");
+        // res.status(409).send("Verificacion no valida");
 
     }).catch((err) => {
         res.status(400).send(err.message);

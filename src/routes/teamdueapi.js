@@ -153,7 +153,8 @@ router.get('/verify/:hashString', (req, res) => {
                 }
             });
         });
-        console.log(usuarioElegido);
+        let userValidado = await Promise.all(usuarioElegido);
+        console.log(userValidado);
 
         if (!usuarioElegido === undefined) {
             usuarioElegido.validado = 1;

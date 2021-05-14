@@ -135,22 +135,19 @@ router.get('/verify/:hashString', (req, res) => {
 
     db.Usuarios.findAll({where: { validado: 0 }}).then((usuarios) => { 
 
-
-
         const respuesta = async() => {
-            console.log("entrando");
             for (let element of usuarios) {
                 let igual = await hashPasswordIsSame(passwordDecode, element.usuario);
-                console.log(igual);
                 if (igual) {
                     element.validado = 1;
                     element.save();
-                    // res.status(201).send("Ok usuario validado")
                     return true;
                 }
             }
             return false;
         }
+
+        let prueba = repsuesta();
 
         if (respuesta()) {
             res.status(201).send("Ok usuario validado");

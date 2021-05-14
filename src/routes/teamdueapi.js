@@ -79,6 +79,7 @@ router.post('/register', (req, res) => {
                     console.log(usserHash);
                     sendEmail(correoInp, encodeURIComponent(usuarioInp));
                     console.log(encodeURIComponent(usserHash));
+                    console.log(decodeURIComponent(usserHash));
 
                 });
         

@@ -141,6 +141,7 @@ router.get('/verify/:hashString', (req, res) => {
                     element.save();
                     // validado = isSame;
                     res.status(201).send("Ok usuario validado")
+                    return;
                 }
             });
         };

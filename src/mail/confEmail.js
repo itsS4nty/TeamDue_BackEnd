@@ -22,7 +22,7 @@ function sendEmail(email, uniqueURL) {
         html: `
             Pulsa <a href="http://51.38.225.18:3000/verify/${uniqueURL}">aquí</a> para verificar tu usuario. <br><br>
             <i>Si usted no ha solicitado este email, simplemente ignore este mensaje.</i> <br><br>
-            <span>Atentamente,
+            <span>Atentamente,<br><br>
 
             Atención al Cliente de Teamdue</span>
         `

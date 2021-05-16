@@ -45,6 +45,16 @@ io.on("connection", (socket) => {
         // socket.broadcast.emit("canvas-data", data);
     });
 
+    socket.on("draw-line", (data) => {
+        let array = Array.from(socket.rooms);
+        io.to(array[1]).emit("draw-line", data);
+    })
+
+    socket.on("draw-rect", (data) => {
+        let array = Array.from(socket.rooms);
+        io.to(array[1]).emit("draw-rect", data);
+    })
+
     socket.on("peticionSala-enviada", (data) => {
         console.log(socket.id + " entrando por peticionSala-enviada");
         for (var i = 0; i < gameRooms.length; i++) {

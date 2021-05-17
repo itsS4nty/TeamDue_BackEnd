@@ -154,7 +154,7 @@ router.get('/verify/:hashString', (req, res) => {
                     console.log(homedir);
                     const path = require("path");
 
-                    fs.mkdir(path.join(homedir,  "mynewdir"));
+                    console.log(path.join(homedir,  "mynewdir"));
                     
                     // if (fs.existsSync("../../files/" + element.usuario)) {
                     //     console.log("El directorio del usuario " + element.usuario + " ya existe");

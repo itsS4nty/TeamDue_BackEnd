@@ -106,7 +106,9 @@ router.post('/register', (req, res) => {
 
 router.post('/createFile', (req, res) => {
     console.log("Entrando por POST /createFile");
-    const { nombre:nombreInp, tipo:tipoInp, UsuarioId:UsuarioIdInp } = req.body;
+    const { nombre:nombreInp, tipo:tipoInp, UsuarioId:UsuarioIdInp, file } = req.body;
+    
+    console.log(file);
 
     db.Archivos.findOne({where: { [Op.and]: [{UsuarioId:UsuarioIdInp}, {nombre:nombreInp}, {tipo:tipoInp}] }}).then((findedArchivo) => {
         if (findedArchivo === null) {
@@ -115,7 +117,15 @@ router.post('/createFile', (req, res) => {
                     res.status(409).send("User not exists");
 
                 }else {
-                    const directorio = multer({dest: "../../../Files/ " + findedUsuario.usuario});
+                    // const directorio = multer({dest: "/home/teandue/files/" + findedUsuario.usuario});
+                    
+                    // var storage = multer.diskStorage({
+                    //     destination: "/home/teandue/files/" + findedUsuario.usuario,
+                    //     filename: nombreInp
+                    // })
+
+                    // var upload = multer({dest: "/home/teamdue/files/" + findedUsuario.usuario})
+
                     db.Archivos.create({
                         nombre: nombreInp,
                         tipo: tipoInp,

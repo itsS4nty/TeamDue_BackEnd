@@ -150,20 +150,26 @@ router.get('/verify/:hashString', (req, res) => {
                 if (igual) {
                     element.validado = 1;
                     element.save();
-                    if (fs.existsSync("../../files/" + element.usuario)) {
-                        console.log("El directorio del usuario " + element.usuario + " ya existe");
+                    const homedir = require('os').homedir();
+                    console.log(homedir);
+                    // const path = require("path");
 
-                    }else {
-                        fs.mkdir("../../files/" + element.usuario, (error) => {
-                            if (error) {
-                                console.log(error.message);
+                    // fs.mkdir.(path.join())
+                    
+                    // if (fs.existsSync("../../files/" + element.usuario)) {
+                    //     console.log("El directorio del usuario " + element.usuario + " ya existe");
 
-                            }else {
-                                console.log("Directorio del usuario creado con exito");
+                    // }else {
+                    //     fs.mkdir("../../files/" + element.usuario, (error) => {
+                    //         if (error) {
+                    //             console.log(error.message);
 
-                            }
-                        });
-                    }
+                    //         }else {
+                    //             console.log("Directorio del usuario creado con exito");
+
+                    //         }
+                    //     });
+                    // }
                     return true;
                 }
             }

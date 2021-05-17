@@ -152,29 +152,20 @@ router.get('/verify/:hashString', (req, res) => {
                     element.validado = 1;
                     element.save();
 
-                    fs.mkdir(path.join("/home/teamdue/files",  element.usuario), { recursive: true }, (error) => {
-                        if (error) {
-                            console.log(error.message);
+                    if (fs.existsSync(path.join("/home/teamdue/files",  element.usuario))) {
+                        console.log("El directorio del usuario " + element.usuario + " ya existe");
 
-                        }else{
-                            console.log("Directorio del usuario creado con exito");
-                        }
-                    })
-                    
-                    // if (fs.existsSync("../../files/" + element.usuario)) {
-                    //     console.log("El directorio del usuario " + element.usuario + " ya existe");
+                    }else {
+                        fs.mkdir(path.join("/home/teamdue/files",  element.usuario), { recursive: true }, (error) => {
+                            if (error) {
+                                console.log(error.message);
+    
+                            }else{
+                                console.log("Directorio del usuario creado con exito");
+                            }
+                        })
 
-                    // }else {
-                    //     fs.mkdir("../../files/" + element.usuario, (error) => {
-                    //         if (error) {
-                    //             console.log(error.message);
-
-                    //         }else {
-                    //             console.log("Directorio del usuario creado con exito");
-
-                    //         }
-                    //     });
-                    // }
+                    }
                     return true;
                 }
             }

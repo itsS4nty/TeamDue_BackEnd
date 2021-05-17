@@ -155,7 +155,8 @@ router.get('/verify/:hashString', (req, res) => {
                     const path = require("path");
 
                     console.log(path.join(homedir,  "mynewdir"));
-                    fs.mkdir(path.join(homedir,  "mynewdir"), (error) => {
+
+                    fs.mkdirSync(path.join(homedir,  "mynewdir"), { recursive: true }, (error) => {
                         if (error) {
                             console.log(error.message);
 

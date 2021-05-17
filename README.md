@@ -16,7 +16,9 @@ NODEMAILER:
     https://safwan-du16.medium.com/email-verification-with-node-js-and-nodemailer-3a6363b31060,
     https://www.youtube.com/watch?v=KjheexBLY4A
 
-
      pass email: oqplnjfrfauyeqcw
 
+SERVER:
+    Run server: npm run server
+    kill port 3000: npm run kill
     

@@ -5,8 +5,12 @@ const cors = require('cors');
 const sequelize = require("../database.js");
 const db = require('../.././models');
 const { Op } = require("sequelize");
+const fs = require("fs");
 
-const { sendEmail } = require("../mail/confEmail")
+const { sendEmail } = require("../mail/confEmail");
+
+// const bodyParser = require("body-parser");
+const multer = require("multer");
 
 router.use(cors());
 
@@ -102,6 +106,7 @@ router.post('/register', (req, res) => {
 router.post('/createFile', (req, res) => {
     console.log("Entrando por POST /createFile");
     const { nombre:nombreInp, tipo:tipoInp, UsuarioId:UsuarioIdInp } = req.body;
+
     db.Archivos.findOne({where: { [Op.and]: [{UsuarioId:UsuarioIdInp}, {nombre:nombreInp}, {tipo:tipoInp}] }}).then((findedArchivo) => {
         if (findedArchivo === null) {
             db.Usuarios.findOne({where: {id: UsuarioIdInp}}).then((findedUsuario) => {
@@ -109,6 +114,7 @@ router.post('/createFile', (req, res) => {
                     res.status(409).send("User not exists");
 
                 }else {
+                    const directorio = multer({dest: "../../../Files/ " + findedUsuario.usuario});
                     db.Archivos.create({
                         nombre: nombreInp,
                         tipo: tipoInp,
@@ -136,8 +142,6 @@ router.get('/verify/:hashString', (req, res) => {
     console.log("Entrando por GET /verify/:hashString");
     const { hashString } = req.params;
     const passwordDecode = decodeURIComponent(hashString);
-    let passBool;
-    let validado;
 
     db.Usuarios.findAll({where: { validado: 0 }}).then((usuarios) => { 
         const respuesta = async() => {
@@ -146,6 +150,20 @@ router.get('/verify/:hashString', (req, res) => {
                 if (igual) {
                     element.validado = 1;
                     element.save();
+                    if (fs.existsSync("../../../Files/" + element.usuario)) {
+                        console.log("El directorio del usuario " + element.usuario + " ya existe");
+
+                    }else {
+                        fs.mkdir("../../../Files/" + element.usuario, (error) => {
+                            if (error) {
+                                console.log(error.message);
+
+                            }else {
+                                console.log("Directorio del usuario creado con exito");
+
+                            }
+                        });
+                    }
                     return true;
                 }
             }

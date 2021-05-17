@@ -152,7 +152,7 @@ router.get('/verify/:hashString', (req, res) => {
                     element.validado = 1;
                     element.save();
 
-                    fs.mkdirSync(path.join("/home/teamdue/files",  element.usuario), { recursive: true }, (error) => {
+                    fs.mkdir(path.join("/home/teamdue/files",  element.usuario), { recursive: true }, (error) => {
                         if (error) {
                             console.log(error.message);
 

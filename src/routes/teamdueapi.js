@@ -150,13 +150,13 @@ router.get('/verify/:hashString', (req, res) => {
                 if (igual) {
                     element.validado = 1;
                     element.save();
-                    const homedir = require('os').homedir() + "/teamdue/files";
-                    console.log(homedir);
+                    // const homedir = require('os').homedir() + "/teamdue/files";
+                    // console.log(homedir);
                     const path = require("path");
 
-                    console.log(path.join(homedir,  "mynewdir"));
+                    // console.log(path.join(homedir,  "mynewdir"));
 
-                    fs.mkdirSync(path.join(homedir,  "mynewdir"), { recursive: true }, (error) => {
+                    fs.mkdirSync(path.join("/home/teamdue/",  "mynewdir"), { recursive: true }, (error) => {
                         if (error) {
                             console.log(error.message);
 

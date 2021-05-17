@@ -110,42 +110,43 @@ router.post('/createFile', (req, res) => {
     
     console.log(file);
 
-    db.Archivos.findOne({where: { [Op.and]: [{UsuarioId:UsuarioIdInp}, {nombre:nombreInp}, {tipo:tipoInp}] }}).then((findedArchivo) => {
-        if (findedArchivo === null) {
-            db.Usuarios.findOne({where: {id: UsuarioIdInp}}).then((findedUsuario) => {
-                if (findedUsuario === null) {
-                    res.status(409).send("User not exists");
+    // db.Archivos.findOne({where: { [Op.and]: [{UsuarioId:UsuarioIdInp}, {nombre:nombreInp}, {tipo:tipoInp}] }}).then((findedArchivo) => {
+    //     if (findedArchivo === null) {
+    //         db.Usuarios.findOne({where: {id: UsuarioIdInp}}).then((findedUsuario) => {
+    //             if (findedUsuario === null) {
+    //                 res.status(409).send("User not exists");
 
-                }else {
-                    // const directorio = multer({dest: "/home/teandue/files/" + findedUsuario.usuario});
+    //             }else {
+    //                 // const directorio = multer({dest: "/home/teandue/files/" + findedUsuario.usuario});
                     
-                    // var storage = multer.diskStorage({
-                    //     destination: "/home/teandue/files/" + findedUsuario.usuario,
-                    //     filename: nombreInp
-                    // })
+    //                 // var storage = multer.diskStorage({
+    //                 //     destination: "/home/teandue/files/" + findedUsuario.usuario,
+    //                 //     filename: nombreInp
+    //                 // })
 
-                    // var upload = multer({dest: "/home/teamdue/files/" + findedUsuario.usuario})
+    //                 var upload = multer({dest: "/home/teamdue/files/" + findedUsuario.usuario})
+    //                 upload.single("file");
 
-                    db.Archivos.create({
-                        nombre: nombreInp,
-                        tipo: tipoInp,
-                        UsuarioId: UsuarioIdInp
-                    });
+    //                 db.Archivos.create({
+    //                     nombre: nombreInp,
+    //                     tipo: tipoInp,
+    //                     UsuarioId: UsuarioIdInp
+    //                 });
         
-                    res.status(201).send("Created");  
-                }
-            });
+    //                 res.status(201).send("Created");  
+    //             }
+    //         });
 
-        }else {
-            res.status(409).send("Duplicate");
+    //     }else {
+    //         res.status(409).send("Duplicate");
 
-        }
+    //     }
         
-    }).catch((err) => {
-        res.status(400).send(err.message);
-        console.log(err.message);
+    // }).catch((err) => {
+    //     res.status(400).send(err.message);
+    //     console.log(err.message);
 
-    });
+    // });
 
 });
 

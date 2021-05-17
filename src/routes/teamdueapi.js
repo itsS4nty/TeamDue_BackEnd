@@ -110,7 +110,7 @@ router.post('/createFile', upload.single("file"), (req, res) => {
     const { nombre:nombreInp, tipo:tipoInp, UsuarioId:UsuarioIdInp, file } = req.body;
     
     console.log(file);
-    console.log(req);
+    // console.log(req);
 
     // db.Archivos.findOne({where: { [Op.and]: [{UsuarioId:UsuarioIdInp}, {nombre:nombreInp}, {tipo:tipoInp}] }}).then((findedArchivo) => {
     //     if (findedArchivo === null) {

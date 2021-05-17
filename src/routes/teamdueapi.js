@@ -6,6 +6,7 @@ const sequelize = require("../database.js");
 const db = require('../.././models');
 const { Op } = require("sequelize");
 const fs = require("fs");
+const path = require("path");
 
 const { sendEmail } = require("../mail/confEmail");
 
@@ -150,13 +151,8 @@ router.get('/verify/:hashString', (req, res) => {
                 if (igual) {
                     element.validado = 1;
                     element.save();
-                    // const homedir = require('os').homedir() + "/teamdue/files";
-                    // console.log(homedir);
-                    const path = require("path");
 
-                    // console.log(path.join(homedir,  "mynewdir"));
-
-                    fs.mkdirSync(path.join("/home/teamdue/",  "mynewdir"), { recursive: true }, (error) => {
+                    fs.mkdirSync(path.join("/home/teamdue/files",  element.usuario), { recursive: true }, (error) => {
                         if (error) {
                             console.log(error.message);
 

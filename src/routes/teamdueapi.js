@@ -12,7 +12,6 @@ const { sendEmail } = require("../mail/confEmail");
 
 // const bodyParser = require("body-parser");
 const multer = require("multer");
-var upload = multer({dest: "/home/teamdue/files"})
 
 router.use(cors());
 
@@ -105,11 +104,14 @@ router.post('/register', (req, res) => {
     });
 });
 
-router.post('/createFile', upload.single("file"), (req, res) => {
+router.post('/createFile', (req, res) => {
     console.log("Entrando por POST /createFile");
     const { nombre:nombreInp, tipo:tipoInp, UsuarioId:UsuarioIdInp, file } = req.body;
     
     console.log(file);
+    
+    var upload = multer({dest: "/home/teamdue/files"})
+    upload.single("file")
     // console.log(req);
 
     // db.Archivos.findOne({where: { [Op.and]: [{UsuarioId:UsuarioIdInp}, {nombre:nombreInp}, {tipo:tipoInp}] }}).then((findedArchivo) => {

@@ -155,6 +155,14 @@ router.get('/verify/:hashString', (req, res) => {
                     const path = require("path");
 
                     console.log(path.join(homedir,  "mynewdir"));
+                    fs.mkdir(path.join(homedir,  "mynewdir"), (error) => {
+                        if (error) {
+                            console.log(error.message);
+
+                        }else{
+                            console.log("Directorio del usuario creado con exito");
+                        }
+                    })
                     
                     // if (fs.existsSync("../../files/" + element.usuario)) {
                     //     console.log("El directorio del usuario " + element.usuario + " ya existe");

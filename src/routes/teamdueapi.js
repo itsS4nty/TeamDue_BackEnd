@@ -150,11 +150,11 @@ router.get('/verify/:hashString', (req, res) => {
                 if (igual) {
                     element.validado = 1;
                     element.save();
-                    if (fs.existsSync("../../../Files/" + element.usuario)) {
+                    if (fs.existsSync("/home/teamdue/Files/" + element.usuario)) {
                         console.log("El directorio del usuario " + element.usuario + " ya existe");
 
                     }else {
-                        fs.mkdir("../../../Files/" + element.usuario, (error) => {
+                        fs.mkdir("/home/teamdue/Files/" + element.usuario, (error) => {
                             if (error) {
                                 console.log(error.message);
 

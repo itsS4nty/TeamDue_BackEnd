@@ -131,6 +131,7 @@ router.post('/createFile',  upload.single("file"), (req, res) => {
                     fileName[2] = "files";
                     fileName[fileName.length - 1] = findedUsuario.usuario;
                     fileName[fileName.length] = req.file.originalname;
+                    console.log(fileName.join("/"));
                     fs.rename(req.file.path, fileName.join("/"));
 
                     db.Archivos.create({
@@ -153,46 +154,6 @@ router.post('/createFile',  upload.single("file"), (req, res) => {
         console.log(err.message);
 
     });
-
-
-    // db.Archivos.findOne({where: { [Op.and]: [{UsuarioId:UsuarioIdInp}, {nombre:nombreInp}, {tipo:tipoInp}] }}).then((findedArchivo) => {
-    //     if (findedArchivo === null) {
-    //         db.Usuarios.findOne({where: {id: UsuarioIdInp}}).then((findedUsuario) => {
-    //             if (findedUsuario === null) {
-    //                 res.status(409).send("User not exists");
-
-    //             }else {
-    //                 // const directorio = multer({dest: "/home/teandue/files/" + findedUsuario.usuario});
-                    
-    //                 // var storage = multer.diskStorage({
-    //                 //     destination: "/home/teandue/files/" + findedUsuario.usuario,
-    //                 //     filename: nombreInp
-    //                 // })
-
-    //                 var upload = multer({dest: "/home/teamdue/files/" + findedUsuario.usuario})
-    //                 upload.single("file");
-
-    //                 db.Archivos.create({
-    //                     nombre: nombreInp,
-    //                     tipo: tipoInp,
-    //                     UsuarioId: UsuarioIdInp
-    //                 });
-        
-    //                 res.status(201).send("Created");  
-    //             }
-    //         });
-
-    //     }else {
-    //         res.status(409).send("Duplicate");
-
-    //     }
-        
-    // }).catch((err) => {
-    //     res.status(400).send(err.message);
-    //     console.log(err.message);
-
-    // });
-
 });
 
 router.get('/verify/:hashString', (req, res) => {

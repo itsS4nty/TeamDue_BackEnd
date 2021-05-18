@@ -117,7 +117,6 @@ router.post('/register', (req, res) => {
 router.post('/createFile',  upload.single("file"), (req, res) => {
     console.log("Entrando por POST /createFile");
     const { UsuarioId:UsuarioIdInp } = req.body;
-
     const nameArray =  req.file.originalname.split(".");
 
     db.Archivos.findOne({where: { [Op.and]: [{UsuarioId:UsuarioIdInp}, {nombre:nameArray[0]}, {tipo: nameArray[1]}] }}).then((findedArchivo) => {
@@ -127,13 +126,10 @@ router.post('/createFile',  upload.single("file"), (req, res) => {
                     res.status(409).send("User not exists");
 
                 }else {
-                    console.log("entra");
-
                     var fileName = req.file.path.split("/");
                     fileName[3] = "files";
                     fileName[fileName.length - 1] = findedUsuario.usuario;
                     fileName[fileName.length] = req.file.originalname;
-                    console.log(fileName.join("/"));
                     fs.renameSync(req.file.path, fileName.join("/"));
 
                     db.Archivos.create({
@@ -148,6 +144,7 @@ router.post('/createFile',  upload.single("file"), (req, res) => {
 
 
         }else {
+            fs.unlinkSync(req.file.path);
             res.status(409).send("Duplicate");
         }
 

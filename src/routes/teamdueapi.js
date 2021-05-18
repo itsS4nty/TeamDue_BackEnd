@@ -134,7 +134,7 @@ router.post('/createFile',  upload.single("file"), (req, res) => {
                     fileName[fileName.length - 1] = findedUsuario.usuario;
                     fileName[fileName.length] = req.file.originalname;
                     console.log(fileName.join("/"));
-                    fs.rename(req.file.path, fileName.join("/"));
+                    fs.renameSync(req.file.path, fileName.join("/"));
 
                     db.Archivos.create({
                         nombre: nameArray[0],

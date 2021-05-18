@@ -198,6 +198,40 @@ router.post('/createFile',  upload.single("file"), (req, res) => {
     });
 });
 
+router.post('/saveFile', upload.single("file"), (req, res) => {
+    const { idArchivo } = req.body;
+
+    db.Archivos.findOne({where: {id:idArchivo}}).then((findedArchivo) => {
+        if (findedArchivo === null) {
+            fs.unlinkSync(req.file.path);
+            res.status(409).send("File not exists");
+
+        }else {
+            db.Usuarios.findOne({where: {id: findedArchivo.UsuarioId}}).then((findedUsuario) => {
+                if (findedUsuario === null) {
+                    fs.unlinkSync(req.file.path);
+                    res.status(409).send("User not exists");
+
+                }else {
+                    var fileName = req.file.path.split("/");
+                    fileName[3] = "files";
+                    fileName[fileName.length - 1] = findedUsuario.usuario;
+                    fileName[fileName.length] = req.file.originalname;
+                    fs.renameSync(req.file.path, fileName.join("/"));
+                    res.send("Archivo guardado");
+
+                }
+            });
+        }
+
+    }).catch((err) => {
+        fs.unlinkSync(req.file.path);
+        res.status(400).send(err.message);
+        console.log(err.message);
+    });
+
+});
+
 router.get('/verify/:hashString', (req, res) => {
     console.log("Entrando por GET /verify/:hashString");
     const { hashString } = req.params;

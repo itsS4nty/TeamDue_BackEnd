@@ -13,10 +13,10 @@ const { sendEmail } = require("../mail/confEmail");
 // const bodyParser = require("body-parser");
 const multer = require("multer");
 const storage = multer({
-    destination:(req, file, cb) => {
+    destination: function(req, file, cb) {
         cb(null, "/home/teamdue/tmp")
     },
-    filename:(req, file, cb) => {
+    filename: function(req, file, cb) {
         cb(null, file.filename)
     }
 });

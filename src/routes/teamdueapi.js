@@ -130,7 +130,7 @@ router.post('/createFile',  upload.single("file"), (req, res) => {
                     console.log("entra");
 
                     var fileName = req.file.path.split("/");
-                    fileName[3]] = "files";
+                    fileName[3] = "files";
                     fileName[fileName.length - 1] = findedUsuario.usuario;
                     fileName[fileName.length] = req.file.originalname;
                     console.log(fileName.join("/"));

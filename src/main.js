@@ -65,6 +65,11 @@ io.on("connection", (socket) => {
         io.to(array[1]).emit("filters", data);
     })
 
+    socket.on("refresh-image", (data) => {
+        let array = Array.from(socket.rooms);
+        io.to(array[1]).emit("refresh-image", data);
+    })
+
     socket.on("peticionSala-enviada", (data) => {
         console.log(socket.id + " entrando por peticionSala-enviada");
         for (var i = 0; i < gameRooms.length; i++) {

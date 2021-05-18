@@ -121,7 +121,7 @@ router.post('/createFile',  upload.single("file"), (req, res) => {
     fileName[fileName.length - 1] = req.file.originalname;
     fs.renameSync(req.file.path, fileName.join("/"));
 
-    console.log(nombreInp);
+    // console.log(nombreInp);
 
     // console.log("archivo" + req.file);
     // console.log(req.file.originalname);

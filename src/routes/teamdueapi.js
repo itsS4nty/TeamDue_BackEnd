@@ -108,7 +108,7 @@ router.post('/createFile', (req, res) => {
     console.log("Entrando por POST /createFile");
     // const { nombre:nombreInp, tipo:tipoInp, UsuarioId:UsuarioIdInp, file } = req.body;
     
-    console.log(req.files.photo);
+    console.log(req.files);
     
     // var upload = multer({dest: "/home/teamdue/files"})
     // upload.single("file")

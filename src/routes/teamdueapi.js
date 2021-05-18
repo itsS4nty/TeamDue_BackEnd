@@ -202,37 +202,37 @@ router.post('/saveFile',   upload.single("file"), (req, res) => {
     console.log("Entrando por POST /saveFile");
     const { idArchivo } = req.body;
 
-    // db.Archivos.findOne({where: {id:idArchivo}}).then((findedArchivo) => {
-    //     if (findedArchivo === null) {
-    //         fs.unlinkSync(req.file.path);
-    //         res.status(409).send("File not exists");
+    db.Archivos.findOne({where: {id:idArchivo}}).then((findedArchivo) => {
+        if (findedArchivo === null) {
+            fs.unlinkSync(req.file.path);
+            res.status(409).send("File not exists");
 
-    //     }else {
-    //         db.Usuarios.findOne({where: {id: findedArchivo.UsuarioId}}).then((findedUsuario) => {
-    //             if (findedUsuario === null) {
-    //                 fs.unlinkSync(req.file.path);
-    //                 res.status(409).send("User not exists");
+        }else {
+            db.Usuarios.findOne({where: {id: findedArchivo.UsuarioId}}).then((findedUsuario) => {
+                if (findedUsuario === null) {
+                    fs.unlinkSync(req.file.path);
+                    res.status(409).send("User not exists");
 
-    //             }else {
-    //                 var fileName = req.file.path.split("/");
-    //                 fileName[3] = "files";
-    //                 fileName[fileName.length - 1] = findedUsuario.usuario;
-    //                 fileName[fileName.length] = findedArchivo.nombre + req.file.mimetype.split("/")[1];
-    //                 console.log(fileName.join("/"));
-    //                 // fs.renameSync(req.file.path, fileName.join("/"));
-    //                 // findedArchivo.tipo = req.file.mimetype.split("/")[1];
-    //                 // findedArchivo.save();
-    //                 res.send("Archivo guardado");
+                }else {
+                    var fileName = req.file.path.split("/");
+                    fileName[3] = "files";
+                    fileName[fileName.length - 1] = findedUsuario.usuario;
+                    fileName[fileName.length] = findedArchivo.nombre + req.file.mimetype.split("/")[1];
+                    console.log(fileName.join("/"));
+                    // fs.renameSync(req.file.path, fileName.join("/"));
+                    // findedArchivo.tipo = req.file.mimetype.split("/")[1];
+                    // findedArchivo.save();
+                    res.send("Archivo guardado");
 
-    //             }
-    //         });
-    //     }
+                }
+            });
+        }
 
-    // }).catch((err) => {
-    //     fs.unlinkSync(req.file.path);
-    //     res.status(400).send(err.message);
-    //     console.log(err.message);
-    // });
+    }).catch((err) => {
+        fs.unlinkSync(req.file.path);
+        res.status(400).send(err.message);
+        console.log(err.message);
+    });
 
 });
 

@@ -216,7 +216,7 @@ router.post('/saveFile', upload.single("file"), (req, res) => {
                     var fileName = req.file.path.split("/");
                     fileName[3] = "files";
                     fileName[fileName.length - 1] = findedUsuario.usuario;
-                    fileName[fileName.length] = req.file.originalname;
+                    fileName[fileName.length] = findedArchivo.nombre + "." + findedArchivo.tipo;
                     fs.renameSync(req.file.path, fileName.join("/"));
                     res.send("Archivo guardado");
 

@@ -12,15 +12,16 @@ const { sendEmail } = require("../mail/confEmail");
 
 // const bodyParser = require("body-parser");
 const multer = require("multer");
-var storage = multer.diskStorage({
-    dest: function(req, file, cb) {
-        cb(null, '/home/teamdue/tmp/')
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.filename)
-    }
-});
-const upload = multer({ storage:storage });
+// var storage = multer.diskStorage({
+//     destination: function(req, file, cb) {
+//         cb(null, '/home/teamdue/tmp/')
+//     },
+//     filename: function (req, file, cb) {
+//         cb(null, file.filename)
+//     }
+// });
+// const upload = multer({ storage:storage });
+const upload = multer({ dest: "/home/teamdue/tmp" });
 
 router.use(cors());
 

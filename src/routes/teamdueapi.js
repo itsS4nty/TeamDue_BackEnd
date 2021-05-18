@@ -123,6 +123,7 @@ router.post('/createFile',  upload.single("file"), (req, res) => {
         if (findedArchivo === null) {
             db.Usuarios.findOne({where: {id: UsuarioIdInp}}).then((findedUsuario) => {
                 if (findedUsuario === null) {
+                    fs.unlinkSync(req.file.path);
                     res.status(409).send("User not exists");
 
                 }else {
@@ -149,6 +150,7 @@ router.post('/createFile',  upload.single("file"), (req, res) => {
         }
 
     }).catch((err) => {
+        fs.unlinkSync(req.file.path);
         res.status(400).send(err.message);
         console.log(err.message);
 

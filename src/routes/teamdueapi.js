@@ -218,10 +218,9 @@ router.post('/saveFile',   upload.single("file"), (req, res) => {
                     fileName[3] = "files";
                     fileName[fileName.length - 1] = findedUsuario.usuario;
                     fileName[fileName.length] = findedArchivo.nombre + "." + req.file.mimetype.split("/")[1];
-                    console.log(fileName.join("/"));
-                    // fs.renameSync(req.file.path, fileName.join("/"));
-                    // findedArchivo.tipo = req.file.mimetype.split("/")[1];
-                    // findedArchivo.save();
+                    fs.renameSync(req.file.path, fileName.join("/"));
+                    findedArchivo.tipo = req.file.mimetype.split("/")[1];
+                    findedArchivo.save();
                     res.send("Archivo guardado");
 
                 }

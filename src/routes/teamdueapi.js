@@ -116,17 +116,16 @@ router.post('/register', (req, res) => {
 
 router.post('/createFile',  upload.single("file"), (req, res) => {
     console.log("Entrando por POST /createFile");
-    // const { nombre:nombreInp, tipo:tipoInp, UsuarioId:UsuarioIdInp, file } = req.body;
+    const { nombre:nombreInp, tipo:tipoInp, UsuarioId:UsuarioIdInp } = req.body;
     var fileName = req.file.path.split("/");
     fileName[fileName.length - 1] = req.file.originalname;
     fs.renameSync(req.file.path, fileName.join("/"));
-    console.log("archivo" + req.file);
-    console.log(req.file.originalname);
-    console.log(req.file.fieldname);
-    
-    // var upload = multer({dest: "/home/teamdue/files"})
-    // upload.single("file")
-    // console.log(req);
+
+    console.log(nombreInp);
+
+    // console.log("archivo" + req.file);
+    // console.log(req.file.originalname);
+    // console.log(req.file.fieldname);
 
     // db.Archivos.findOne({where: { [Op.and]: [{UsuarioId:UsuarioIdInp}, {nombre:nombreInp}, {tipo:tipoInp}] }}).then((findedArchivo) => {
     //     if (findedArchivo === null) {

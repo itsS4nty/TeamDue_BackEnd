@@ -7,20 +7,8 @@ const db = require('../.././models');
 const { Op } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
-
 const { sendEmail } = require("../mail/confEmail");
-
-// const bodyParser = require("body-parser");
 const multer = require("multer");
-// var storage = multer.diskStorage({
-//     destination: function(req, file, cb) {
-//         cb(null, '/home/teamdue/tmp/')
-//     },
-//     filename: function (req, file, cb) {
-//         cb(null, file.filename)
-//     }
-// });
-// const upload = multer({ storage:storage });
 const upload = multer({ dest: "/home/teamdue/tmp" });
 
 router.use(cors());
@@ -35,6 +23,33 @@ router.get('/files/:id', (req, res) => {
         res.status(400).send(err.message);
         console.log(err.message);
 
+    });
+});
+
+routeger.get('/file/:id', (req, res) => {
+    console.log("Entrando por GET /file/id");
+    const { id:idArchivo } = req.params;
+
+    db.Archivos.findOne({where: {id:idArchivo}}).then((findedArchivo) => {
+        if (findedArchivo === null) {
+            res.status(409).send("File not exists");
+
+        }else {
+            db.Usuarios.findOne({where: {id: UsuarioIdInp}}).then((findedUsuario) => {
+                if (findedUsuario === null) {
+                    res.status(409).send("User not exists");
+
+                }else {
+                    var dir = "/home/teamdue/files/" + findedUsuario.usuario + "/" + findedArchivo.nombre;
+                    res.download(dir);
+
+                }
+            });
+        }
+
+    }).catch((err) => {
+        res.status(400).send(err.message);
+        console.log(err.message);
     });
 });
 
@@ -142,7 +157,6 @@ router.post('/createFile',  upload.single("file"), (req, res) => {
                     res.status(201).send("Created");  
                 }
             });
-
 
         }else {
             fs.unlinkSync(req.file.path);

@@ -12,7 +12,7 @@ const { sendEmail } = require("../mail/confEmail");
 
 // const bodyParser = require("body-parser");
 const multer = require("multer");
-const storage = multer({
+const storage = multer.diskStorage({
     destination: function(req, file, cb) {
         cb(null, "/home/teamdue/tmp")
     },

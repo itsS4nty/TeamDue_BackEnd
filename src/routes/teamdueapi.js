@@ -106,12 +106,12 @@ router.post('/register', (req, res) => {
 
 router.post('/createFile', (req, res) => {
     console.log("Entrando por POST /createFile");
-    const { nombre:nombreInp, tipo:tipoInp, UsuarioId:UsuarioIdInp, file } = req.body;
+    // const { nombre:nombreInp, tipo:tipoInp, UsuarioId:UsuarioIdInp, file } = req.body;
     
-    console.log(file);
+    console.log(req.file);
     
-    var upload = multer({dest: "/home/teamdue/files"})
-    upload.single("file")
+    // var upload = multer({dest: "/home/teamdue/files"})
+    // upload.single("file")
     // console.log(req);
 
     // db.Archivos.findOne({where: { [Op.and]: [{UsuarioId:UsuarioIdInp}, {nombre:nombreInp}, {tipo:tipoInp}] }}).then((findedArchivo) => {

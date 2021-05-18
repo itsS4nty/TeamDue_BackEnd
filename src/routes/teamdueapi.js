@@ -127,12 +127,14 @@ router.post('/createFile',  upload.single("file"), (req, res) => {
                     res.status(409).send("User not exists");
 
                 }else {
-                    var fileName = req.file.path.split("/");
-                    fileName[2] = "files";
-                    fileName[fileName.length - 1] = findedUsuario.usuario;
-                    fileName[fileName.length] = req.file.originalname;
-                    console.log(fileName.join("/"));
-                    fs.rename(req.file.path, fileName.join("/"));
+                    console.log("entra");
+
+                    // var fileName = req.file.path.split("/");
+                    // fileName[2] = "files";
+                    // fileName[fileName.length - 1] = findedUsuario.usuario;
+                    // fileName[fileName.length] = req.file.originalname;
+                    // console.log(fileName.join("/"));
+                    // fs.rename(req.file.path, fileName.join("/"));
 
                     db.Archivos.create({
                         nombre: nameArray[0],

@@ -14,7 +14,7 @@ const upload = multer({ dest: "/home/teamdue/tmp" });
 router.use(cors());
 
 router.get('/files/:id', (req, res) => {
-    console.log("Entrando por GET /files/id");
+    console.log("Entrando por GET /files/:id");
     const { id } = req.params;
     db.Archivos.findAll({where: { UsuarioId: id }}).then((findedArchivo) => {
         res.json(findedArchivo);
@@ -27,7 +27,7 @@ router.get('/files/:id', (req, res) => {
 });
 
 router.get('/file/:id', (req, res) => {
-    console.log("Entrando por GET /file/id");
+    console.log("Entrando por GET /file/:id");
     const { id:idArchivo } = req.params;
 
     db.Archivos.findOne({where: {id:idArchivo}}).then((findedArchivo) => {
@@ -42,6 +42,33 @@ router.get('/file/:id', (req, res) => {
                 }else {
                     var dir = "/home/teamdue/files/" + findedUsuario.usuario + "/" + findedArchivo.nombre + "." + findedArchivo.tipo;
                     res.sendFile(dir);
+
+                }
+            });
+        }
+
+    }).catch((err) => {
+        res.status(400).send(err.message);
+        console.log(err.message);
+    });
+});
+
+router.get('/downloadFile/:id', (req, res) => {
+    console.log("Entrando por GET /downloadFile/:id");
+    const { id:idArchivo } = req.params;
+
+    db.Archivos.findOne({where: {id:idArchivo}}).then((findedArchivo) => {
+        if (findedArchivo === null) {
+            res.status(409).send("File not exists");
+
+        }else {
+            db.Usuarios.findOne({where: {id: findedArchivo.UsuarioId}}).then((findedUsuario) => {
+                if (findedUsuario === null) {
+                    res.status(409).send("User not exists");
+
+                }else {
+                    var dir = "/home/teamdue/files/" + findedUsuario.usuario + "/" + findedArchivo.nombre + "." + findedArchivo.tipo;
+                    res.download(dir);
 
                 }
             });

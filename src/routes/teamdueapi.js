@@ -156,7 +156,7 @@ router.post('/register', (req, res) => {
     });
 });
 
-router.post('/createFile',  upload.single("file"), (req, res) => {
+router.post('/createFile', upload.single("file"), (req, res) => {
     console.log("Entrando por POST /createFile");
     const { UsuarioId:UsuarioIdInp } = req.body;
     const nameArray =  req.file.originalname.split(".");
@@ -198,7 +198,7 @@ router.post('/createFile',  upload.single("file"), (req, res) => {
     });
 });
 
-router.post('/saveFile',   upload.single("file"), (req, res) => {
+router.post('/saveFile', upload.single("file"), (req, res) => {
     console.log("Entrando por POST /saveFile");
     const { idArchivo } = req.body;
 

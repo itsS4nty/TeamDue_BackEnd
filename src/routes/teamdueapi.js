@@ -26,7 +26,7 @@ router.get('/files/:id', (req, res) => {
     });
 });
 
-routeger.get('/file/:id', (req, res) => {
+router.get('/file/:id', (req, res) => {
     console.log("Entrando por GET /file/id");
     const { id:idArchivo } = req.params;
 

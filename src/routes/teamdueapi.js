@@ -116,16 +116,43 @@ router.post('/register', (req, res) => {
 
 router.post('/createFile',  upload.single("file"), (req, res) => {
     console.log("Entrando por POST /createFile");
-    const { nombre:nombreInp, tipo:tipoInp, UsuarioId:UsuarioIdInp } = req.body;
-    var fileName = req.file.path.split("/");
-    fileName[fileName.length - 1] = req.file.originalname;
-    fs.renameSync(req.file.path, fileName.join("/"));
+    const { UsuarioId:UsuarioIdInp } = req.body;
 
-    console.log(nombreInp);
+    const nameArray = req.file.originalname(".");
+    db.Archivos.findOne({where: { [Op.and]: [{UsuarioId:UsuarioIdInp}, {nombre:nameArray[0]}, {tipo: nameArray[1]}] }}).then((findedArchivo) => {
+        if (findedArchivo === null) {
+            db.Usuarios.findOne({where: {id: UsuarioIdInp}}).then((findedUsuario) => {
+                if (findedUsuario === null) {
+                    res.status(409).send("User not exists");
 
-    // console.log("archivo" + req.file);
-    // console.log(req.file.originalname);
-    // console.log(req.file.fieldname);
+                }else {
+                    var fileName = req.file.path.split("/");
+                    fileName[2] = "files";
+                    fileName[fileName.length - 1] = findedUsuario.usuario;
+                    fileName[fileName.length] = req.file.originalname;
+                    fs.renameSync(req.file.path, fileName.join("/"));
+
+                    db.Archivos.create({
+                        nombre: nameArray[0],
+                        tipo: nameArray[1],
+                        UsuarioId: UsuarioIdInp
+                    });
+        
+                    res.status(201).send("Created");  
+                }
+            });
+
+
+        }else {
+            res.status(409).send("Duplicate");
+        }
+
+    }).catch((err) => {
+        res.status(400).send(err.message);
+        console.log(err.message);
+
+    });
+
 
     // db.Archivos.findOne({where: { [Op.and]: [{UsuarioId:UsuarioIdInp}, {nombre:nombreInp}, {tipo:tipoInp}] }}).then((findedArchivo) => {
     //     if (findedArchivo === null) {

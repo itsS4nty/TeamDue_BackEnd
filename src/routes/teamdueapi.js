@@ -116,7 +116,7 @@ router.post('/register', (req, res) => {
 
 router.post('/createFile',  upload.single("file"), (req, res) => {
     console.log("Entrando por POST /createFile");
-    const { nombre:nombreInp, tipo:tipoInp, UsuarioId:UsuarioIdInp } = req.body;
+    // const { nombre:nombreInp, tipo:tipoInp, UsuarioId:UsuarioIdInp } = req.body;
     var fileName = req.file.path.split("/");
     fileName[fileName.length - 1] = req.file.originalname;
     fs.renameSync(req.file.path, fileName.join("/"));

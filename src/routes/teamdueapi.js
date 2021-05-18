@@ -41,7 +41,7 @@ router.get('/file/:id', (req, res) => {
 
                 }else {
                     var dir = "/home/teamdue/files/" + findedUsuario.usuario + "/" + findedArchivo.nombre + "." + findedArchivo.tipo;
-                    res.send(dir);
+                    res.send(dir.buffer);
 
                 }
             });

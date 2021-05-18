@@ -217,7 +217,7 @@ router.post('/saveFile',   upload.single("file"), (req, res) => {
                     var fileName = req.file.path.split("/");
                     fileName[3] = "files";
                     fileName[fileName.length - 1] = findedUsuario.usuario;
-                    fileName[fileName.length] = findedArchivo.nombre + req.file.mimetype.split("/")[1];
+                    fileName[fileName.length] = findedArchivo.nombre + "." + req.file.mimetype.split("/")[1];
                     console.log(fileName.join("/"));
                     // fs.renameSync(req.file.path, fileName.join("/"));
                     // findedArchivo.tipo = req.file.mimetype.split("/")[1];

@@ -40,6 +40,7 @@ router.get('/file/:id', (req, res) => {
                     res.status(409).send("User not exists");
 
                 }else {
+                    console.log(__dirname);
                     var dir = "/home/teamdue/files/" + findedUsuario.usuario + "/" + findedArchivo.nombre + "." + findedArchivo.tipo;
                     res.download(dir);
 

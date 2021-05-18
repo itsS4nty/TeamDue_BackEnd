@@ -35,7 +35,7 @@ router.get('/file/:id', (req, res) => {
             res.status(409).send("File not exists");
 
         }else {
-            db.Usuarios.findOne({where: {id: UsuarioIdInp}}).then((findedUsuario) => {
+            db.Usuarios.findOne({where: {id: findedArchivo.UsuarioId}}).then((findedUsuario) => {
                 if (findedUsuario === null) {
                     res.status(409).send("User not exists");
 

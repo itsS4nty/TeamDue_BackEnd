@@ -17,7 +17,6 @@ module.exports = {
         type: Sequelize.STRING
       },      
       apellido2: {
-        allowNull: true,
         type: Sequelize.STRING
       },
       correo: {

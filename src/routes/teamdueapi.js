@@ -23,7 +23,7 @@ router.get('/files/:id', (req, res) => {
     const { id } = req.params;
     const { token } = req.headers;
 
-    validateToken(token, app.get("llave")).then((respuestaToken) => {
+    validateToken(token, app.get("llave")).then(respuestaToken => {
         console.log(respuestaToken);
     })
 

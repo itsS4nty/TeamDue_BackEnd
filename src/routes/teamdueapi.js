@@ -221,6 +221,7 @@ router.post('/createFile', upload.single("file"), (req, res) => {
     if (token) {
         jwt.verify(token, app.get("llave"), (err, decoded) => {
             if (err) {
+                fs.unlinkSync(req.file.path);
                 res.status(401).send("Token no valido"); 
                 
             }else {

@@ -26,6 +26,7 @@ router.get('/files/:id', (req, res) => {
     validateToken(token, app.get("llave")).then(respuestaToken => {
         if (respuestaToken) {
             db.Archivos.findAll({where: { UsuarioId: id }}).then((findedArchivo) => {
+                createLog("Guardando cambios en el archivo alojado en el servidor", id);
                 res.json(findedArchivo);
                 
             }).catch((err) => {
@@ -58,6 +59,7 @@ router.get('/file/:id', (req, res) => {
         
                         }else {
                             var dir = "/home/teamdue/files/" + findedUsuario.usuario + "/" + findedArchivo.nombre + "." + findedArchivo.tipo;
+                            createLog("Obteniendo archivo del servidor", findedUsuario.id);
                             res.sendFile(dir);
         
                         }
@@ -93,6 +95,7 @@ router.get('/downloadFile/:id', (req, res) => {
         
                         }else {
                             var dir = "/home/teamdue/files/" + findedUsuario.usuario + "/" + findedArchivo.nombre + "." + findedArchivo.tipo;
+                            createLog("Descargando archivo del servidor", findedUsuario.id);
                             res.download(dir);
         
                         }
@@ -227,7 +230,7 @@ router.post('/createFile', upload.single("file"), (req, res) => {
                                 tipo: nameArray[1],
                                 UsuarioId: UsuarioIdInp
                             });
-                
+                            createLog("Creacion de fichero", findedUsuario.id);
                             res.status(201).send("Created");  
                         }
                     });
@@ -278,6 +281,7 @@ router.post('/saveFile', upload.single("file"), (req, res) => {
                             fs.renameSync(req.file.path, fileName.join("/"));
                             findedArchivo.tipo = req.file.mimetype.split("/")[1];
                             findedArchivo.save();
+                            createLog("Guardando cambios en el archivo alojado en el servidor", findedUsuario.id);
                             res.send("Archivo guardado");
         
                         }
@@ -319,6 +323,8 @@ router.get('/verify/:hashString', (req, res) => {
                                 console.log(error.message);
     
                             }else{
+                                createLog("Usuario validado", element.id);
+                                createLog("Directorio en el servidor creado", element.id);
                                 console.log("Directorio del usuario creado con exito");
                             }
                         })

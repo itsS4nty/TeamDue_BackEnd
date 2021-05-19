@@ -118,7 +118,7 @@ router.post('/register', (req, res) => {
     db.Usuarios.findOne({where: { [Op.or]: [{usuario: usuarioInp}, {correo: correoInp}]}}).then((findedArchivo) => {
         if (findedArchivo === null) {
             hashPassword(password).then(passEncrypt => {         
-                var usu = db.Usuarios.create({
+                db.Usuarios.create({
                     nombre: nombreInp,
                     apellido1: apellido1Inp,
                     apellido2: apellido2Inp,
@@ -129,15 +129,13 @@ router.post('/register', (req, res) => {
                     validado: 0,
                     fecha_registro: new Date()
         
-                });
-
-                console.log(usu);
-
-                db.ConfiguracionUsuario.create({
-                    tema_oscuro: 0,
-                    mandar_correo: 1,
-                    UsuarioId: usu["id"]
-
+                }).then(usu => {
+                    db.ConfiguracionUsuario.create({
+                        tema_oscuro: 0,
+                        mandar_correo: 1,
+                        UsuarioId: usu["id"]
+    
+                    });
                 });
                 
                 hashPassword(usuarioInp).then(usserHash => {

@@ -13,7 +13,7 @@ const { sendEmail } = require("../mail/confEmail");
 const multer = require("multer");
 const upload = multer({ dest: "/home/teamdue/tmp" });
 const app = express();
-const { validate } = require("../jwt/validate.js");
+const { validateToken } = require("../jwt/validate.js");
 
 app.set("llave", config.keyMaster);
 router.use(cors());
@@ -23,20 +23,22 @@ router.get('/files/:id', (req, res) => {
     const { id } = req.params;
     const { token } = req.headers;
 
-    validate(token, app.get("llave")).then((respuesta) => {
-        if (respuesta) {
-            db.Archivos.findAll({where: { UsuarioId: id }}).then((findedArchivo) => {
-                res.json(findedArchivo);
+    console.log(validateToken(token, app.get("llave")));
+
+    // validate(token, app.get("llave")).then((respuesta) => {
+    //     if (respuesta) {
+    //         db.Archivos.findAll({where: { UsuarioId: id }}).then((findedArchivo) => {
+    //             res.json(findedArchivo);
                 
-            }).catch((err) => {
-                res.status(400).send(err.message);
-                console.log(err.message);
+    //         }).catch((err) => {
+    //             res.status(400).send(err.message);
+    //             console.log(err.message);
         
-            });
-        }else {
-            res.status(403).send("Token no valido");
-        }
-    })
+    //         });
+    //     }else {
+    //         res.status(403).send("Token no valido");
+    //     }
+    // })
 
     // if (validate(token, app.get("llave"))) {
     //     db.Archivos.findAll({where: { UsuarioId: id }}).then((findedArchivo) => {

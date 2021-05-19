@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-function validate(token, llave) {
+function validateToken(token, llave) {
     if (token) {
         jwt.verify(token, llave, (err, decoded) => {
             if (err) {
@@ -8,7 +8,7 @@ function validate(token, llave) {
 
             }else {
                 return true;
-                
+
             }
         })
 
@@ -18,6 +18,6 @@ function validate(token, llave) {
 }
 
 module.exports = {
-    validate: validate
+    validateToken: validateToken
 
 }

@@ -133,7 +133,7 @@ router.post('/login', (req, res) => {
                             check: true
                         };
                         const token = jwt.sign(payload, app.get("llave"), {
-                            expiresIn: 2
+                            expiresIn: 3600
                         });
                         res.json({
                             mensaje: "Autenticacion correcta",

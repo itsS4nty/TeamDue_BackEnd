@@ -19,7 +19,6 @@ router.use(cors());
 
 router.post('/autenticarToken', (req, res) => {
     const { usuario, password } = req.body;
-    console.log(usuario + " . " + password);
     if (usuario === "keko" && password === "Admin123") {
         const payload = {
             check: true
@@ -43,17 +42,24 @@ router.get('/files/:id', (req, res) => {
     const { id } = req.params;
     const { token } = req.headers;
     if (token) {
-        db.Archivos.findAll({where: { UsuarioId: id }}).then((findedArchivo) => {
-            res.json(findedArchivo);
+        jwt.verify(token, app.get("llave"), (err, decoded) => {
+            if (err) {
+                res.status(401).send("Token no valido"); 
+
+            }else {
+                db.Archivos.findAll({where: { UsuarioId: id }}).then((findedArchivo) => {
+                    res.json(findedArchivo);
+                    
+                }).catch((err) => {
+                    res.status(400).send(err.message);
+                    console.log(err.message);
             
-        }).catch((err) => {
-            res.status(400).send(err.message);
-            console.log(err.message);
-    
+                });
+            }
         });
 
     }else {
-        res.status(401).send("Token no valido");
+        res.status(400).send("Token no proveido");
         
     }
 });

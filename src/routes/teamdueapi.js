@@ -23,7 +23,7 @@ router.get('/files/:id', (req, res) => {
     const { id } = req.params;
     const { token } = req.headers;
     
-    if (validate(token, app)) {
+    if (validate(token, app.get("llave"))) {
         db.Archivos.findAll({where: { UsuarioId: id }}).then((findedArchivo) => {
             res.json(findedArchivo);
             
@@ -35,7 +35,7 @@ router.get('/files/:id', (req, res) => {
 
     }else {
         res.status(403).send("Token no valido");
-        
+
     }
 
     // if (token) {

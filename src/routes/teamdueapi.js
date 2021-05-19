@@ -13,7 +13,7 @@ const { sendEmail } = require("../mail/confEmail");
 const multer = require("multer");
 const upload = multer({ dest: "/home/teamdue/tmp" });
 const app = express();
-// const { validateToken } = require("../jwt/validate.js");
+const { validateToken } = require("../jwt/validate.js");
 
 app.set("llave", config.keyMaster);
 router.use(cors());
@@ -417,26 +417,6 @@ async function hashPassword(password) {
 async function hashPasswordIsSame(passwordHash, password2) { 
     return await bcrypt.compare(password2, passwordHash);
 
-}
-
-async function validateToken(token) {
-    var boolValidate;
-    if (token) {
-        jwt.verify(token, app.get("llave"), (err, decoded) => {
-            if (err) {
-                boolValidate = false;
-
-            }else {
-                boolValidate = true
-
-            }
-        })
-
-    }else {
-        boolValidate = false
-    }
-
-    return boolValidate;
 }
 
 module.exports = router;

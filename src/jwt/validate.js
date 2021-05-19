@@ -1,22 +1,23 @@
 const jwt = require('jsonwebtoken');
 
-function validateToken(token, llave) {
+function validateToken(token) {
+    var boolValidate;
     if (token) {
-        jwt.verify(token, llave, (err, decoded) => {
+        jwt.verify(token, app.get("llave"), (err, decoded) => {
             if (err) {
-                return false;
+                boolValidate = false;
 
             }else {
-                console.log("ho");
-                return "holas";
-                return true;
+                boolValidate = true
 
             }
         })
 
     }else {
-        return false;
+        boolValidate = false
     }
+
+    return boolValidate;
 }
 
 module.exports = {

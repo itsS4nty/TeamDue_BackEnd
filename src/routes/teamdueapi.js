@@ -129,7 +129,18 @@ router.post('/login', (req, res) => {
             hashPasswordIsSame(findedArchivo["password"], password).then(isSame => {
                 if (isSame) {
                     if (findedArchivo["validado"] == 1) {
-                        res.json(findedArchivo);
+                        const payload = {
+                            check: true
+                        };
+                        const token = jwt.sign(payload, app.get("llave"), {
+                            expiresIn: 1440
+                        });
+                        res.json({
+                            mensaje: "Autenticacion correcta",
+                            token: token,
+                            usuario: findedArchivo
+                        })
+                        // res.json(findedArchivo);
 
                     }else {
                         res.status(403).send("Usuario no validado");

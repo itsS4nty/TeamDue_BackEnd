@@ -1,4 +1,6 @@
 const express = require("express");
+const jwt = require('jsonwebtoken');
+const config = require('../jwt/conf.js');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const cors = require('cors');
@@ -11,6 +13,8 @@ const { sendEmail } = require("../mail/confEmail");
 const multer = require("multer");
 const upload = multer({ dest: "/home/teamdue/tmp" });
 
+
+console.log(config.keyMaster);
 router.use(cors());
 
 router.get('/files/:id', (req, res) => {

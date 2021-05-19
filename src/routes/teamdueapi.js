@@ -13,6 +13,7 @@ const { sendEmail } = require("../mail/confEmail");
 const multer = require("multer");
 const upload = multer({ dest: "/home/teamdue/tmp" });
 const app = express();
+const { validate } = require("../jwt/validate.js");
 
 app.set("llave", config.keyMaster);
 router.use(cors());
@@ -21,27 +22,43 @@ router.get('/files/:id', (req, res) => {
     console.log("Entrando por GET /files/:id");
     const { id } = req.params;
     const { token } = req.headers;
-    if (token) {
-        jwt.verify(token, app.get("llave"), (err, decoded) => {
-            if (err) {
-                res.status(401).send("Token no valido"); 
-
-            }else {
-                db.Archivos.findAll({where: { UsuarioId: id }}).then((findedArchivo) => {
-                    res.json(findedArchivo);
-                    
-                }).catch((err) => {
-                    res.status(400).send(err.message);
-                    console.log(err.message);
+    
+    if (validate(token, app)) {
+        db.Archivos.findAll({where: { UsuarioId: id }}).then((findedArchivo) => {
+            res.json(findedArchivo);
             
-                });
-            }
+        }).catch((err) => {
+            res.status(400).send(err.message);
+            console.log(err.message);
+    
         });
 
     }else {
-        res.status(400).send("Token no proveido");
+        res.status(403).send("Token no valido");
         
     }
+
+    // if (token) {
+    //     jwt.verify(token, app.get("llave"), (err, decoded) => {
+    //         if (err) {
+    //             res.status(401).send("Token no valido"); 
+
+    //         }else {
+    //             db.Archivos.findAll({where: { UsuarioId: id }}).then((findedArchivo) => {
+    //                 res.json(findedArchivo);
+                    
+    //             }).catch((err) => {
+    //                 res.status(400).send(err.message);
+    //                 console.log(err.message);
+            
+    //             });
+    //         }
+    //     });
+
+    // }else {
+    //     res.status(400).send("Token no proveido");
+        
+    // }
 });
 
 router.get('/file/:id', (req, res) => {

@@ -1,9 +1,9 @@
 const jwt = require('jsonwebtoken');
 
-function validateToken(token) {
+function validateToken(token, llave) {
     var boolValidate;
     if (token) {
-        jwt.verify(token, app.get("llave"), (err, decoded) => {
+        jwt.verify(token, llave, (err, decoded) => {
             if (err) {
                 boolValidate = false;
 

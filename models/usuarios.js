@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
       Usuarios.hasMany(models.Logs, {as: 'Logs'});
       Usuarios.hasMany(models.Archivos, {as: 'Archivos'});
       Usuarios.hasMany(models.ConfiguracionEditor, {as: 'ConfiguracionEditor'});
-      Usuarios.hasMany(models.ConfiguracionUsuario, {as: 'ConfiguracionUsuario'});
     }
   };
   Usuarios.init({

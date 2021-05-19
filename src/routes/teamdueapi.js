@@ -114,13 +114,14 @@ router.post('/login', (req, res) => {
 
 router.post('/register', (req, res) => {
     console.log("Entrando por POST /register");
-    const { nombre:nombreInp, apellidos:apellidosInp, correo:correoInp, usuario:usuarioInp, password } = req.body;
+    const { nombre:nombreInp, apellido1:apellido1Inp, apellido2:apellido2Inp, correo:correoInp, usuario:usuarioInp, password } = req.body;
     db.Usuarios.findOne({where: { [Op.or]: [{usuario: usuarioInp}, {correo: correoInp}]}}).then((findedArchivo) => {
         if (findedArchivo === null) {
             hashPassword(password).then(passEncrypt => {         
                 var usu = db.Usuarios.create({
                     nombre: nombreInp,
-                    apellidos: apellidosInp,
+                    apellido1: apellido1Inp,
+                    apellido2: apellido2Inp,
                     correo: correoInp,
                     usuario: usuarioInp,
                     password: passEncrypt,

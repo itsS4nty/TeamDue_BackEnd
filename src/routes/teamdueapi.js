@@ -134,7 +134,7 @@ router.post('/register', (req, res) => {
                 db.ConfiguracionUsuario.create({
                     tema_oscuro: 0,
                     mandar_correo: 1,
-                    UsuarioId: usu["id"]
+                    UsuarioId: 2
 
                 });
                 

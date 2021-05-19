@@ -3,8 +3,8 @@ Backend
 
 BASE DE DATOS:
 
-Para migrar la base de datos: sequelize db:migrate
-Para deshacer la migracion: sequelize db:migrate:undo:all
+Para migrar la base de datos: npx sequelize db:migrate
+Para deshacer la migracion: npx sequelize db:migrate:undo:all
 
 SESIONES:
     En la creación de las sesiones me he inspirado en estos videos.

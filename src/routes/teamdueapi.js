@@ -14,6 +14,7 @@ const multer = require("multer");
 const upload = multer({ dest: "/home/teamdue/tmp" });
 const app = express();
 const { validateToken } = require("../jwt/validate.js");
+const { now } = require("sequelize/types/lib/utils");
 
 app.set("llave", config.keyMaster);
 router.use(cors());
@@ -177,6 +178,8 @@ router.post('/register', (req, res) => {
                         UsuarioId: usu["id"]
     
                     });
+
+                    createLog("Creacion usuario", usu["id"]);
                 });
                 
                 hashPassword(usuarioInp).then(usserHash => {
@@ -354,6 +357,14 @@ async function hashPassword(password) {
 async function hashPasswordIsSame(passwordHash, password2) { 
     return await bcrypt.compare(password2, passwordHash);
 
+}
+
+async function createLog(accion, idUsu) {
+    db.Logs.create({
+        accion: accion,
+        fecha: new Date(),
+        UsuarioId: idUsu
+    });
 }
 
 module.exports = router;

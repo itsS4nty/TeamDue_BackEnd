@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-function validateToken(token, llave) {
+async function validateToken(token, llave) {
     if (token) {
         jwt.verify(token, llave, (err, decoded) => {
             if (err) {

@@ -421,7 +421,7 @@ async function hashPasswordIsSame(passwordHash, password2) {
 
 async function validateToken(token) {
     if (token) {
-        jwt.verify(token, app.get("llave"), (err, decoded) => {
+        await jwt.verify(token, app.get("llave"), (err, decoded) => {
             if (err) {
                 return false;
 

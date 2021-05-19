@@ -25,20 +25,35 @@ router.get('/files/:id', (req, res) => {
 
     console.log(validate(token, app.get("llave")));
 
-    if (validate(token, app.get("llave"))) {
-        db.Archivos.findAll({where: { UsuarioId: id }}).then((findedArchivo) => {
-            res.json(findedArchivo);
+    validate(token, app.get("llave")).then(respuesta => {
+        if (respuesta) {
+            db.Archivos.findAll({where: { UsuarioId: id }}).then((findedArchivo) => {
+                res.json(findedArchivo);
+                
+            }).catch((err) => {
+                res.status(400).send(err.message);
+                console.log(err.message);
+        
+            });
+        }else {
+            res.status(403).send("Token no valido");
+        }
+    })
+
+    // if (validate(token, app.get("llave"))) {
+    //     db.Archivos.findAll({where: { UsuarioId: id }}).then((findedArchivo) => {
+    //         res.json(findedArchivo);
             
-        }).catch((err) => {
-            res.status(400).send(err.message);
-            console.log(err.message);
+    //     }).catch((err) => {
+    //         res.status(400).send(err.message);
+    //         console.log(err.message);
     
-        });
+    //     });
 
-    }else {
-        res.status(403).send("Token no valido");
+    // }else {
+    //     res.status(403).send("Token no valido");
 
-    }
+    // }
 
     // if (token) {
     //     jwt.verify(token, app.get("llave"), (err, decoded) => {

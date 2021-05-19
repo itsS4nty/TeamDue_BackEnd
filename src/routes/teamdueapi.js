@@ -130,12 +130,12 @@ router.post('/login', (req, res) => {
                         const token = jwt.sign(payload, app.get("llave"), {
                             expiresIn: 3600
                         });
+                        createLog("Inicio de sesion", findedArchivo["id"]);
                         res.json({
                             mensaje: "Autenticacion correcta",
                             token: token,
                             usuario: findedArchivo
                         })
-                        // res.json(findedArchivo);
 
                     }else {
                         res.status(403).send("Usuario no validado");

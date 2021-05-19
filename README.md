@@ -22,3 +22,6 @@ SERVER:
     Run server: npm run server
     kill port 3000: npm run kill
     
+JWT:
+    Para la implementacion de un token en la api me he inspirado en este codigo
+    https://asfo.medium.com/autenticando-un-api-rest-con-nodejs-y-jwt-json-web-tokens-5f3674aba50e

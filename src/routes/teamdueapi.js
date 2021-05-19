@@ -436,7 +436,7 @@ async function validateToken(token) {
         boolValidate = false
     }
 
-    return respHttp;
+    return boolValidate;
 }
 
 module.exports = router;

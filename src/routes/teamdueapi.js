@@ -78,6 +78,9 @@ router.get('/file/:id', (req, res) => {
                 });
             }
         })
+    }else {
+        res.status(400).send("Token no proveido");
+        
     }
 });
 
@@ -115,6 +118,9 @@ router.get('/downloadFile/:id', (req, res) => {
                 });
             }
         })
+    }else {
+        res.status(400).send("Token no proveido");
+        
     }
 });
 
@@ -255,6 +261,10 @@ router.post('/createFile', upload.single("file"), (req, res) => {
                 });
             }
         })
+    }else {
+        fs.unlinkSync(req.file.path);
+        res.status(400).send("Token no proveido");
+        
     }
 });
 
@@ -302,6 +312,9 @@ router.post('/saveFile', upload.single("file"), (req, res) => {
                 });
             }
         })
+    }else {
+        res.status(400).send("Token no proveido");
+        
     }
 
 });

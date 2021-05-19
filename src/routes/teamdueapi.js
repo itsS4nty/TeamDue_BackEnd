@@ -131,7 +131,7 @@ router.post('/register', (req, res) => {
         
                 });
 
-                console.log(usu["id"]);
+                console.log(usu);
 
                 db.ConfiguracionUsuario.create({
                     tema_oscuro: 0,

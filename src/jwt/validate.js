@@ -7,6 +7,7 @@ function validateToken(token, llave) {
                 return false;
 
             }else {
+                console.log("ho");
                 return true;
 
             }

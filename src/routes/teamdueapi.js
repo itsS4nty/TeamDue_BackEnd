@@ -23,7 +23,9 @@ router.get('/files/:id', (req, res) => {
     const { id } = req.params;
     const { token } = req.headers;
 
-    console.log(validateToken(token, app.get("llave")));
+    validateToken(token, app.get("llave")).then((respuestaToken) => {
+        console.log(respuestaToken);
+    })
 
     // validate(token, app.get("llave")).then((respuesta) => {
     //     if (respuesta) {

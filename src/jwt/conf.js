@@ -1,3 +1,3 @@
-module.exports = {
-    keyMaster = "llaveMaestra123."
-}
+const keyMaster = "llaveMaestra123.";
+
+module.exports = keyMaster;

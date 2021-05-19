@@ -7,6 +7,7 @@ function validate(token, llave) {
                 return false;
 
             }else {
+                console.log("HOLAAAAAAAA");
                 return token;
                 // return true;
             }

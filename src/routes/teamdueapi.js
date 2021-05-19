@@ -26,7 +26,7 @@ router.get('/files/:id', (req, res) => {
     validateToken(token, app.get("llave")).then(respuestaToken => {
         if (respuestaToken) {
             db.Archivos.findAll({where: { UsuarioId: id }}).then((findedArchivo) => {
-                createLog("Guardando cambios en el archivo alojado en el servidor", id);
+                createLog("Obteniendo archivos del servidor en formato JSON", id);
                 res.json(findedArchivo);
                 
             }).catch((err) => {

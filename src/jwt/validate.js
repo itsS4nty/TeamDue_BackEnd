@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-async function validateToken(token, llave) {
+function validateToken(token, llave) {
     if (token) {
         jwt.verify(token, llave, (err, decoded) => {
             if (err) {
@@ -8,6 +8,7 @@ async function validateToken(token, llave) {
 
             }else {
                 console.log("ho");
+                return "holas";
                 return true;
 
             }

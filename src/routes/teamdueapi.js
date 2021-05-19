@@ -19,7 +19,7 @@ router.use(cors());
 
 router.post('/autenticarToken', (req, res) => {
     const { usuario, password } = req.body;
-
+    console.log(usuario + " . " + password);
     if (usuario === "keko" && password === "Admin123") {
         const payload = {
             check: true

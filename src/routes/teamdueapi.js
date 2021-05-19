@@ -420,21 +420,20 @@ async function hashPasswordIsSame(passwordHash, password2) {
 }
 
 async function validateToken(token) {
-    var respHttp;
+    var boolValidate;
     if (token) {
         jwt.verify(token, app.get("llave"), (err, decoded) => {
             if (err) {
-                respHttp = 401;
+                boolValidate = false;
 
             }else {
-                console.log("ho");
-                respHttp = 200
+                boolValidate = true
 
             }
         })
 
     }else {
-        respHttp = 400
+        boolValidate = false
     }
 
     return respHttp;

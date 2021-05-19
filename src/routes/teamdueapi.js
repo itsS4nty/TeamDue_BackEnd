@@ -22,7 +22,9 @@ router.get('/files/:id', (req, res) => {
     console.log("Entrando por GET /files/:id");
     const { id } = req.params;
     const { token } = req.headers;
-    
+
+    console.log(validate(token, app.get("llave")));
+
     if (validate(token, app.get("llave"))) {
         db.Archivos.findAll({where: { UsuarioId: id }}).then((findedArchivo) => {
             res.json(findedArchivo);

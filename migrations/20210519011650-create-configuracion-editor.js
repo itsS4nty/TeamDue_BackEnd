@@ -1,24 +1,36 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('ConfiguracionUsuarios', {
+    await queryInterface.createTable('ConfiguracionEditors', {
       id: {
-        references: {
-          model: 'Usuarios',
-          key: 'id'
-        },
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      tema_oscuro: {
+      nombreFiltro: {
         allowNull: false,
-        type: Sequelize.BOOLEAN
+        type: Sequelize.STRING
       },
-      mandar_correo: {
+      brillo: {
         allowNull: false,
-        type: Sequelize.BOOLEAN
+        type: Sequelize.INTEGER
+      },
+      saturacion: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      difuminacion: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      sepia: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      contraste: {
+        allowNull: false,
+        type: Sequelize.INTEGER
       },
       UsuarioId: {
         references: {
@@ -39,6 +51,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('ConfiguracionUsuarios');
+    await queryInterface.dropTable('ConfiguracionEditors');
   }
 };

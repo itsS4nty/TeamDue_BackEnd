@@ -11,12 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      ConfiguracionUsuario.belongsTo(models.Usuarios, {foreignKey: 'id', as: 'Usuarios'});
+      ConfiguracionUsuario.belongsTo(models.Usuarios, {foreignKey: 'UsuarioId', as: 'Usuarios'});
     }
   };
   ConfiguracionUsuario.init({
     tema_oscuro: DataTypes.BOOLEAN,
-    mandar_correo: DataTypes.BOOLEAN
+    mandar_correo: DataTypes.BOOLEAN,
+    UsuarioId: DataTypes.INTEGER
   }, {
     timestamps: false,
     sequelize,

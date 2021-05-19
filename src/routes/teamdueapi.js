@@ -12,8 +12,9 @@ const path = require("path");
 const { sendEmail } = require("../mail/confEmail");
 const multer = require("multer");
 const upload = multer({ dest: "/home/teamdue/tmp" });
+const app = express();
 
-express.set("llave", config.keyMaster);
+app.set("llave", config.keyMaster);
 router.use(cors());
 
 router.post('/autenticarToken', (req, res) => {
@@ -23,7 +24,7 @@ router.post('/autenticarToken', (req, res) => {
         const payload = {
             check: true
         };
-        const token = jwt.sign(payload, express.get("llave"), {
+        const token = jwt.sign(payload, app.get("llave"), {
             expiresIn: 1440
         });
         res.json({

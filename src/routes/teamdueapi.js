@@ -17,26 +17,6 @@ const app = express();
 app.set("llave", config.keyMaster);
 router.use(cors());
 
-router.post('/autenticarToken', (req, res) => {
-    const { usuario, password } = req.body;
-    if (usuario === "keko" && password === "Admin123") {
-        const payload = {
-            check: true
-        };
-        const token = jwt.sign(payload, app.get("llave"), {
-            expiresIn: 1440
-        });
-        res.json({
-            mensaje: "Autenticacion correcta",
-            token: token
-        })
-
-    }else {
-        res.status(406).send("Autenticacion incorrecta");
-    }
-
-});
-
 router.get('/files/:id', (req, res) => {
     console.log("Entrando por GET /files/:id");
     const { id } = req.params;
@@ -67,55 +47,75 @@ router.get('/files/:id', (req, res) => {
 router.get('/file/:id', (req, res) => {
     console.log("Entrando por GET /file/:id");
     const { id:idArchivo } = req.params;
+    const { token } = req.headers;
 
-    db.Archivos.findOne({where: {id:idArchivo}}).then((findedArchivo) => {
-        if (findedArchivo === null) {
-            res.status(409).send("File not exists");
+    if (token) {
+        jwt.verify(token, app.get("llave"), (err, decoded) => {
+            if (err) {
+                res.status(401).send("Token no valido"); 
 
-        }else {
-            db.Usuarios.findOne({where: {id: findedArchivo.UsuarioId}}).then((findedUsuario) => {
-                if (findedUsuario === null) {
-                    res.status(409).send("User not exists");
-
-                }else {
-                    var dir = "/home/teamdue/files/" + findedUsuario.usuario + "/" + findedArchivo.nombre + "." + findedArchivo.tipo;
-                    res.sendFile(dir);
-
-                }
-            });
-        }
-
-    }).catch((err) => {
-        res.status(400).send(err.message);
-        console.log(err.message);
-    });
+            }else {
+                db.Archivos.findOne({where: {id:idArchivo}}).then((findedArchivo) => {
+                    if (findedArchivo === null) {
+                        res.status(409).send("File not exists");
+            
+                    }else {
+                        db.Usuarios.findOne({where: {id: findedArchivo.UsuarioId}}).then((findedUsuario) => {
+                            if (findedUsuario === null) {
+                                res.status(409).send("User not exists");
+            
+                            }else {
+                                var dir = "/home/teamdue/files/" + findedUsuario.usuario + "/" + findedArchivo.nombre + "." + findedArchivo.tipo;
+                                res.sendFile(dir);
+            
+                            }
+                        });
+                    }
+            
+                }).catch((err) => {
+                    res.status(400).send(err.message);
+                    console.log(err.message);
+                });
+            }
+        })
+    }
 });
 
 router.get('/downloadFile/:id', (req, res) => {
     console.log("Entrando por GET /downloadFile/:id");
     const { id:idArchivo } = req.params;
+    const { token } = req.headers;
 
-    db.Archivos.findOne({where: {id:idArchivo}}).then((findedArchivo) => {
-        if (findedArchivo === null) {
-            res.status(409).send("File not exists");
-
-        }else {
-            db.Usuarios.findOne({where: {id: findedArchivo.UsuarioId}}).then((findedUsuario) => {
-                if (findedUsuario === null) {
-                    res.status(409).send("User not exists");
-
-                }else {
-                    var dir = "/home/teamdue/files/" + findedUsuario.usuario + "/" + findedArchivo.nombre + "." + findedArchivo.tipo;
-                    res.download(dir);
-
-                }
-            });
-        }
-
-    }).catch((err) => {
-        res.status(400).send(err.message);
-        console.log(err.message);
-    });
+    if (token) {
+        jwt.verify(token, app.get("llave"), (err, decoded) => {
+            if (err) {
+                res.status(401).send("Token no valido"); 
+                
+            }else {
+                db.Archivos.findOne({where: {id:idArchivo}}).then((findedArchivo) => {
+                    if (findedArchivo === null) {
+                        res.status(409).send("File not exists");
+            
+                    }else {
+                        db.Usuarios.findOne({where: {id: findedArchivo.UsuarioId}}).then((findedUsuario) => {
+                            if (findedUsuario === null) {
+                                res.status(409).send("User not exists");
+            
+                            }else {
+                                var dir = "/home/teamdue/files/" + findedUsuario.usuario + "/" + findedArchivo.nombre + "." + findedArchivo.tipo;
+                                res.download(dir);
+            
+                            }
+                        });
+                    }
+            
+                }).catch((err) => {
+                    res.status(400).send(err.message);
+                    console.log(err.message);
+                });
+            }
+        })
+    }
 });
 
 router.post('/login', (req, res) => {
@@ -210,79 +210,99 @@ router.post('/createFile', upload.single("file"), (req, res) => {
     console.log("Entrando por POST /createFile");
     const { UsuarioId:UsuarioIdInp } = req.body;
     const nameArray =  req.file.originalname.split(".");
+    const { token } = req.headers;
 
-    db.Archivos.findOne({where: { [Op.and]: [{UsuarioId:UsuarioIdInp}, {nombre:nameArray[0]}, {tipo: nameArray[1]}] }}).then((findedArchivo) => {
-        if (findedArchivo === null) {
-            db.Usuarios.findOne({where: {id: UsuarioIdInp}}).then((findedUsuario) => {
-                if (findedUsuario === null) {
+    if (token) {
+        jwt.verify(token, app.get("llave"), (err, decoded) => {
+            if (err) {
+                res.status(401).send("Token no valido"); 
+                
+            }else {
+                db.Archivos.findOne({where: { [Op.and]: [{UsuarioId:UsuarioIdInp}, {nombre:nameArray[0]}, {tipo: nameArray[1]}] }}).then((findedArchivo) => {
+                    if (findedArchivo === null) {
+                        db.Usuarios.findOne({where: {id: UsuarioIdInp}}).then((findedUsuario) => {
+                            if (findedUsuario === null) {
+                                fs.unlinkSync(req.file.path);
+                                res.status(409).send("User not exists");
+            
+                            }else {
+                                var fileName = req.file.path.split("/");
+                                fileName[3] = "files";
+                                fileName[fileName.length - 1] = findedUsuario.usuario;
+                                fileName[fileName.length] = req.file.originalname;
+                                fs.renameSync(req.file.path, fileName.join("/"));
+            
+                                db.Archivos.create({
+                                    nombre: nameArray[0],
+                                    tipo: nameArray[1],
+                                    UsuarioId: UsuarioIdInp
+                                });
+                    
+                                res.status(201).send("Created");  
+                            }
+                        });
+            
+                    }else {
+                        fs.unlinkSync(req.file.path);
+                        res.status(409).send("Duplicate");
+                    }
+            
+                }).catch((err) => {
                     fs.unlinkSync(req.file.path);
-                    res.status(409).send("User not exists");
-
-                }else {
-                    var fileName = req.file.path.split("/");
-                    fileName[3] = "files";
-                    fileName[fileName.length - 1] = findedUsuario.usuario;
-                    fileName[fileName.length] = req.file.originalname;
-                    fs.renameSync(req.file.path, fileName.join("/"));
-
-                    db.Archivos.create({
-                        nombre: nameArray[0],
-                        tipo: nameArray[1],
-                        UsuarioId: UsuarioIdInp
-                    });
-        
-                    res.status(201).send("Created");  
-                }
-            });
-
-        }else {
-            fs.unlinkSync(req.file.path);
-            res.status(409).send("Duplicate");
-        }
-
-    }).catch((err) => {
-        fs.unlinkSync(req.file.path);
-        res.status(400).send(err.message);
-        console.log(err.message);
-
-    });
+                    res.status(400).send(err.message);
+                    console.log(err.message);
+            
+                });
+            }
+        })
+    }
 });
 
 router.post('/saveFile', upload.single("file"), (req, res) => {
     console.log("Entrando por POST /saveFile");
     const { idArchivo } = req.body;
+    const { token } = req.headers;
 
-    db.Archivos.findOne({where: {id:idArchivo}}).then((findedArchivo) => {
-        if (findedArchivo === null) {
-            fs.unlinkSync(req.file.path);
-            res.status(409).send("File not exists");
-
-        }else {
-            db.Usuarios.findOne({where: {id: findedArchivo.UsuarioId}}).then((findedUsuario) => {
-                if (findedUsuario === null) {
+    if (token) {
+        jwt.verify(token, app.get("llave"), (err, decoded) => {
+            if (err) {
+                res.status(401).send("Token no valido"); 
+                
+            }else {
+                db.Archivos.findOne({where: {id:idArchivo}}).then((findedArchivo) => {
+                    if (findedArchivo === null) {
+                        fs.unlinkSync(req.file.path);
+                        res.status(409).send("File not exists");
+            
+                    }else {
+                        db.Usuarios.findOne({where: {id: findedArchivo.UsuarioId}}).then((findedUsuario) => {
+                            if (findedUsuario === null) {
+                                fs.unlinkSync(req.file.path);
+                                res.status(409).send("User not exists");
+            
+                            }else {
+                                var fileName = req.file.path.split("/");
+                                fileName[3] = "files";
+                                fileName[fileName.length - 1] = findedUsuario.usuario;
+                                fileName[fileName.length] = findedArchivo.nombre + "." + req.file.mimetype.split("/")[1];
+                                fs.unlinkSync("/home/teamdue/files/" + findedUsuario.usuario + "/" + findedArchivo.nombre + "." + findedArchivo.tipo);
+                                fs.renameSync(req.file.path, fileName.join("/"));
+                                findedArchivo.tipo = req.file.mimetype.split("/")[1];
+                                findedArchivo.save();
+                                res.send("Archivo guardado");
+            
+                            }
+                        });
+                    }
+            
+                }).catch((err) => {
                     fs.unlinkSync(req.file.path);
-                    res.status(409).send("User not exists");
-
-                }else {
-                    var fileName = req.file.path.split("/");
-                    fileName[3] = "files";
-                    fileName[fileName.length - 1] = findedUsuario.usuario;
-                    fileName[fileName.length] = findedArchivo.nombre + "." + req.file.mimetype.split("/")[1];
-                    fs.unlinkSync("/home/teamdue/files/" + findedUsuario.usuario + "/" + findedArchivo.nombre + "." + findedArchivo.tipo);
-                    fs.renameSync(req.file.path, fileName.join("/"));
-                    findedArchivo.tipo = req.file.mimetype.split("/")[1];
-                    findedArchivo.save();
-                    res.send("Archivo guardado");
-
-                }
-            });
-        }
-
-    }).catch((err) => {
-        fs.unlinkSync(req.file.path);
-        res.status(400).send(err.message);
-        console.log(err.message);
-    });
+                    res.status(400).send(err.message);
+                    console.log(err.message);
+                });
+            }
+        })
+    }
 
 });
 

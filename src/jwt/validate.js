@@ -7,7 +7,7 @@ function validate(token, llave) {
                 return false;
 
             }else {
-                return true;
+                return "true";
             }
         })
 

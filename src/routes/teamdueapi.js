@@ -420,21 +420,24 @@ async function hashPasswordIsSame(passwordHash, password2) {
 }
 
 async function validateToken(token) {
+    var respHttp;
     if (token) {
-        await jwt.verify(token, app.get("llave"), (err, decoded) => {
+        jwt.verify(token, app.get("llave"), (err, decoded) => {
             if (err) {
-                return false;
+                respHttp = 401;
 
             }else {
                 console.log("ho");
-                return true;
+                respHttp = 200
 
             }
         })
 
     }else {
-        return false;
+        respHttp = 400
     }
+
+    return respHttp;
 }
 
 module.exports = router;

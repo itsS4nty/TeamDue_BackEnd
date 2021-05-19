@@ -13,21 +13,48 @@ const { sendEmail } = require("../mail/confEmail");
 const multer = require("multer");
 const upload = multer({ dest: "/home/teamdue/tmp" });
 
-
-console.log(config.keyMaster);
+router.set("llave", config.keyMaster);
 router.use(cors());
+
+router.post('/autenticarToken', (req, res) => {
+    const { usuario, password } = req.body;
+
+    if (usuario === "keko" && password === "Admin123") {
+        const payload = {
+            check: true
+        };
+        const token = jwt.sign(payload, router.get("llave"), {
+            expiresIn: 1440
+        });
+        res.json({
+            mensaje: "Autenticacion correcta",
+            token: token
+        })
+
+    }else {
+        res.status(406).send("Autenticacion incorrecta");
+    }
+
+});
 
 router.get('/files/:id', (req, res) => {
     console.log("Entrando por GET /files/:id");
     const { id } = req.params;
-    db.Archivos.findAll({where: { UsuarioId: id }}).then((findedArchivo) => {
-        res.json(findedArchivo);
-        
-    }).catch((err) => {
-        res.status(400).send(err.message);
-        console.log(err.message);
+    const { token } = req.headers;
+    if (token) {
+        db.Archivos.findAll({where: { UsuarioId: id }}).then((findedArchivo) => {
+            res.json(findedArchivo);
+            
+        }).catch((err) => {
+            res.status(400).send(err.message);
+            console.log(err.message);
+    
+        });
 
-    });
+    }else {
+        res.status(401).send("Token no valido");
+        
+    }
 });
 
 router.get('/file/:id', (req, res) => {

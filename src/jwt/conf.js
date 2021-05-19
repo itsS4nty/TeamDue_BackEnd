@@ -1,3 +1,5 @@
 const keyMaster = "llaveMaestra123.";
 
-module.exports = keyMaster;
+module.exports = {
+    keyMaster: keyMaster
+};

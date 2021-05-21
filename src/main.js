@@ -86,13 +86,6 @@ io.on("connection", (socket) => {
         io.to(array[array.length - 1]).emit("refresh-image", data);
     })
 
-
-    socket.on("new-user", (data) => {
-        usuariosInformacion.set(data.user, {"administrador": "false",
-        "sala": ""});
-    });
-
-
     socket.on("disconnect", function(){
         clientes.splice(clientes.indexOf(socket.id), 1);
         console.log(socket.id + " desconectado del servidor");
@@ -127,11 +120,12 @@ io.on("connection", (socket) => {
         return io.to(data.idPeticion).emit("peticionRechazada", data.roomKey);
     });
 
-    socket.on("join-room", (room) => {
+    socket.on("join-room", (data) => {
         console.log(socket.id + " entrando por join-room");
-        socket.join(room);
-        console.log(socket.id + " se ha unido a la sala con key " + room + " exitosamente.");
-        return socket.emit("entrando-sala", room);
+        socket.join(data.roomKey);
+        usuariosInformacion.set(data.usuario, data.roomKey);
+        console.log(socket.id + " se ha unido a la sala con key " + data.roomKey + " exitosamente.");
+        return socket.emit("entrando-sala", data.roomKey);
     });
 
     socket.on("new-room", (data) => {
@@ -145,15 +139,29 @@ io.on("connection", (socket) => {
 
         roomInformation = {
             roomKey: data.roomKey,
-            administrator: socket.id
+            administrator: socket.id,
+            nombreAdmin: data.usuario
         };
         gameRooms.push(roomInformation);
-        
+
         usuariosInformacion.set(data.usuario, data.roomKey);
 
         socket.join(data.roomKey);
         console.log(socket.id + " ha creado con exito la sala con key " + data.roomKey);
         return socket.emit("sala-creada", "Sala creada con la key: " + data.roomKey + " el administrador es el socket con id: " + roomInformation.administrator);
+    });
+
+    socket.on("refresh-page", (usuario) => {
+        var room = usuariosInformacion.get(usuario)
+
+        for (var i = 0; i < gameRooms.length; i++) {
+            if (gameRooms[i].roomKey == room && gameRooms[i].nombreAdmin == usuario) {
+                gameRooms[i].administrator = socket.id;
+
+            }
+        }
+
+        socket.join(room);
     });
 
     socket.on("mensaje", (data) => {

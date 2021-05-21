@@ -32,10 +32,13 @@ httpServer.listen(8080, () => {
     console.log("Server app on port 8080");
 });
 
+var clientes = {}
 
 // Sockets
 io.on("connection", (socket) => {
+    clientes[socket.id] = socket;
     console.log("Nueva conexion:", socket.id);
+    console.log("Clientes actualmente: " + clientes.length());
 
     socket.on("canvas-data", (data) => {
         // console.log(socket.id, "entrando por: canvas-data");
@@ -78,6 +81,7 @@ io.on("connection", (socket) => {
 
     socket.on("disconnect", function(){
         console.log(socket.id + " desconectado del servidor");
+
     });
 
     socket.on("peticionSala-enviada", (data) => {

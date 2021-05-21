@@ -9,7 +9,8 @@ const express = require('express');
 const app = express();
 var gameRooms = [];
 var clientes = [];
-var usuariosInformacion = [];
+var usuariosInformacion = new Map();
+
 
 // Settings
 app.set("port", 3000 || process.env.PORT);
@@ -38,6 +39,7 @@ io.on("connection", (socket) => {
     clientes.push(socket.id);
     console.log("Nueva conexion:", socket.id);
     console.log("Clientes actualmente: " + clientes.length);
+    console.log(usuariosInformacion);
 
     socket.on("new-text", (data) => {
         // let array = Array.from(socket.rooms);
@@ -84,18 +86,18 @@ io.on("connection", (socket) => {
         io.to(array[array.length - 1]).emit("refresh-image", data);
     })
 
-    socket.on("reconnect-client", (data) => {
-        console.log(socket.id + " intentado reconectar: " + data);
 
+    socket.on("new-user", (data) => {
+        usuariosInformacion.set(data.user, {"administrador": "false",
+        "sala": ""});
     });
 
-    
+
     socket.on("disconnect", function(){
         clientes.splice(clientes.indexOf(socket.id), 1);
         console.log(socket.id + " desconectado del servidor");
 
     });
-
 
     socket.on("peticionSala-enviada", (data) => {
         console.log(socket.id + " entrando por peticionSala-enviada");
@@ -132,23 +134,26 @@ io.on("connection", (socket) => {
         return socket.emit("entrando-sala", room);
     });
 
-    socket.on("new-room", (roomKey) => {
+    socket.on("new-room", (data) => {
         console.log(socket.id + " entrando por new-room");
         for (var i = 0; i < gameRooms.length; i++) {
-            if (gameRooms[i].roomKey == roomKey) {
-                return socket.emit("err", "La room con la clave " + roomKey + " ya existe.");
+            if (gameRooms[i].roomKey == data.roomKey) {
+                return socket.emit("err", "La room con la clave " + data.roomKey + " ya existe.");
 
             }
         }
 
         roomInformation = {
-            roomKey: roomKey,
+            roomKey: data.roomKey,
             administrator: socket.id
         };
         gameRooms.push(roomInformation);
-        socket.join(roomKey);
-        console.log(socket.id + " ha creado con exito la sala con key " + roomKey);
-        return socket.emit("sala-creada", "Sala creada con la key: " + roomKey + " el administrador es el socket con id: " + roomInformation.administrator);
+        
+        usuariosInformacion.set(data.usuario, data.roomKey);
+
+        socket.join(data.roomKey);
+        console.log(socket.id + " ha creado con exito la sala con key " + data.roomKey);
+        return socket.emit("sala-creada", "Sala creada con la key: " + data.roomKey + " el administrador es el socket con id: " + roomInformation.administrator);
     });
 
     socket.on("mensaje", (data) => {

@@ -38,7 +38,7 @@ var clientes = {}
 io.on("connection", (socket) => {
     clientes[socket.id] = socket;
     console.log("Nueva conexion:", socket.id);
-    console.log("Clientes actualmente: " + clientes.length());
+    console.log("Clientes actualmente: " + clientes.length);
 
     socket.on("canvas-data", (data) => {
         // console.log(socket.id, "entrando por: canvas-data");

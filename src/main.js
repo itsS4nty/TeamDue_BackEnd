@@ -39,7 +39,7 @@ io.on("connection", (socket) => {
     clientes.push(socket.id);
     console.log("Nueva conexion:", socket.id);
     console.log("Clientes actualmente: " + clientes.length);
-    console.log(usuariosInformacion);
+    // console.log(usuariosInformacion);
 
     socket.on("new-text", (data) => {
         // let array = Array.from(socket.rooms);

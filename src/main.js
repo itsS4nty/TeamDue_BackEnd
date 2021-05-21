@@ -152,6 +152,7 @@ io.on("connection", (socket) => {
     });
 
     socket.on("refresh-page", (usuario) => {
+        console.log(socket.id + " entrando por refresh-page");
         var room = usuariosInformacion.get(usuario)
 
         for (var i = 0; i < gameRooms.length; i++) {

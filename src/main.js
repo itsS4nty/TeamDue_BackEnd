@@ -9,6 +9,7 @@ const express = require('express');
 const app = express();
 var gameRooms = [];
 var clientes = [];
+var usuariosInformacion = [];
 
 // Settings
 app.set("port", 3000 || process.env.PORT);
@@ -37,6 +38,12 @@ io.on("connection", (socket) => {
     clientes.push(socket.id);
     console.log("Nueva conexion:", socket.id);
     console.log("Clientes actualmente: " + clientes.length);
+
+    socket.on("new-text", (data) => {
+        // let array = Array.from(socket.rooms);
+        // io.to(array[array.length - 1]).emit("canvas-data", data);
+        socket.broadcast.emit("new-text", data);
+    })
 
     socket.on("canvas-data", (data) => {
         // console.log(socket.id, "entrando por: canvas-data");
@@ -82,15 +89,11 @@ io.on("connection", (socket) => {
 
     });
 
+    
     socket.on("disconnect", function(){
         clientes.splice(clientes.indexOf(socket.id), 1);
         console.log(socket.id + " desconectado del servidor");
 
-    });
-
-
-    socket.on("llegaDisconnect", (data) => {
-        console.log(socket.id + " llega disconect " + data);
     });
 
 

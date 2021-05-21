@@ -83,7 +83,7 @@ io.on("connection", (socket) => {
     });
 
     socket.on("disconnect", function(){
-        clientes.splice(array.indexOf(socket.id), 1);
+        clientes.splice(clientes.indexOf(socket.id), 1);
         console.log(socket.id + " desconectado del servidor");
 
     });

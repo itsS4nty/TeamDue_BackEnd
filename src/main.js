@@ -8,7 +8,7 @@ const express = require('express');
 // Variables
 const app = express();
 var gameRooms = [];
-
+var clientes = [];
 
 // Settings
 app.set("port", 3000 || process.env.PORT);
@@ -31,8 +31,6 @@ app.listen(app.get("port"), () => {
 httpServer.listen(8080, () => {
     console.log("Server app on port 8080");
 });
-
-var clientes = []
 
 // Sockets
 io.on("connection", (socket) => {
@@ -78,6 +76,11 @@ io.on("connection", (socket) => {
         // io.to(array[1]).emit("refresh-image", data);
         io.to(array[array.length - 1]).emit("refresh-image", data);
     })
+
+    socket.on("reconnect-client", (data) => {
+        console.log(socket.id + " intentado reconectar: " + data);
+
+    });
 
     socket.on("disconnect", function(){
         console.log(socket.id + " desconectado del servidor");
@@ -137,7 +140,6 @@ io.on("connection", (socket) => {
         console.log(socket.id + " ha creado con exito la sala con key " + roomKey);
         return socket.emit("sala-creada", "Sala creada con la key: " + roomKey + " el administrador es el socket con id: " + roomInformation.administrator);
     });
-
 
     socket.on("mensaje", (data) => {
         console.log("Enviando mensaje a la sala: " + data.sala);

@@ -32,11 +32,11 @@ httpServer.listen(8080, () => {
     console.log("Server app on port 8080");
 });
 
-var clientes = {}
+var clientes = []
 
 // Sockets
 io.on("connection", (socket) => {
-    clientes[socket.id] = socket;
+    clientes.push(socket);
     console.log("Nueva conexion:", socket.id);
     console.log("Clientes actualmente: " + clientes.length);
 

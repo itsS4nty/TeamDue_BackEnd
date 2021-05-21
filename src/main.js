@@ -88,6 +88,12 @@ io.on("connection", (socket) => {
 
     });
 
+
+    socket.on("llegaDisconnect", (data) => {
+        console.log(socket.id + " llega disconect " + data);
+    });
+
+
     socket.on("peticionSala-enviada", (data) => {
         console.log(socket.id + " entrando por peticionSala-enviada");
         for (var i = 0; i < gameRooms.length; i++) {

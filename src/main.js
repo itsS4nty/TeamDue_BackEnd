@@ -34,7 +34,7 @@ httpServer.listen(8080, () => {
 
 // Sockets
 io.on("connection", (socket) => {
-    clientes.push(socket);
+    clientes.push(socket.id);
     console.log("Nueva conexion:", socket.id);
     console.log("Clientes actualmente: " + clientes.length);
 
@@ -83,6 +83,7 @@ io.on("connection", (socket) => {
     });
 
     socket.on("disconnect", function(){
+        clientes.splice(array.indexOf(socket.id), 1);
         console.log(socket.id + " desconectado del servidor");
 
     });

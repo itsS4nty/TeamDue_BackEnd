@@ -122,33 +122,33 @@ io.on("connection", (socket) => {
 
     socket.on("join-room", (data) => {
         console.log(socket.id + " entrando por join-room");
-        socket.join(data.roomKey);
-        usuariosInformacion.set(data.usuario, data.roomKey);
-        console.log(socket.id + " se ha unido a la sala con key " + data.roomKey + " exitosamente.");
-        return socket.emit("entrando-sala", data.roomKey);
+        socket.join(data.roomId);
+        usuariosInformacion.set(data.usuario, data.roomId);
+        console.log(socket.id + " se ha unido a la sala con key " + data.roomId + " exitosamente.");
+        return socket.emit("entrando-sala", data.roomId);
     });
 
     socket.on("new-room", (data) => {
         console.log(socket.id + " entrando por new-room");
         for (var i = 0; i < gameRooms.length; i++) {
-            if (gameRooms[i].roomKey == data.roomKey) {
-                return socket.emit("err", "La room con la clave " + data.roomKey + " ya existe.");
+            if (gameRooms[i].roomKey == data.roomId) {
+                return socket.emit("err", "La room con la clave " + data.roomId + " ya existe.");
 
             }
         }
 
         roomInformation = {
-            roomKey: data.roomKey,
+            roomKey: data.roomId,
             administrator: socket.id,
             nombreAdmin: data.usuario
         };
         gameRooms.push(roomInformation);
 
-        usuariosInformacion.set(data.usuario, data.roomKey);
+        usuariosInformacion.set(data.usuario, data.roomId);
 
-        socket.join(data.roomKey);
-        console.log(socket.id + " ha creado con exito la sala con key " + data.roomKey);
-        return socket.emit("sala-creada", "Sala creada con la key: " + data.roomKey + " el administrador es el socket con id: " + roomInformation.administrator);
+        socket.join(data.roomId);
+        console.log(socket.id + " ha creado con exito la sala con key " + data.roomId);
+        return socket.emit("sala-creada", "Sala creada con la key: " + data.roomId + " el administrador es el socket con id: " + roomInformation.administrator);
     });
 
     socket.on("refresh-page", (usuario) => {

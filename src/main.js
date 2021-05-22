@@ -121,7 +121,7 @@ io.on("connection", (socket) => {
     });
 
     socket.on("join-room", (data) => {
-        console.log(socket.id + " entrando por join-room");
+        console.log(socket.id + " entrando por join-room, nombre usuario: " + data.usuario);
         socket.join(data.roomId);
         usuariosInformacion.set(data.usuario, data.roomId);
         console.log(socket.id + " se ha unido a la sala con key " + data.roomId + " exitosamente.");
@@ -129,7 +129,7 @@ io.on("connection", (socket) => {
     });
 
     socket.on("new-room", (data) => {
-        console.log(socket.id + " entrando por new-room");
+        console.log(socket.id + " entrando por new-room, nombre usuario: " + data.usuario);
         for (var i = 0; i < gameRooms.length; i++) {
             if (gameRooms[i].roomKey == data.roomId) {
                 return socket.emit("err", "La room con la clave " + data.roomId + " ya existe.");
@@ -152,7 +152,7 @@ io.on("connection", (socket) => {
     });
 
     socket.on("refresh-page", (usuario) => {
-        console.log(socket.id + " entrando por refresh-page");
+        console.log(socket.id + " entrando por refresh-page, nombre usuario: " + usuario);
         var room = usuariosInformacion.get(usuario)
 
         for (var i = 0; i < gameRooms.length; i++) {

@@ -122,10 +122,10 @@ io.on("connection", (socket) => {
 
     socket.on("join-room", (data) => {
         console.log(socket.id + " entrando por join-room, nombre usuario: " + data.usuario);
-        socket.join(data.createRoom);
-        usuariosInformacion.set(data.usuario, data.createRoom);
-        console.log(socket.id + " se ha unido a la sala con key " + data.createRoom + " exitosamente.");
-        return socket.emit("entrando-sala", data.createRoom);
+        socket.join(data.roomId);
+        usuariosInformacion.set(data.usuario, data.roomId);
+        console.log(socket.id + " se ha unido a la sala con key " + data.roomId + " exitosamente.");
+        return socket.emit("entrando-sala", data.roomId);
     });
 
     socket.on("new-room", (data) => {

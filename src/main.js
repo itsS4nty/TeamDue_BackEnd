@@ -145,7 +145,7 @@ io.on("connection", (socket) => {
         gameRooms.push(roomInformation);
 
         if (usuariosInformacion.get(data.usuario) === undefined) {
-            usuariosInformacion.set(data.usuario, salas);
+            usuariosInformacion.set(data.usuario, data.roomId);
 
         }else {
             var salas = Array.from(usuariosInformacion.get(data.usuario));
@@ -154,7 +154,7 @@ io.on("connection", (socket) => {
 
         }
 
-        console.log("salas:" + usuariosInformacion.get(data.usuario));
+        console.log("salas:" + Array.fromusuariosInformacion.get(data.usuario));
 
         socket.join(data.roomId);
         console.log(socket.id + " ha creado con exito la sala con key " + data.roomId);

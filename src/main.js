@@ -178,7 +178,7 @@ io.on("connection", (socket) => {
 
         socket.join(data.roomId);
         console.log(socket.id + " ha creado con exito la sala con key " + data.roomId);
-        return socket.emit("sala-creada", "Sala creada con la key: " + data.roomId + " el administrador es el socket con id: " + roomInformation.administrator);
+        return socket.emit("sala-creada", data.roomId);
     });
 
     socket.on("refresh-page", (usuario) => {

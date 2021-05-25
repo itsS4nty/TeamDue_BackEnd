@@ -49,38 +49,38 @@ io.on("connection", (socket) => {
 
     socket.on("canvas-data", (data) => {
         let array = Array.from(socket.rooms); 
-        io.to(array.find(data.idRoom)).emit("canvas-data", data.canvas);
+        io.to(data.idRoom).emit("canvas-data", data.canvas);
         // io.to(array[array.length - 1]).emit("canvas-data", data);
     });
 
     socket.on("draw-line", (data) => {
         let array = Array.from(socket.rooms);
-        io.to(array.find(data.idRoom)).emit("draw-line", data.canvas);
+        io.to(data.idRoom).emit("draw-line", data.canvas);
         // io.to(array[array.length - 1]).emit("draw-line", data);
     })
 
     socket.on("draw-rect", (data) => {
         let array = Array.from(socket.rooms);
-        io.to(array.find(data.idRoom)).emit("draw-rect", data.canvas);
+        io.to(data.idRoom).emit("draw-rect", data.canvas);
         // io.to(array[array.length - 1]).emit("draw-rect", data);
     })
 
     socket.on("background-image", (data) => {
         let array = Array.from(socket.rooms);
-        io.to(array.find(data.idRoom)).emit("background-image", data.canvas);
+        io.to(data.idRoom).emit("background-image", data.canvas);
         // io.to(array[array.length - 1]).emit("background-image", data);
     })
 
     socket.on("filters", (data) => {
         let array = Array.from(socket.rooms);
         console.log(array);
-        io.to(array.find(data.idRoom)).emit("filters", data.canvas);
+        io.to(data.idRoom).emit("filters", data.canvas);
         // io.to(array[array.length - 1]).emit("filters", data);
     })
 
     socket.on("refresh-image", (data) => {
         let array = Array.from(socket.rooms);
-        io.to(array.find(data.idRoom)).emit("refresh-image", data.canvas);
+        io.to(data.idRoom).emit("refresh-image", data.canvas);
         // io.to(array[array.length - 1]).emit("refresh-image", data);
     })
 

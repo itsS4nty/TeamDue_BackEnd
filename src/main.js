@@ -97,11 +97,16 @@ io.on("connection", (socket) => {
                 console.log(socket.id + " con nombre de usuario " + data.usuario + " ha enviado una peticion a la room con id " + data.room + " exitosamente.");
                 dataSaliente = {
                     roomKey: gameRooms[i].roomKey,
-                    administrator: gameRooms[i].administrator,
                     idPeticion: socket.id,
                     nombreUsuario: data.usuario
                 };
-                return io.to(gameRooms[i].administrator).emit("peticion-recibida", dataSaliente);
+
+                for (var j = 0; j < gameRooms[i].administrator.length; j++) {
+                    io.to(gameRooms[i].administrator[j]).emit("peticion-recibida", dataSaliente);
+                    console.log(gameRooms[i].administrator);
+                }
+
+                return;
             }
         }
 
@@ -148,10 +153,11 @@ io.on("connection", (socket) => {
 
         roomInformation = {
             roomKey: data.roomId,
-            administrator: socket.id,
+            administrator: [socket.id],
             nombreAdmin: data.usuario
         };
         gameRooms.push(roomInformation);
+        console.log(gameRooms.administrator);
 
         if (usuariosInformacion.get(data.usuario) === undefined) {
             usuariosInformacion.set(data.usuario, data.roomId);
@@ -179,7 +185,8 @@ io.on("connection", (socket) => {
         for (var i = 0; i < room.length; i++) {
             for (var j = 0; j < gameRooms.length; j++) {
                 if (gameRooms[j].roomKey == room[i] && gameRooms[j].nombreAdmin == usuario) {
-                    gameRooms[j].administrator = socket.id; 
+                    gameRooms[j].administrator.push(socket.id); 
+                    console.log(gameRooms[j].administrator);
                 }
             }
             socket.join(room[i]);

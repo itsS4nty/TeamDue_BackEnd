@@ -88,10 +88,11 @@ io.on("connection", (socket) => {
         clientes.splice(clientes.indexOf(socket.id), 1);
         // console.log(socket.id + " desconectado del servidor");
 
-    });
+    }); 
 
     socket.on("canvas", (data) => {
-        socket.emit(data);
+        console.log(socket.id + " entrando por canvas");
+        socket.emit("canvas", data);
     });
 
     socket.on("peticionSala-enviada", (data) => {
@@ -160,7 +161,6 @@ io.on("connection", (socket) => {
             nombreAdmin: data.usuario
         };
         gameRooms.push(roomInformation);
-        console.log(roomInformation.administrator);
 
         if (usuariosInformacion.get(data.usuario) === undefined) {
             usuariosInformacion.set(data.usuario, data.roomId);
@@ -189,7 +189,6 @@ io.on("connection", (socket) => {
                 if (gameRooms[j].administrator.indexOf(socket.id) === -1) {
                     gameRooms[j].administrator.push(socket.id); 
                 }
-                console.log(gameRooms[j].administrator);
             }
         }
         socket.join(data.idRoom);

@@ -72,16 +72,10 @@ io.on("connection", (socket) => {
     })
 
     socket.on("filters", (data) => {
-        try {
-            let array = Array.from(socket.rooms);
-            console.log(array);
-            io.to(array.find(data.idRoom)).emit("filters", data.canvas);
-            // io.to(array[array.length - 1]).emit("filters", data);
-            
-        }catch (error) {
-            console.log(error);
-        }
-
+        let array = Array.from(socket.rooms);
+        console.log(array.find(data.idRoom));
+        io.to(array.find(data.idRoom)).emit("filters", data.canvas);
+        // io.to(array[array.length - 1]).emit("filters", data);
     })
 
     socket.on("refresh-image", (data) => {

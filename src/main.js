@@ -149,16 +149,14 @@ io.on("connection", (socket) => {
                 return socket.emit("err", "La room con la clave " + data.roomId + " ya existe.");
 
             }
-        }
-        var admins = [];
-        admins.push(socket.id);
+        };
         roomInformation = {
             roomKey: data.roomId,
-            administrator: admins,
+            administrator: [socket.id],
             nombreAdmin: data.usuario
         };
         gameRooms.push(roomInformation);
-        console.log(gameRooms.administrator);
+        console.log(roomInformation.administrator);
 
         if (usuariosInformacion.get(data.usuario) === undefined) {
             usuariosInformacion.set(data.usuario, data.roomId);

@@ -68,13 +68,13 @@ io.on("connection", (socket) => {
 
     socket.on("background-image", (data) => {
         let array = Array.from(socket.rooms);
-        io.to(data.idRoom).emit("background-image", data.canvas);
+        io.to(data.idRoom).emit("background-image", data);
         // io.to(array[array.length - 1]).emit("background-image", data);
     })
 
     socket.on("filters", (data) => {
         let array = Array.from(socket.rooms);
-        io.to(data.idRoom).emit("filters", data.canvas);
+        io.to(data.idRoom).emit("filters", data);
         // io.to(array[array.length - 1]).emit("filters", data);
     })
 
@@ -150,10 +150,11 @@ io.on("connection", (socket) => {
 
             }
         }
-
+        var admins = [];
+        admins.push(socket.id);
         roomInformation = {
             roomKey: data.roomId,
-            administrator: [socket.id],
+            administrator: admins,
             nombreAdmin: data.usuario
         };
         gameRooms.push(roomInformation);

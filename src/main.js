@@ -146,7 +146,7 @@ io.on("connection", (socket) => {
                 nomAdmin = gameRooms[i].nombreAdmin;
             }
         }
-
+        console.log(nomAdmin);
         // usuariosInformacion.set(data.usuario, data.roomId);
 
         console.log(socket.id + " se ha unido a la sala con key " + data.roomId + " exitosamente.");

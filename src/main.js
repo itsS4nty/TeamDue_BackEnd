@@ -90,6 +90,10 @@ io.on("connection", (socket) => {
 
     });
 
+    socket.on("canvas", (data) => {
+        socket.emit(data);
+    });
+
     socket.on("peticionSala-enviada", (data) => {
         console.log(socket.id + " entrando por peticionSala-enviada");
         for (var i = 0; i < gameRooms.length; i++) {
@@ -179,11 +183,9 @@ io.on("connection", (socket) => {
 
     socket.on("refresh-page", (data) => {
         console.log(socket.id + " entrando por refresh-page, nombre usuario: " + data.usuario);
-        // var room = Array.from(usuariosInformacion.get(data.usuario))
 
         for (var j = 0; j < gameRooms.length; j++) {
             if (gameRooms[j].roomKey == data.idRoom && gameRooms[j].nombreAdmin == data.usuario) {
-                console.log(gameRooms[j].administrator.indexOf("f"));
                 if (gameRooms[j].administrator.indexOf(socket.id) === -1) {
                     gameRooms[j].administrator.push(socket.id); 
                 }

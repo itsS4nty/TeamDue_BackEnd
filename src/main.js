@@ -92,6 +92,7 @@ io.on("connection", (socket) => {
 
     socket.on("canvas", (data) => {
         console.log(socket.id + " entrando por canvas");
+        console.log(data.idRoom);
         io.to(data.idRoom).emit("canvas", data.canvas);
     });
 

@@ -108,7 +108,6 @@ io.on("connection", (socket) => {
 
                 for (var j = 0; j < gameRooms[i].administrator.length; j++) {
                     io.to(gameRooms[i].administrator[j]).emit("peticion-recibida", dataSaliente);
-                    console.log(gameRooms[i].administrator);
                 }
 
                 return;

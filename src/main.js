@@ -139,11 +139,18 @@ io.on("connection", (socket) => {
             salas.push(data.roomId);
             usuariosInformacion.set(data.usuario, salas);
         }
+        var nomAdmin;
+
+        for (var i = 0; i < gameRooms.length; i++) {
+            if (gameRooms[i].roomKey === data.roomId) {
+                nomAdmin = gameRooms[i].nombreAdmin;
+            }
+        }
 
         // usuariosInformacion.set(data.usuario, data.roomId);
 
         console.log(socket.id + " se ha unido a la sala con key " + data.roomId + " exitosamente.");
-        return socket.emit("entrando-sala", data.roomId);
+        return socket.emit("entrando-sala", nomAdmin);
     });
 
     socket.on("new-room", (data) => {

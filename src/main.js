@@ -49,41 +49,42 @@ io.on("connection", (socket) => {
 
     socket.on("canvas-data", (data) => {
         // console.log(socket.id, "entrando por: canvas-data");
-        let array = Array.from(socket.rooms);
+        let array = Array.from(socket.rooms); 
         // console.log(array[1]);
         // io.to(array[1]).emit("canvas-data", data);
-        io.to(array[array.length - 1]).emit("canvas-data", data);
+        // io.to(array[array.length - 1]).emit("canvas-data", data);
+        io.to(array.find(data.idRoom)).emit("canvas-data", data);
         // socket.broadcast.emit("canvas-data", data);
     });
 
     socket.on("draw-line", (data) => {
         let array = Array.from(socket.rooms);
         // io.to(array[1]).emit("draw-line", data);
-        io.to(array[array.length - 1]).emit("draw-line", data);
+        io.to(array.find(data.idRoom)).emit("draw-line", data);
     })
 
     socket.on("draw-rect", (data) => {
         let array = Array.from(socket.rooms);
         // io.to(array[1]).emit("draw-rect", data);
-        io.to(array[array.length - 1]).emit("draw-rect", data);
+        io.to(array.find(data.idRoom)).emit("draw-rect", data);
     })
 
     socket.on("background-image", (data) => {
         let array = Array.from(socket.rooms);
         // io.to(array[1]).emit("background-image", data);
-        io.to(array[array.length - 1]).emit("background-image", data);
+        io.to(array.find(data.idRoom)).emit("background-image", data);
     })
 
     socket.on("filters", (data) => {
         let array = Array.from(socket.rooms);
         // io.to(array[1]).emit("filters", data);
-        io.to(array[array.length - 1]).emit("filters", data);
+        io.to(array.find(data.idRoom)).emit("filters", data);
     })
 
     socket.on("refresh-image", (data) => {
         let array = Array.from(socket.rooms);
         // io.to(array[1]).emit("refresh-image", data);
-        io.to(array[array.length - 1]).emit("refresh-image", data);
+        io.to(array.find(data.idRoom)).emit("refresh-image", data);
     })
 
     socket.on("disconnect", function(){
@@ -123,7 +124,19 @@ io.on("connection", (socket) => {
     socket.on("join-room", (data) => {
         console.log(socket.id + " entrando por join-room, nombre usuario: " + data.usuario);
         socket.join(data.roomId);
+
+        if (usuariosInformacion.get(data.usuario) === undefined) {
+            usuariosInformacion.set(data.usuario, data.roomId);
+
+        }else {
+            var salas = Array.from(usuariosInformacion.get(data.usuario));
+            salas.push(data.roomId);
+            usuariosInformacion.set(data.usuario, salas);
+        }
+
         usuariosInformacion.set(data.usuario, data.roomId);
+
+
         console.log(socket.id + " se ha unido a la sala con key " + data.roomId + " exitosamente.");
         return socket.emit("entrando-sala", data.roomId);
     });
@@ -154,7 +167,7 @@ io.on("connection", (socket) => {
 
         }
 
-        console.log(usuariosInformacion.get(data.usuario));
+        // console.log(usuariosInformacion.get(data.usuario));
 
         // console.log("salas:" + Array.fromusuariosInformacion.get(data.usuario));
 
@@ -165,16 +178,16 @@ io.on("connection", (socket) => {
 
     socket.on("refresh-page", (usuario) => {
         console.log(socket.id + " entrando por refresh-page, nombre usuario: " + usuario);
-        var room = usuariosInformacion.get(usuario)
+        var room = Array.from(usuariosInformacion.get(usuario))
 
-        for (var i = 0; i < gameRooms.length; i++) {
-            if (gameRooms[i].roomKey == room && gameRooms[i].nombreAdmin == usuario) {
-                gameRooms[i].administrator = socket.id;
-
+        for (var i = 0; i < room.length; i++) {
+            for (var j = 0; j < gameRooms.length; j++) {
+                if (gameRooms[j].roomKey == room[i] && gameRooms[j].nombreAdmin == usuario) {
+                    gameRooms[j].administrator = socket.id; 
+                }
             }
+            socket.join(room[i]);
         }
-
-        socket.join(room);
     });
 
     socket.on("mensaje", (data) => {

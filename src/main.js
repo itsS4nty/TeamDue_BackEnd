@@ -143,7 +143,7 @@ io.on("connection", (socket) => {
         for (var i = 0; i < gameRooms.length; i++) {
             if (gameRooms[i].roomKey === data.roomId) {
                 for (var j = 0; j < gameRooms[i].administrator.length; j++) {
-                    io.to(gameRooms[i].administrator[j]).emit("entrando-sala", nomAdmin);
+                    io.to(gameRooms[i].administrator[j]).emit("entrando-sala", data.usuario);
                 }
 
             }

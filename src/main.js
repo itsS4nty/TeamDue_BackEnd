@@ -139,18 +139,22 @@ io.on("connection", (socket) => {
             salas.push(data.roomId);
             usuariosInformacion.set(data.usuario, salas);
         }
-        var nomAdmin;
 
         for (var i = 0; i < gameRooms.length; i++) {
             if (gameRooms[i].roomKey === data.roomId) {
-                nomAdmin = gameRooms[i].nombreAdmin;
+                for (var j = 0; j < gameRooms[i].administrator.length; j++) {
+                    io.to(gameRooms[i].administrator[j]).emit("entrando-sala", nomAdmin);
+                }
+
             }
         }
-        console.log(nomAdmin);
-        // usuariosInformacion.set(data.usuario, data.roomId);
 
         console.log(socket.id + " se ha unido a la sala con key " + data.roomId + " exitosamente.");
-        return socket.emit("entrando-sala", nomAdmin);
+        return;
+        // console.log(nomAdmin);
+        // usuariosInformacion.set(data.usuario, data.roomId);
+        // return io.to() socket.emit("entrando-sala", nomAdmin);
+
     });
 
     socket.on("new-room", (data) => {

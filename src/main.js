@@ -187,7 +187,7 @@ io.on("connection", (socket) => {
                 console.log(gameRooms[j].administrator);
             }
         }
-        socket.join(room[i]);
+        socket.join(data.idRoom);
     });
 
     socket.on("mensaje", (data) => {

@@ -52,44 +52,50 @@ io.on("connection", (socket) => {
         let array = Array.from(socket.rooms); 
         // console.log(array[1]);
         // io.to(array[1]).emit("canvas-data", data);
-        // io.to(array[array.length - 1]).emit("canvas-data", data);
-        io.to(array.find(data.idRoom)).emit("canvas-data", data);
+        io.to(array[array.length - 1]).emit("canvas-data", data);
+        // io.to(array.find(data.idRoom)).emit("canvas-data", data);
         // socket.broadcast.emit("canvas-data", data);
     });
 
     socket.on("draw-line", (data) => {
         let array = Array.from(socket.rooms);
         // io.to(array[1]).emit("draw-line", data);
-        io.to(array.find(data.idRoom)).emit("draw-line", data);
+        // io.to(array.find(data.idRoom)).emit("draw-line", data);
+        io.to(array[array.length - 1]).emit("draw-line", data);
     })
 
     socket.on("draw-rect", (data) => {
         let array = Array.from(socket.rooms);
         // io.to(array[1]).emit("draw-rect", data);
-        io.to(array.find(data.idRoom)).emit("draw-rect", data);
+        // io.to(array.find(data.idRoom)).emit("draw-rect", data);
+        io.to(array[array.length - 1]).emit("draw-line", data);
     })
 
     socket.on("background-image", (data) => {
         let array = Array.from(socket.rooms);
         // io.to(array[1]).emit("background-image", data);
-        io.to(array.find(data.idRoom)).emit("background-image", data);
+        // io.to(array.find(data.idRoom)).emit("background-image", data);
+        io.to(array[array.length - 1]).emit("draw-line", data);
     })
 
     socket.on("filters", (data) => {
         let array = Array.from(socket.rooms);
         // io.to(array[1]).emit("filters", data);
-        io.to(array.find(data.idRoom)).emit("filters", data);
+        // io.to(array.find(data.idRoom)).emit("filters", data);
+        io.to(array[array.length - 1]).emit("draw-line", data);
     })
 
     socket.on("refresh-image", (data) => {
         let array = Array.from(socket.rooms);
         // io.to(array[1]).emit("refresh-image", data);
-        io.to(array.find(data.idRoom)).emit("refresh-image", data);
+        // io.to(array.find(data.idRoom)).emit("refresh-image", data);
+        io.to(array[array.length - 1]).emit("draw-line", data);
     })
 
     socket.on("disconnect", function(){
         clientes.splice(clientes.indexOf(socket.id), 1);
-        console.log(socket.id + " desconectado del servidor");
+        // console.log(socket.id + " desconectado del servidor");
+        io.to(array[array.length - 1]).emit("draw-line", data);
 
     });
 
@@ -134,8 +140,7 @@ io.on("connection", (socket) => {
             usuariosInformacion.set(data.usuario, salas);
         }
 
-        usuariosInformacion.set(data.usuario, data.roomId);
-
+        // usuariosInformacion.set(data.usuario, data.roomId);
 
         console.log(socket.id + " se ha unido a la sala con key " + data.roomId + " exitosamente.");
         return socket.emit("entrando-sala", data.roomId);

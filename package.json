@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon --delay 1000ms src/main.js",
-    "kill": "lsof -ti tcp:3000 | xargs kill && nodemon --delay 1000ms src/main.js"
+    "kill": "git pull && lsof -ti tcp:3000 | xargs kill && nodemon --delay 1000ms src/main.js"
   },
   "repository": {
     "type": "git",

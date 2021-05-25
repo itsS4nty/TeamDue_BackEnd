@@ -144,7 +144,7 @@ io.on("connection", (socket) => {
         };
         gameRooms.push(roomInformation);
 
-        var salas = usuariosInformacion.get(data.usuario);
+        var salas = Array.from(usuariosInformacion.get(data.usuario));
         salas.push(data.roomId);
         usuariosInformacion.set(data.usuario, salas);
 

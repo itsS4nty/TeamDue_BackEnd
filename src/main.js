@@ -179,7 +179,7 @@ io.on("connection", (socket) => {
 
     socket.on("refresh-page", (data) => {
         console.log(socket.id + " entrando por refresh-page, nombre usuario: " + data.usuario);
-        var room = Array.from(usuariosInformacion.get(data.usuario))
+        // var room = Array.from(usuariosInformacion.get(data.usuario))
 
         for (var j = 0; j < gameRooms.length; j++) {
             if (gameRooms[j].roomKey == data.idRoom && gameRooms[j].nombreAdmin == data.usuario) {

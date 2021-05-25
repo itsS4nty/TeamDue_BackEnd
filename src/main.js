@@ -144,9 +144,15 @@ io.on("connection", (socket) => {
         };
         gameRooms.push(roomInformation);
 
-        var salas = Array.from(usuariosInformacion.get(data.usuario));
-        salas.push(data.roomId);
-        usuariosInformacion.set(data.usuario, salas);
+        if (usuariosInformacion.get(data.usuario) === undefined) {
+            usuariosInformacion.set(data.usuario, salas);
+
+        }else {
+            var salas = Array.from(usuariosInformacion.get(data.usuario));
+            salas.push(data.roomId);
+            usuariosInformacion.set(data.usuario, salas);
+
+        }
 
         console.log("salas:" + usuariosInformacion.get(data.usuario));
 

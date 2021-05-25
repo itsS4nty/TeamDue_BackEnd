@@ -202,7 +202,15 @@ io.on("connection", (socket) => {
             }
         }
         socket.join(data.idRoom);
-        socket.emit("canvas", data.canvas);
+
+        for (var i = 0; i < gameRooms.length; i++) {
+            if (gameRooms[i].roomKey === data.idRoom) {
+                for (var j = 0; j < gameRooms[i].administrator.length; j++) {
+                    io.to(gameRooms[i].administrator[j]).emit("entrando-sala", data.usuario);
+                }
+
+            }
+        }
     });
 
     socket.on("mensaje", (data) => {

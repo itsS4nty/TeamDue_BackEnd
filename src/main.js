@@ -177,19 +177,17 @@ io.on("connection", (socket) => {
         return socket.emit("sala-creada", data.roomId);
     });
 
-    socket.on("refresh-page", (usuario) => {
-        console.log(socket.id + " entrando por refresh-page, nombre usuario: " + usuario);
-        var room = Array.from(usuariosInformacion.get(usuario))
+    socket.on("refresh-page", (data) => {
+        console.log(socket.id + " entrando por refresh-page, nombre usuario: " + data.usuario);
+        var room = Array.from(usuariosInformacion.get(data.usuario))
 
-        for (var i = 0; i < room.length; i++) {
-            for (var j = 0; j < gameRooms.length; j++) {
-                if (gameRooms[j].roomKey == room[i] && gameRooms[j].nombreAdmin == usuario) {
-                    gameRooms[j].administrator.push(socket.id); 
-                    console.log(gameRooms[j].administrator);
-                }
+        for (var j = 0; j < gameRooms.length; j++) {
+            if (gameRooms[j].roomKey == data.idRoom && gameRooms[j].nombreAdmin == data.usuario) {
+                gameRooms[j].administrator.push(socket.id); 
+                console.log(gameRooms[j].administrator);
             }
-            socket.join(room[i]);
         }
+        socket.join(room[i]);
     });
 
     socket.on("mensaje", (data) => {

@@ -184,7 +184,7 @@ io.on("connection", (socket) => {
         for (var j = 0; j < gameRooms.length; j++) {
             if (gameRooms[j].roomKey == data.idRoom && gameRooms[j].nombreAdmin == data.usuario) {
                 console.log(gameRooms[j].administrator);
-                if (!gameRooms[j].administrator.find(socket.id)) {
+                if (!(gameRooms[j].administrator).find(socket.id)) {
                     gameRooms[j].administrator.push(socket.id); 
                 }
                 console.log(gameRooms[j].administrator);

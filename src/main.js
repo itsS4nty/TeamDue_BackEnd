@@ -95,7 +95,6 @@ io.on("connection", (socket) => {
     socket.on("disconnect", function(){
         clientes.splice(clientes.indexOf(socket.id), 1);
         // console.log(socket.id + " desconectado del servidor");
-        io.to(array[array.length - 1]).emit("draw-line", data);
 
     });
 

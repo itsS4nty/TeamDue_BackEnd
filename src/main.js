@@ -183,7 +183,7 @@ io.on("connection", (socket) => {
 
         for (var j = 0; j < gameRooms.length; j++) {
             if (gameRooms[j].roomKey == data.idRoom && gameRooms[j].nombreAdmin == data.usuario) {
-                console.log(typeof gameRooms[j].administrator[0]);
+                console.log(gameRooms[j].administrator.indexOf(socket.id));
                 if (!(gameRooms[j].administrator).find(socket.id)) {
                     gameRooms[j].administrator.push(socket.id); 
                 }

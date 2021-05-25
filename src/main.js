@@ -49,7 +49,7 @@ io.on("connection", (socket) => {
 
     socket.on("canvas-data", (data) => {
         let array = Array.from(socket.rooms); 
-        console.log(data.idRoom);
+        // console.log(data.idRoom);
         io.to(data.idRoom).emit("canvas-data", data.canvas);
         // io.to(array[array.length - 1]).emit("canvas-data", data);
     });
@@ -183,7 +183,9 @@ io.on("connection", (socket) => {
 
         for (var j = 0; j < gameRooms.length; j++) {
             if (gameRooms[j].roomKey == data.idRoom && gameRooms[j].nombreAdmin == data.usuario) {
-                gameRooms[j].administrator.push(socket.id); 
+                if (!gameRooms[j].administrator.find(socket.id)) {
+                    gameRooms[j].administrator.push(socket.id); 
+                }
                 console.log(gameRooms[j].administrator);
             }
         }

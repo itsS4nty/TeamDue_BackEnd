@@ -202,7 +202,7 @@ io.on("connection", (socket) => {
             }
         }
         socket.join(data.idRoom);
-        socket.emit("canvas", "hola nois");
+        socket.emit("canvas", data.canvas);
     });
 
     socket.on("mensaje", (data) => {

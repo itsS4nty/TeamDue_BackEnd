@@ -353,6 +353,13 @@ router.get('/verify/:hashString', (req, res) => {
     });
 });
 
+router.post('/comprovarArchivo/:nomFichero&:idUsuario', (req, res) => {
+    console.log("Entrando por GET /comprovarArchivo/:nomFichero&:idUsuario");
+    const { nomFichero, idUsuario } = req.params;
+    console.log(nomFichero);
+    console.log(idUsuario);
+});
+
 async function hashPassword(password) {
     const salt = await bcrypt.genSalt(10)
     return await bcrypt.hash(password, salt);

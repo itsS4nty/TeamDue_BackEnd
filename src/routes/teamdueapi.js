@@ -203,6 +203,57 @@ router.post('/register', (req, res) => {
     });
 });
 
+router.post('/newFile', (req, res) => {
+    console.log("Entrando por POST /newFile");
+    const { UsuarioId:UsuarioIdInp, nameFile, tipo } = req.body;
+    const { token } = req.headers;
+
+    validateToken(token, app.get("llave")).then(respuestaToken => {
+        if (respuestaToken) {
+            db.Archivos.findOne({where: { [Op.and]: [{UsuarioId:UsuarioIdInp}, {nombre:nameFile}, {tipo: tipo}] }}).then((findedArchivo) => {
+                if (findedArchivo === null) {
+                    db.Usuarios.findOne({where: {id: UsuarioIdInp}}).then((findedUsuario) => {
+                        if (findedUsuario === null) {
+                            res.status(409).send("User not exists");
+        
+                        }else {
+                            if (tipo === "png") {
+                                fs.copyFile("/home/teamdue/files/blank.png", "/home/teamdue/files/" + findedUsuario.usuario + "/" +  nameFile  + ".png", (err) => {
+                                    if (err) {
+                                        console.log(err.message);
+                                    }
+                                });                     
+
+                            }
+        
+                            var archivoCreado = db.Archivos.create({
+                                nombre: nameFile,
+                                tipo: tipo,
+                                UsuarioId: UsuarioIdInp
+                            });
+                            createLog("Creacion de fichero", findedUsuario.id);
+                            res.status(201).send(archivoCreado.id);  
+                        }
+                    });
+        
+                }else {
+                    res.status(409).send("Duplicate");
+                }
+        
+            }).catch((err) => {
+                res.status(400).send(err.message);
+                console.log(err.message);
+        
+            });
+
+        }else {
+            res.status(403).send("Token no valido");
+
+        }
+    })
+
+});
+
 router.post('/createFile', upload.single("file"), (req, res) => {
     console.log("Entrando por POST /createFile");
     const { UsuarioId:UsuarioIdInp } = req.body;

@@ -225,13 +225,13 @@ router.post('/createFile', upload.single("file"), (req, res) => {
                             fileName[fileName.length] = req.file.originalname;
                             fs.renameSync(req.file.path, fileName.join("/"));
         
-                            db.Archivos.create({
+                            var archivoCreado = db.Archivos.create({
                                 nombre: nameArray[0],
                                 tipo: nameArray[1],
                                 UsuarioId: UsuarioIdInp
                             });
                             createLog("Creacion de fichero", findedUsuario.id);
-                            res.status(201).send(db.Archivos.id);  
+                            res.status(201).send(archivoCreado.id);  
                         }
                     });
         

@@ -353,12 +353,12 @@ router.get('/verify/:hashString', (req, res) => {
     });
 });
 
-router.get('/comprovarArchivo/:nomFichero&:idUsuario&:tipo', (req, res) => {
+router.get('/comprovarArchivo', (req, res) => {
     console.log("Entrando por GET /comprovarArchivo/:nomFichero&:idUsuario&:tipo");
-    // const { nomFichero, idUsuario, tipo } = req.params;
-    const nomFichero = req.params.nomFichero;
-    const idUsuario = req.params.idUsuario;
-    const tipo = req.params.tipo;
+    const { nomFichero, idUsuario, tipo } = req.params;
+    // const nomFichero = req.params.nomFichero;
+    // const idUsuario = req.params.idUsuario;
+    // const tipo = req.params.tipo;
     const { token } = req.headers;
 
     validateToken(token, app.get("llave")).then(respuestaToken => {

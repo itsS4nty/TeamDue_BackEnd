@@ -353,7 +353,7 @@ router.get('/verify/:hashString', (req, res) => {
     });
 });
 
-router.post('/comprovarArchivo/:nomFichero&:idUsuario', (req, res) => {
+router.get('/comprovarArchivo/:nomFichero&:idUsuario', (req, res) => {
     console.log("Entrando por GET /comprovarArchivo/:nomFichero&:idUsuario");
     const { nomFichero, idUsuario } = req.params;
     console.log(nomFichero);

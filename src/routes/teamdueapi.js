@@ -357,7 +357,6 @@ router.get('/comprovarArchivo/:nomFichero&:idUsuario&:tipo', (req, res) => {
     console.log("Entrando por GET /comprovarArchivo/:nomFichero&:idUsuario&:tipo");
     const { nomFichero, idUsuario, tipo } = req.params;
 
-
     validateToken(token, app.get("llave").then(respuestaToken => {
         if (respuestaToken) {
             db.Archivos.findOne({where: { [Op.and]: [{UsuarioId:idUsuario}, {nombre:nomFichero}, {tipo: tipo}] }}).then((findedArchivo) => {

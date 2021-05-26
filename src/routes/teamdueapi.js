@@ -356,6 +356,7 @@ router.get('/verify/:hashString', (req, res) => {
 router.get('/comprovarArchivo/:nomFichero&:idUsuario&:tipo', (req, res) => {
     console.log("Entrando por GET /comprovarArchivo/:nomFichero&:idUsuario&:tipo");
     const { nomFichero, idUsuario, tipo } = req.params;
+    const { token } = req.headers;
 
     validateToken(token, app.get("llave").then(respuestaToken => {
         if (respuestaToken) {

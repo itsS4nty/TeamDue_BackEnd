@@ -357,26 +357,30 @@ router.get('/comprovarArchivo/:nomFichero&:idUsuario&:tipo', (req, res) => {
     console.log("Entrando por GET /comprovarArchivo/:nomFichero&:idUsuario&:tipo");
     const { nomFichero, idUsuario, tipo } = req.params;
 
-    if (respuestaToken) {
-        db.Archivos.findOne({where: { [Op.and]: [{UsuarioId:idUsuario}, {nombre:nomFichero}, {tipo: tipo}] }}).then((findedArchivo) => {
-            if (findedArchivo === null) {
-                res.status(200).send(true);
-    
-            }else {
-                res.status(200).send(false);
-            }
-    
-        }).catch((err) => {
-            fs.unlinkSync(req.file.path);
-            res.status(400).send(err.message);
-            console.log(err.message);
-    
-        });
+
+    validateToken(token, app.get("llave").then(respuestaToken => {
+        if (respuestaToken) {
+            db.Archivos.findOne({where: { [Op.and]: [{UsuarioId:idUsuario}, {nombre:nomFichero}, {tipo: tipo}] }}).then((findedArchivo) => {
+                if (findedArchivo === null) {
+                    res.status(200).send(true);
         
-    }else {
-        fs.unlinkSync(req.file.path);
-        res.status(403).send("Token no valido");
-    }
+                }else {
+                    res.status(200).send(false);
+                }
+        
+            }).catch((err) => {
+                fs.unlinkSync(req.file.path);
+                res.status(400).send(err.message);
+                console.log(err.message);
+        
+            });
+            
+        }else {
+            fs.unlinkSync(req.file.path);
+            res.status(403).send("Token no valido");
+        }
+
+    }));
 });
 
 async function hashPassword(password) {

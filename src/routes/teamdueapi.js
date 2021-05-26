@@ -207,6 +207,7 @@ router.post('/newFile', (req, res) => {
     console.log("Entrando por POST /newFile");
     const { UsuarioId:UsuarioIdInp, nameFile, tipo } = req.body;
     const { token } = req.headers;
+    console.log(UsuarioIdInp, nameFile, tipo);
 
     validateToken(token, app.get("llave")).then(respuestaToken => {
         if (respuestaToken) {

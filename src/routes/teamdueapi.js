@@ -353,38 +353,39 @@ router.get('/verify/:hashString', (req, res) => {
     });
 });
 
-router.get('/comprovarArchivo', (req, res) => {
+router.get('/comprovarArchivo/', (req, res) => {
     console.log("Entrando por GET /comprovarArchivo/:nomFichero&:idUsuario&:tipo");
     const { nomFichero, idUsuario, tipo } = req.params;
     // const nomFichero = req.params.nomFichero;
     // const idUsuario = req.params.idUsuario;
     // const tipo = req.params.tipo;
     const { token } = req.headers;
+    console.log(nomFichero, idUsuario, tipo);
 
-    validateToken(token, app.get("llave")).then(respuestaToken => {
-        if (respuestaToken) {
-            db.Archivos.findOne({where: { [Op.and]: [{UsuarioId:idUsuario}, {nombre:nomFichero}, {tipo: tipo}] }}).then((findedArchivo) => {
-                console.log(typeof nomFichero);
-                console.log(findedArchivo);
-                if (findedArchivo === null) {
-                    res.status(200).send(true);
+    // validateToken(token, app.get("llave")).then(respuestaToken => {
+    //     if (respuestaToken) {
+    //         db.Archivos.findOne({where: { [Op.and]: [{UsuarioId:idUsuario}, {nombre:nomFichero}, {tipo: tipo}] }}).then((findedArchivo) => {
+    //             console.log(typeof nomFichero);
+    //             console.log(findedArchivo);
+    //             if (findedArchivo === null) {
+    //                 res.status(200).send(true);
         
-                }else {
-                    res.status(200).send(false);
-                }
+    //             }else {
+    //                 res.status(200).send(false);
+    //             }
         
-            }).catch((err) => {
-                fs.unlinkSync(req.file.path);
-                res.status(400).send(err.message);
-                console.log(err.message);
+    //         }).catch((err) => {
+    //             fs.unlinkSync(req.file.path);
+    //             res.status(400).send(err.message);
+    //             console.log(err.message);
         
-            });
+    //         });
             
-        }else {
-            fs.unlinkSync(req.file.path);
-            res.status(403).send("Token no valido");
-        }
-    });
+    //     }else {
+    //         fs.unlinkSync(req.file.path);
+    //         res.status(403).send("Token no valido");
+    //     }
+    // });
 });
 
 async function hashPassword(password) {

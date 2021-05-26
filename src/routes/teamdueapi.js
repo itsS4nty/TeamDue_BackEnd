@@ -355,10 +355,10 @@ router.get('/verify/:hashString', (req, res) => {
 
 router.get('/comprovarArchivo', (req, res) => {
     console.log("Entrando por GET /comprovarArchivo/:nomFichero&:idUsuario&:tipo");
-    const { nomFichero, idUsuario, tipo } = req.params;
-    // const nomFichero = req.params.nomFichero;
-    // const idUsuario = req.params.idUsuario;
-    // const tipo = req.params.tipo;
+    // const { nomFichero, idUsuario, tipo } = req.params;
+    const nomFichero = req.query.nomFichero;
+    const idUsuario = req.query.idUsuario;
+    const tipo = req.query.tipo;
     const { token } = req.headers;
     console.log(nomFichero, idUsuario, tipo);
 

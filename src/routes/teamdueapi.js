@@ -358,7 +358,7 @@ router.get('/comprovarArchivo/:nomFichero&:idUsuario&:tipo', (req, res) => {
     const { nomFichero, idUsuario, tipo } = req.params;
     const { token } = req.headers;
 
-    validateToken(token, app.get("llave").then(respuestaToken => {
+    validateToken(token, app.ge("llave")).then(respuestaToken => {
         if (respuestaToken) {
             db.Archivos.findOne({where: { [Op.and]: [{UsuarioId:idUsuario}, {nombre:nomFichero}, {tipo: tipo}] }}).then((findedArchivo) => {
                 if (findedArchivo === null) {
@@ -379,8 +379,7 @@ router.get('/comprovarArchivo/:nomFichero&:idUsuario&:tipo', (req, res) => {
             fs.unlinkSync(req.file.path);
             res.status(403).send("Token no valido");
         }
-
-    }));
+    });
 });
 
 async function hashPassword(password) {

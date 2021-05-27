@@ -422,7 +422,7 @@ router.get('/comprovarArchivo', (req, res) => {
                     res.status(200).send(true);
                     
                 }else {
-                    console.log(findedArchivo)
+                    console.log(findedArchivo.dataValues.id);
                     res.status(200).send(false);
                 }
         

@@ -235,7 +235,6 @@ router.post('/newFile', (req, res) => {
                             });
 
                             createLog("Creacion de fichero", findedUsuario.id);
-                            console.log(archivoCreado.id);
                             res.status(201).send(archivoCreado.id);  
                         }
                     });
@@ -422,8 +421,7 @@ router.get('/comprovarArchivo', (req, res) => {
                     res.status(200).send(true);
                     
                 }else {
-                    console.log(findedArchivo.dataValues.id);
-                    res.status(200).send(false);
+                    res.status(200).send(findedArchivo.dataValues.id);
                 }
         
             }).catch((err) => {

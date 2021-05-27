@@ -42,6 +42,7 @@ io.on("connection", (socket) => {
     // console.log(usuariosInformacion);
 
     socket.on("pedir-texto", (data) => {
+        console.log(socket.id + " con usuario: " + data.usuario + " entrando por pedir-texto");
         fs.readFile('/home/teamdue/files/' + data.usuario + "/" + data.nombre + ".txt", 'utf-8', (err, dataFichero) => {
             if(err) {
               console.log('error: ', err);

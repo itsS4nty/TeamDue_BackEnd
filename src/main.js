@@ -44,7 +44,7 @@ io.on("connection", (socket) => {
     socket.on("new-text", (data) => {
         // let array = Array.from(socket.rooms);
         // io.to(array[array.length - 1]).emit("canvas-data", data);
-        socket.broadcast.emit("new-text", data);
+        io.to(data.idRoom).emit("new-text", data.data);
     })
 
     socket.on("canvas-data", (data) => {

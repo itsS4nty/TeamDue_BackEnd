@@ -3,7 +3,7 @@ const connImport = require('./database.js');
 const httpServer = require("http").createServer();
 const io = require("socket.io")(httpServer, {cors:{origin: "*",}});
 const express = require('express');
-
+const fs = require("fs");
 
 // Variables
 const app = express();
@@ -42,7 +42,10 @@ io.on("connection", (socket) => {
     // console.log(usuariosInformacion);
 
     socket.on("guardar-fichero", (data) => {
-        
+        fs.unlinkSync("/home/teamdue/files/" + data.usuario + "/" + data.nombre + "." + data.tipo);
+        fs.writeFile("/home/teamdue/files/" + data.usuario + "/" + data.nombre + "." + data.tipo, data.base64Data, 'base64', function(err) {
+            console.log(err);
+        });
 
     });
 

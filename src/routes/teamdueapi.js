@@ -310,7 +310,7 @@ router.post('/createFile', upload.single("file"), (req, res) => {
 
 router.post('/saveFile', upload.single("file"), (req, res) => {
     console.log("Entrando por POST /saveFile");
-    const { idArchivo } = req.body;
+    const { idArchivo, base64Data } = req.body;
     const { token } = req.headers;
 
     validateToken(token, app.get("llave")).then(respuestaToken => {
@@ -332,11 +332,14 @@ router.post('/saveFile', upload.single("file"), (req, res) => {
                             fileName[fileName.length - 1] = findedUsuario.usuario;
                             fileName[fileName.length] = findedArchivo.nombre + "." + req.file.mimetype.split("/")[1];
                             fs.unlinkSync("/home/teamdue/files/" + findedUsuario.usuario + "/" + findedArchivo.nombre + "." + findedArchivo.tipo);
-                            fs.renameSync(req.file.path, fileName.join("/"));
-                            findedArchivo.tipo = req.file.mimetype.split("/")[1];
-                            findedArchivo.save();
+                            fs.writeFile("/home/teamdue/files/" + findedUsuario.usuario + "/" + findedArchivo.nombre + "." + findedArchivo.tipo, base64Data, 'base64', function(err) {
+                                console.log(err);
+                            });
                             createLog("Guardando cambios en el archivo alojado en el servidor", findedUsuario.id);
                             res.send("Archivo guardado");
+                            // fs.renameSync(req.file.path, fileName.join("/"));
+                            // findedArchivo.tipo = req.file.mimetype.split("/")[1];
+                            // findedArchivo.save();
         
                         }
                     });

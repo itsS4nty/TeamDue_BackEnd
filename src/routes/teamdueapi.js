@@ -310,9 +310,11 @@ router.post('/createFile', upload.single("file"), (req, res) => {
     });
 });
 
-router.post('/saveFile', (req, res) => {
+router.get('/saveFile', (req, res) => {
     console.log("Entrando por POST /saveFile");
-    const { idArchivo, base64Data } = req.body;
+    // const idArchivo = req.query;
+    // const base64Data = req.query.idUsuario;
+    const { idArchivo, base64Data } = req.query;
     const { token } = req.headers;
 
     validateToken(token, app.get("llave")).then(respuestaToken => {

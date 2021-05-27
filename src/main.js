@@ -43,9 +43,7 @@ io.on("connection", (socket) => {
 
     socket.on("guardar-fichero", (data) => {
         fs.unlinkSync("/home/teamdue/files/" + data.usuario + "/" + data.nombre + "." + data.tipo);
-        fs.writeFile("/home/teamdue/files/" + data.usuario + "/" + data.nombre + "." + data.tipo, data.base64Data, 'base64', function(err) {
-            console.log(err.message);
-        });
+        fs.writeFile("/home/teamdue/files/" + data.usuario + "/" + data.nombre + "." + data.tipo, data.base64Data, 'base64', function(err) {});
 
     });
 

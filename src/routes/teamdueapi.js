@@ -27,6 +27,7 @@ app.use(bodyParser.json({
     limit: '50mb',
     parameterLimit: 100000
 }))
+app.use(express.json());
 router.use(cors());
 
 router.get('/files/:id', (req, res) => {

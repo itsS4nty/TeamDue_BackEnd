@@ -348,7 +348,7 @@ router.post('/saveFile', (req, res) => {
                 }
         
             }).catch((err) => {
-                fs.unlinkSync(req.file.path);
+                //fs.unlinkSync(req.file.path);
                 res.status(400).send(err.message);
                 console.log(err.message);
             });

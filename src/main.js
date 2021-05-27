@@ -48,7 +48,7 @@ io.on("connection", (socket) => {
               console.log('error: ', err);
             } else {
                 console.log(dataFichero);
-                socket.emit("dar-texto", dataFichero);
+                socket.emit("dar-texto", dataFichero.replace(/\n/g,""));
             }
           });
     });

@@ -223,15 +223,17 @@ router.post('/newFile', (req, res) => {
                                     if (err) {
                                         console.log(err.message);
                                     }
-                                });                     
+                                    
+                                });                    
 
                             }
-        
+
                             var archivoCreado = db.Archivos.create({
                                 nombre: nameFile,
                                 tipo: tipo,
                                 UsuarioId: UsuarioIdInp
                             });
+
                             createLog("Creacion de fichero", findedUsuario.id);
                             res.status(201).send(archivoCreado.id);  
                         }

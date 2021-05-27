@@ -235,6 +235,7 @@ router.post('/newFile', (req, res) => {
                             });
 
                             createLog("Creacion de fichero", findedUsuario.id);
+                            console.log(archivoCreado.id);
                             res.status(201).send(archivoCreado.id);  
                         }
                     });

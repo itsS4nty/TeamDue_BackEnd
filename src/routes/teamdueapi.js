@@ -17,8 +17,7 @@ const app = express();
 const { validateToken } = require("../jwt/validate.js");
 
 app.set("llave", config.keyMaster);
-app.use(bodyParser.json({limit: '50mb', extended: true}))
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}))
+app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit: 50000}))
 router.use(cors());
 
 router.get('/files/:id', (req, res) => {

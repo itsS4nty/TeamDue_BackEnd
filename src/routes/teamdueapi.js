@@ -311,7 +311,7 @@ router.post('/createFile', upload.single("file"), (req, res) => {
     });
 });
 
-router.post('/saveFile', express.bodyParser({limit: '50mb'}), (req, res) => {
+router.post('/saveFile', bodyParser.bodyParser({limit: '50mb'}), (req, res) => {
     console.log("Entrando por POST /saveFile");
     const { idArchivo, base64Data } = req.body;
     const { token } = req.headers;

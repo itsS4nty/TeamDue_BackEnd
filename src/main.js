@@ -41,12 +41,17 @@ io.on("connection", (socket) => {
     console.log("Clientes actualmente: " + clientes.length);
     // console.log(usuariosInformacion);
 
+    socket.on("guardar-fichero", (data) => {
+        
+
+    });
+
     socket.on("new-text", (data) => {
         // let array = Array.from(socket.rooms);
         // io.to(array[array.length - 1]).emit("canvas-data", data);
         console.log(data);
         io.to(data.idRoom).emit("new-text", data.data);
-    })
+    });
 
     socket.on("canvas-data", (data) => {
         let array = Array.from(socket.rooms); 
@@ -59,31 +64,31 @@ io.on("connection", (socket) => {
         let array = Array.from(socket.rooms);
         io.to(data.idRoom).emit("draw-line", data.canvas);
         // io.to(array[array.length - 1]).emit("draw-line", data);
-    })
+    });
 
     socket.on("draw-rect", (data) => {
         let array = Array.from(socket.rooms);
         io.to(data.idRoom).emit("draw-rect", data.canvas);
         // io.to(array[array.length - 1]).emit("draw-rect", data);
-    })
+    });
 
     socket.on("background-image", (data) => {
         let array = Array.from(socket.rooms);
         io.to(data.idRoom).emit("background-image", data);
         // io.to(array[array.length - 1]).emit("background-image", data);
-    })
+    });
 
     socket.on("filters", (data) => {
         let array = Array.from(socket.rooms);
         io.to(data.idRoom).emit("filters", data);
         // io.to(array[array.length - 1]).emit("filters", data);
-    })
+    });
 
     socket.on("refresh-image", (data) => {
         let array = Array.from(socket.rooms);
         io.to(data.idRoom).emit("refresh-image", data.canvas);
         // io.to(array[array.length - 1]).emit("refresh-image", data);
-    })
+    });
 
     socket.on("disconnect", function(){
         clientes.splice(clientes.indexOf(socket.id), 1);

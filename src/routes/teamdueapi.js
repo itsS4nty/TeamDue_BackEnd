@@ -226,6 +226,13 @@ router.post('/newFile', (req, res) => {
                                     
                                 });                    
 
+                            }else if (tipo === "txt") {
+                                fs.copyFile("/home/teamdue/files/blank.txt", "/home/teamdue/files/" + findedUsuario.usuario + "/" +  nameFile  + ".txt", (err) => {
+                                    if (err) {
+                                        console.log(err.message);
+                                    }
+                                    
+                                }); 
                             }
 
                             var archivoCreado = db.Archivos.create({

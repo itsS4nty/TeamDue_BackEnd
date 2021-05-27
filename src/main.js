@@ -41,9 +41,24 @@ io.on("connection", (socket) => {
     console.log("Clientes actualmente: " + clientes.length);
     // console.log(usuariosInformacion);
 
+    socket.on("pedir-texto", (data) => {
+        fs.readFile('/home/teamdue/files/' + data.usuario + "/" + data.nombre + ".txt", 'utf-8', (err, dataFichero) => {
+            if(err) {
+              console.log('error: ', err);
+            } else {
+              socket.emit("dar-texto", dataFichero);
+            }
+          });
+    });
+
     socket.on("guardar-fichero", (data) => {
         fs.unlinkSync("/home/teamdue/files/" + data.usuario + "/" + data.nombre + "." + data.tipo);
-        fs.writeFile("/home/teamdue/files/" + data.usuario + "/" + data.nombre + "." + data.tipo, data.base64Data, 'base64', function(err) {});
+        if (data.tipo == "png") {
+            fs.writeFile("/home/teamdue/files/" + data.usuario + "/" + data.nombre + "." + data.tipo, data.base64Data, 'base64', function(err) {});
+
+        }else {
+            fs.writeFile("/home/teamdue/files/" + data.usuario + "/" + data.nombre + "." + data.tipo, data.base64Data, function(err) {});  
+        }
 
     });
 

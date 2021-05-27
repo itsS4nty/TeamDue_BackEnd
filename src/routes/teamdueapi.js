@@ -17,8 +17,16 @@ const app = express();
 const { validateToken } = require("../jwt/validate.js");
 
 app.set("llave", config.keyMaster);
-app.use(express.json({limit: '50mb'}));
-app.use(express.urlencoded({limit: '50mb'}));
+app.use(bodyParser.urlencoded({
+    extended: true,
+    limit: '50mb',
+    parameterLimit: 100000
+}))
+
+app.use(bodyParser.json({
+    limit: '50mb',
+    parameterLimit: 100000
+}))
 router.use(cors());
 
 router.get('/files/:id', (req, res) => {
@@ -311,7 +319,7 @@ router.post('/createFile', upload.single("file"), (req, res) => {
     });
 });
 
-router.post('/saveFile', bodyParser({limit: '50mb'}), (req, res) => {
+router.post('/saveFile', (req, res) => {
     console.log("Entrando por POST /saveFile");
     const { idArchivo, base64Data } = req.body;
     const { token } = req.headers;

@@ -419,10 +419,10 @@ router.get('/comprovarArchivo', (req, res) => {
         if (respuestaToken) {
             db.Archivos.findOne({where: { [Op.and]: [{UsuarioId:idUsuario}, {nombre:nomFichero}, {tipo: tipo}] }}).then((findedArchivo) => {
                 if (findedArchivo === null) {
-                    console.log(findedArchivo)
                     res.status(200).send(true);
-        
+                    
                 }else {
+                    console.log(findedArchivo)
                     res.status(200).send(false);
                 }
         

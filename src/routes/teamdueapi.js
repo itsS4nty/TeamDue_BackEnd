@@ -18,7 +18,6 @@ const { validateToken } = require("../jwt/validate.js");
 
 app.set("llave", config.keyMaster);
 router.use(cors());
-app.use(bodyParser({limit: '50MB'}))
 
 router.get('/files/:id', (req, res) => {
     console.log("Entrando por GET /files/:id");

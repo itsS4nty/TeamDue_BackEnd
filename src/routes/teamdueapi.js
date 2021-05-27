@@ -421,7 +421,7 @@ router.get('/comprovarArchivo', (req, res) => {
                     res.status(200).send(true);
                     
                 }else {
-                    res.status(200).send(findedArchivo.dataValues.id);
+                    res.status(200).send({id: findedArchivo.dataValues.id});
                 }
         
             }).catch((err) => {

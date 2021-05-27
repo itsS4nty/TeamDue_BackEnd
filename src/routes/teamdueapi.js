@@ -41,6 +41,23 @@ router.get('/files/:id', (req, res) => {
     })
 });
 
+router.get("/pedirTexto", (req, res) => {
+    console.log("Entrando por GET /pedirTexto/?:usuario&:nombre");
+    const usuario = req.query.usuario;
+    const nombre = req.query.nombre;
+    fs.readFile('/home/teamdue/files/' + data.usuario + "/" + data.nombre + ".txt", 'utf-8', (err, dataFichero) => {
+        if(err) {
+            console.log('error: ', err);
+            res.status(400).send("Bad Request");
+
+        } else {
+            res.send(dataFichero.replace(/\n/g,""));
+
+        }
+      });
+
+});
+
 router.get('/file/:id', (req, res) => {
     console.log("Entrando por GET /file/:id");
     const { id:idArchivo } = req.params;

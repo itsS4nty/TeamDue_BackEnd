@@ -18,6 +18,7 @@ const { validateToken } = require("../jwt/validate.js");
 
 app.set("llave", config.keyMaster);
 router.use(cors());
+app.use(bodyParser({limit: '50MB'}))
 
 router.get('/files/:id', (req, res) => {
     console.log("Entrando por GET /files/:id");
@@ -309,11 +310,9 @@ router.post('/createFile', upload.single("file"), (req, res) => {
     });
 });
 
-router.get('/saveFile', (req, res) => {
+router.post('/saveFile', (req, res) => {
     console.log("Entrando por POST /saveFile");
-    // const idArchivo = req.query;
-    // const base64Data = req.query.idUsuario;
-    const { idArchivo, base64Data } = req.query;
+    const { idArchivo, base64Data } = req.body;
     const { token } = req.headers;
 
     validateToken(token, app.get("llave")).then(respuestaToken => {

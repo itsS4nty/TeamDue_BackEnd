@@ -56,6 +56,8 @@ router.get("/pedirTexto", (req, res) => {
             //data.push(dataFichero);
             console.log(JSON.stringify(dataFichero));
             console.log(dataFichero)
+            console.log(JSON.parse(JSON.stringify(dataFichero)));
+            console.log(JSON.parse(dataFichero));
             console.log(data);
             res.send(data);
             // res.send(dataFichero);

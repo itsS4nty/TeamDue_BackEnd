@@ -52,7 +52,10 @@ router.get("/pedirTexto", (req, res) => {
 
         } else {
             // res.send(JSON.parse(dataFichero.replace(/\n/g,"")));
-            res.send(dataFichero);
+            let data = [];
+            data.push(dataFichero);
+            console.log(data);
+            // res.send(dataFichero);
         }
       });
 

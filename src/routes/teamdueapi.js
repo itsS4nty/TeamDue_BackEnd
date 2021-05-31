@@ -54,11 +54,10 @@ router.get("/pedirTexto", (req, res) => {
             // res.send(JSON.parse(dataFichero.replace(/\n/g,"")));
             let data = [{type: "paragraph",   children: [{ text: "Des del servidor"}]}];
             //data.push(dataFichero);
-            console.log(JSON.stringify(dataFichero));
-            console.log(dataFichero)
-            console.log(JSON.parse(JSON.stringify(dataFichero)));
-            console.log(JSON.parse(dataFichero));
-            console.log(data);
+            dataFichero = dataFichero.replace(/(")/g, "'");
+            dataFichero = dataFichero.replace(/\n/g,"");
+            dataFichero = dataFichero.replace(/(\s*?{\s*?|\s*?,\s*?)(['"])?([a-zA-Z0-9]+)(['"])?:/g, '$1"$3":');
+            console.log(dataFichero);
             res.send(data);
             // res.send(dataFichero);
         }

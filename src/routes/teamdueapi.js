@@ -52,11 +52,11 @@ router.get("/pedirTexto", (req, res) => {
 
         } else {
             // res.send(JSON.parse(dataFichero.replace(/\n/g,"")));
-            let data = [];
+            let data = [{"type": "paragraph",   "children": [{ "text": "Des del servidor"}]}];
             data.push(dataFichero);
             console.log(JSON.stringify(dataFichero))
             console.log(data);
-            res.json([{"type": "paragraph",   "children": [{ "text": "Des del servidor"}]}]);
+            res.send(data);
             // res.send(dataFichero);
         }
       });

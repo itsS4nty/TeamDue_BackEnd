@@ -56,7 +56,7 @@ router.get("/pedirTexto", (req, res) => {
             data.push(dataFichero);
             console.log(JSON.stringify(dataFichero))
             console.log(data);
-            res.send([{"type": "paragraph",   "children": [{ "text": "Des del servidor"}]}]);
+            res.json([{"type": "paragraph",   "children": [{ "text": "Des del servidor"}]}]);
             // res.send(dataFichero);
         }
       });

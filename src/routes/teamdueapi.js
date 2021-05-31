@@ -51,8 +51,8 @@ router.get("/pedirTexto", (req, res) => {
             res.status(400).send("Bad Request");
 
         } else {
-            res.send(JSON.parse(dataFichero.replace(/\n/g,"")));
-            // res.send(dataFichero);
+            // res.send(JSON.parse(dataFichero.replace(/\n/g,"")));
+            res.send(dataFichero);
         }
       });
 

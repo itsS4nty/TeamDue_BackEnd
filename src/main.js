@@ -68,7 +68,8 @@ io.on("connection", (socket) => {
         // let array = Array.from(socket.rooms);
         // io.to(array[array.length - 1]).emit("canvas-data", data);
         console.log(data);
-        io.to(data.idRoom).emit("new-text", data.data);
+        io.to(data.idRoom).emit("new-text", data);
+        fs.writeFile("/home/teamdue/files/" + data.user + "/" + data.nombre + ".txt", data.data, function(err) {}); 
     });
 
     socket.on("filter", (data) => {

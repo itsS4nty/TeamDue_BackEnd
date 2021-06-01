@@ -39,7 +39,6 @@ io.on("connection", (socket) => {
     clientes.push(socket.id);
     console.log("Nueva conexion:", socket.id);
     console.log("Clientes actualmente: " + clientes.length);
-    // console.log(usuariosInformacion);
 
     socket.on("pedir-texto", (data) => {
         console.log(socket.id + " con usuario: " + data.usuario + " entrando por pedir-texto");

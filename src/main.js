@@ -74,12 +74,14 @@ io.on("connection", (socket) => {
     socket.on("filter", (data) => {
         // let array = Array.from(socket.rooms);
         // io.to(array[array.length - 1]).emit("canvas-data", data);
+        console.log(data);
         io.to(data.idRoom).emit("filter", data);
     });
 
     socket.on("customFilter", (data) => {
         // let array = Array.from(socket.rooms);
         // io.to(array[array.length - 1]).emit("canvas-data", data);
+        console.log(data);
         io.to(data.idRoom).emit("customFilter", data);
     });
 

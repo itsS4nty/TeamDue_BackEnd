@@ -71,6 +71,18 @@ io.on("connection", (socket) => {
         io.to(data.idRoom).emit("new-text", data.data);
     });
 
+    socket.on("filter", (data) => {
+        // let array = Array.from(socket.rooms);
+        // io.to(array[array.length - 1]).emit("canvas-data", data);
+        io.to(data.idRoom).emit("filter", data);
+    });
+
+    socket.on("customFilter", (data) => {
+        // let array = Array.from(socket.rooms);
+        // io.to(array[array.length - 1]).emit("canvas-data", data);
+        io.to(data.idRoom).emit("customFilter", data);
+    });
+
     socket.on("canvas-data", (data) => {
         let array = Array.from(socket.rooms); 
         // console.log(data.idRoom);
